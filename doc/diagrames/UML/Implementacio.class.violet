@@ -183,7 +183,7 @@ dateTime</string>
    <object class="com.horstmann.violet.NoteNode">
     <void property="text">
      <void property="text">
-      <string>Cada usari només pot comentar i valorar un cop l&apos;itinerari</string>
+      <string>Cada usuari només pot comentar i valorar un cop l&apos;itinerari</string>
      </void>
     </void>
    </object>
