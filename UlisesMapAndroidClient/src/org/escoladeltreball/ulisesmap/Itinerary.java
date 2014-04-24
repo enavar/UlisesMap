@@ -4,7 +4,7 @@ import org.osmdroid.util.GeoPoint;
 
 public class Itinerary {
 	
-	String Name;
+	String name;
 	GeoPoint gp;
 	String image;
 	
@@ -13,19 +13,19 @@ public class Itinerary {
 	
 	public Itinerary(String name, GeoPoint gp) {
 		super();
-		Name = name;
+		this.name = name;
 		this.gp = gp;
 	}
 
 	/* Getters and Setters */
 
 	public String getName() {
-		return Name;
+		return name;
 	}
 
 
 	public void setName(String name) {
-		Name = name;
+		name = name;
 	}
 
 
