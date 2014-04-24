@@ -10,6 +10,7 @@
 	tools:context=".LoginActivity">
 
 	<EditText
+		android:id="@+id/edit_login"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:inputType="text"
@@ -17,6 +18,7 @@
 		/>
 	
 	<EditText
+		android:id="@+id/edit_psw"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:inputType="textPassword"
@@ -24,18 +26,21 @@
 		/>
 	
 	<CheckBox
+		android:id="@+id/check_anonymous"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/field_anonim"		
+		android:text="@string/check_anonymous"		
 		/>
 	
 	<Button
+		android:id="@+id/button_enter"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/button_enter"
 		/>
 	
 	<Button
+		android:id="@+id/button_register"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/button_register"
