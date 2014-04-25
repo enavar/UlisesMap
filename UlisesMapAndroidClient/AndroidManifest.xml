@@ -32,6 +32,10 @@
 			android:name="org.escoladeltreball.ulisesmap.activities.MenuActivity"
 			android:label="@string/title_activity_menu" >
 		</activity>
+		<activity
+			android:name="org.escoladeltreball.ulisesmap.activities.ShowPointsActivity"
+			android:label="@string/button_point" >
+		</activity>
 	</application>
 
 </manifest>

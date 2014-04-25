@@ -3,8 +3,6 @@ package org.escoladeltreball.ulisesmap.activities;
 import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.R.id;
-import org.escoladeltreball.ulisesmap.R.layout;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.osmdroid.util.GeoPoint;
