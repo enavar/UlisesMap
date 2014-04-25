@@ -2,6 +2,7 @@ package org.escoladeltreball.ulisesmap.adapters;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Point;
 
 import android.view.LayoutInflater;
@@ -22,27 +23,75 @@ public class ShowPointsAdapter extends BaseAdapter {
 
 	}
 
+	public ShowPointsAdapter(ArrayList<Point> points,
+
+	LayoutInflater layoutInflater) {
+
+		super();
+
+		this.points = points;
+
+		this.layoutInflater = layoutInflater;
+
+	}
+
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return points.size();
+
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return points.get(position);
+
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return position;
+
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Point point = points.get(position);
+
+		ViewHolder holder = null;
+
+		if (convertView == null) {
+
+			convertView = layoutInflater.inflate(R.layout.showpoints_list_item,
+					null);
+
+			holder = new ViewHolder();
+			holder.image = (ImageView) convertView.findViewById(R.id.image);
+
+			holder.name = (TextView) convertView.findViewById(R.id.name);
+
+			holder.coord = (TextView) convertView.findViewById(R.id.coord);
+
+			holder.description = (TextView) convertView
+					.findViewById(R.id.description);
+
+			convertView.setTag(holder);
+
+		} else
+
+			holder = (ViewHolder) convertView.getTag();
+
+		new ImageDownloader(holder.image).execute(point.getImage());
+
+		holder.name.setText(point.getName());
+		holder.coord.setText(point.getGp().toString());
+		holder.description.setText(point.getDescription());
+
+		return convertView;
+
 	}
+
 }

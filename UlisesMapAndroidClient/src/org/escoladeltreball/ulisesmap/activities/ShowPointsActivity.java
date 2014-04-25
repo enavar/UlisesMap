@@ -26,13 +26,10 @@ public class ShowPointsActivity extends Activity {
 		
 		//use for testing
 		getPoints();		
-		//android:name="org.escoladeltreball.ulisesmap.activities.LoginActivity"
-		//		android:label="@string/title_activity_login" >
-		
 		
 		ListView list = (ListView) findViewById(R.id.listView1);
         LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ShowPointsAdapter adapter = new ShowPointsAdapter();
+        ShowPointsAdapter adapter = new ShowPointsAdapter(points, layoutInflater);
         list.setAdapter(adapter);
 
         list.setTextFilterEnabled(true);
