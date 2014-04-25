@@ -1,8 +1,12 @@
-package org.escoladeltreball.ulisesmap;
+package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.R;
+import org.escoladeltreball.ulisesmap.R.id;
+import org.escoladeltreball.ulisesmap.R.layout;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
+import org.escoladeltreball.ulisesmap.model.Point;
 import org.osmdroid.util.GeoPoint;
 
 import android.app.Activity;
@@ -44,13 +48,13 @@ public class ShowPointsActivity extends Activity {
 		GeoPoint gp2 = new GeoPoint(41.383, 2.176);
 		GeoPoint gp3 = new GeoPoint(41.391, 2.180);
 		String image = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Sagrada_Familia_01.jpg/330px-Sagrada_Familia_01.jpg";
-		Point sf = new Point("Sagrada Familia", gp1, image, "desc");
-		Point cathedral = new Point("Cathedral", gp2, image, "desc");
-		Point arc = new Point("Arc de Trium", gp3, image, "desc");
+		//Point sf = new Point("Sagrada Familia", gp1, image, "desc");
+		//Point cathedral = new Point("Cathedral", gp2, image, "desc");
+		//Point arc = new Point("Arc de Trium", gp3, image, "desc");
 		
-		points.add(sf);
-		points.add(cathedral);
-		points.add(arc);
+		//points.add(sf);
+		//points.add(cathedral);
+		//points.add(arc);
 		
 	}
 

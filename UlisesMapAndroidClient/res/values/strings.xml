@@ -10,5 +10,7 @@
 	<string name="button_enter">Enter</string>
 	<string name="button_register">Register Now</string>
 	<string name="title_activity_menu">Menu</string>
+	<string name="button_route">Routes</string>
+	<string name="button_point">Points of Interes</string>
 
 </resources>
