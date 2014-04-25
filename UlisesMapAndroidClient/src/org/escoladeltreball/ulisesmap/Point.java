@@ -7,10 +7,19 @@ public class Point {
 	String name;
 	GeoPoint gp;
 	String image;
+	String description;
 	
 	/* Constructor */
 	
-	
+		
+	public Point(String name, GeoPoint gp, String image, String description) {
+		super();
+		this.name = name;
+		this.gp = gp;
+		this.image = image;
+		this.description = description;
+	}
+
 	public Point(String name, GeoPoint gp) {
 		super();
 		this.name = name;
@@ -18,6 +27,15 @@ public class Point {
 	}
 
 	/* Getters and Setters */
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 
 	public String getName() {
 		return name;
