@@ -6,14 +6,12 @@
     android:orientation="vertical"
     tools:context=".ShowPointsActivity" >
     
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="75sp"
-        android:layout_height="75sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:textSize="20sp" />
+    <CheckBox
+        android:id="@+id/selectPoint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/coord"
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/name"
@@ -41,5 +39,14 @@
         android:layout_alignLeft="@+id/name"
         android:layout_alignParentRight="true"
         android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="75sp"
+        android:layout_height="75sp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/selectPoint"
+        android:gravity="center"
+        android:textSize="20sp" />
 
 </RelativeLayout>
