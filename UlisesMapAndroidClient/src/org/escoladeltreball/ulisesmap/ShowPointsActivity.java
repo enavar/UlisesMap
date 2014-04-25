@@ -2,16 +2,23 @@ package org.escoladeltreball.ulisesmap;
 
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+import org.escoladeltreball.ulisesmap.model.Point;
+=======
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
+>>>>>>> 75a701c59bfeb6104096471afd844511d7f4ecdd
 import org.osmdroid.util.GeoPoint;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+<<<<<<< HEAD
+=======
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+>>>>>>> 75a701c59bfeb6104096471afd844511d7f4ecdd
 
 public class ShowPointsActivity extends Activity {
 	

@@ -2,6 +2,7 @@ package org.escoladeltreball.ulisesmap;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.model.Point;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
