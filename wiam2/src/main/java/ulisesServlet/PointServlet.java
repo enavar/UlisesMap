@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.sql.Connection;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /*
- * UsersServlet    
+ * PointServlet    
  *
  * Copyright 2014 local 
  * 
@@ -18,17 +17,13 @@ import javax.servlet.http.HttpServletResponse;
  * See http://www.gnu.org/licenses/gpl.html for more information.
  */
 
-/**
- * Servlet implementation class Servlet
- */
-@WebServlet("/UsersServlet")
-public class UsersServlet extends HttpServlet {
+public class PointServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private Connection con;
 	private DAOconection databaseDAO = new DAOconection();
 		
-	public UsersServlet() {
+	public PointServlet() {
 		      super();
 		    }
 		/**
@@ -48,12 +43,8 @@ public class UsersServlet extends HttpServlet {
 		 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 		 */
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			// type of response dates
-			response.setContentType("text/html");
-			// input client dates
-			String user;
-			String password;
-			
+		
 		}
+
 
 }
