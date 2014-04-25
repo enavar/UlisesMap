@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class showPointsAdapter extends BaseAdapter {
+public class ShowPointsAdapter extends BaseAdapter {
 
 	ArrayList<Point> points;
 	private LayoutInflater layoutInflater;
