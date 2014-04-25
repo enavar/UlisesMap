@@ -48,13 +48,13 @@ public class ShowPointsActivity extends Activity {
 		GeoPoint gp2 = new GeoPoint(41.383, 2.176);
 		GeoPoint gp3 = new GeoPoint(41.391, 2.180);
 		String image = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Sagrada_Familia_01.jpg/330px-Sagrada_Familia_01.jpg";
-		//Point sf = new Point("Sagrada Familia", gp1, image, "desc");
-		//Point cathedral = new Point("Cathedral", gp2, image, "desc");
-		//Point arc = new Point("Arc de Trium", gp3, image, "desc");
+		Point sf = new Point("Sagrada Familia", gp1, image, "desc");
+		Point cathedral = new Point("Cathedral", gp2, image, "desc");
+		Point arc = new Point("Arc de Trium", gp3, image, "desc");
 		
-		//points.add(sf);
-		//points.add(cathedral);
-		//points.add(arc);
+		points.add(sf);
+		points.add(cathedral);
+		points.add(arc);
 		
 	}
 
