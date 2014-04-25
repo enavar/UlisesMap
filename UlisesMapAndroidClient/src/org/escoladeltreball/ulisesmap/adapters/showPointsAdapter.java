@@ -2,7 +2,7 @@ package org.escoladeltreball.ulisesmap.adapters;
 
 import java.util.ArrayList;
 
-import org.escoladeltreball.ulisesmap.Point;
+import org.escoladeltreball.ulisesmap.model.Point;
 
 import android.view.LayoutInflater;
 import android.view.View;
