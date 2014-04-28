@@ -1,8 +1,9 @@
 package wiamDB;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Statement;
 
 /*
  * Users    
@@ -15,23 +16,50 @@ import java.util.ArrayList;
 
 public class Users {
 	
-	private Connection con;
+private Connection con;
+	
+	/**
+	 * Method to set database connection
+	 * @param e is a database connection
+	 */
+	
+	public void connect(Connection e) {
+		this.con = e;
+	}
+	
 	/**
 	 * Select query of table users
-	 * @return String query result
+	 * @param name the user name
+	 * @param pass the user password
+	 * @return true if user exists, false oterwhise
 	 * @throws SQLException
 	 */
 	
-	public ArrayList<String> clients() throws SQLException {
-		ArrayList<String> users = new ArrayList<String>();
+	public boolean selectUserByName(String name,String pass) throws SQLException {
+		Statement stm;
 		try {
-			
+			stm = con.createStatement();
+			ResultSet rs = stm
+					.executeQuery("Select * from users where name=" + name + " and password=" + pass + ";");
+			while (rs.next()) {
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return users;
-
+		return false;
+	}
+	
+	public void insertUser(String name,String password) {
+		Statement stm;
+		String insert = "insert into users values ('" + name + "','" + password + "')";
+		try {
+			stm = con.createStatement();
+			stm.executeUpdate(insert);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
