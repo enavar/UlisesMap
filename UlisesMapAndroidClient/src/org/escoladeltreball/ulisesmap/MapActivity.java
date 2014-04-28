@@ -33,7 +33,10 @@ public class MapActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_showpoints);
+		setContentView(R.layout.activity_map);
+		
+		//get an array with points from ShowPointsActivity
+		ArrayList<Point> selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra("selectedPoints");
 		
 		//get instance of a map
 		map = (MapView) findViewById(R.id.mapView);	
@@ -49,10 +52,10 @@ public class MapActivity extends Activity {
 		//set zoom and centered a map
 		IMapController mapController = map.getController();
 		mapController.setZoom(14);
-		mapController.setCenter(sf.getGp());
+		mapController.setCenter(selectedPoints.get(0).getGp());
 		
 		//draw the road
-		getRoadAsync(sf.getGp(), arc.getGp());
+		getRoadAsync(selectedPoints.get(0).getGp(), selectedPoints.get(1).getGp());
 
 	}
 

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class ShowPointsAdapter extends BaseAdapter {
 	public static class ViewHolder {
 		protected ImageView image;
 		protected TextView name, coord, description;
+		protected CheckBox chBox;
 
 	}
 
@@ -69,26 +71,43 @@ public class ShowPointsAdapter extends BaseAdapter {
 					null);
 
 			holder = new ViewHolder();
+			
 			holder.image = (ImageView) convertView.findViewById(R.id.image);
-
 			holder.name = (TextView) convertView.findViewById(R.id.name);
-
 			holder.coord = (TextView) convertView.findViewById(R.id.coord);
-
 			holder.description = (TextView) convertView
-					.findViewById(R.id.description);
+					.findViewById(R.id.description);			
+			holder.chBox = (CheckBox) convertView
+					.findViewById(R.id.selectPoint);
 
 			convertView.setTag(holder);
+			
+			holder.chBox.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					CheckBox cb = (CheckBox) v;
+					Point point = (Point) cb.getTag();
+					point.setSelected(cb.isChecked());
+				}
+			});
 
 		} else
 
 			holder = (ViewHolder) convertView.getTag();
 
+		//download image
 		new ImageDownloader(holder.image).execute(point.getImage());
 
+		//get the current Point object
+		Point p = points.get(position);
+		
+		//assign values to Point object
 		holder.name.setText(point.getName());
 		holder.coord.setText(point.getGp().toString());
 		holder.description.setText(point.getDescription());
+		holder.chBox.setChecked(p.isSelected());
+		holder.chBox.setTag(p);
 
 		return convertView;
 

@@ -2,6 +2,7 @@ package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.MapActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
 import org.escoladeltreball.ulisesmap.model.Point;
@@ -9,12 +10,15 @@ import org.osmdroid.util.GeoPoint;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -23,12 +27,15 @@ import android.widget.Spinner;
 public class ShowPointsActivity extends Activity implements OnItemSelectedListener {
 	
 	ArrayList<Point> points;
+	ArrayList<Point> selectedPoints;
+	Button map;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_showpoints);
+		setContentView(R.layout.activity_showpoints);		
 		
+		map = (Button) findViewById(R.id.toMap);
 		Spinner spinner = (Spinner) findViewById(R.id.zone);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this,
@@ -37,8 +44,6 @@ public class ShowPointsActivity extends Activity implements OnItemSelectedListen
 		arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		spinner.setAdapter(arrayAdapter);
-		
-		spinner.setOnItemSelectedListener(this);
 		
 		//use for testing
 		getPoints();		
@@ -49,9 +54,56 @@ public class ShowPointsActivity extends Activity implements OnItemSelectedListen
         list.setAdapter(adapter);
 
         list.setTextFilterEnabled(true);
+        
+        //assign listeners
+      	spinner.setOnItemSelectedListener(this);
+      	map.setOnClickListener(toMapListener);		
+	}
+	
+	/* Listeners and implemented methods */	
+	
+	OnClickListener toMapListener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			getSelectedPoints();
+			Intent intent = new Intent(map.getContext(), MapActivity.class);
+			intent.putExtra("selectedPoints", selectedPoints);
+			startActivity(intent);
+		
+		}
+	};
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+			
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		// TODO Auto-generated method stub
 		
 	}
 	
+	/* Methods */
+	
+	/**
+	 * Create an array with selected points
+	 */
+	private void getSelectedPoints() {
+		selectedPoints = new ArrayList<Point>();
+		for (int i = 0; i < points.size(); i++) {
+			Point p = points.get(i);
+			if (p.isSelected()) {
+				selectedPoints.add(p);
+			}
+		}
+	}
+	
+	/**
+	 * Used for testing only
+	 */
 	private void getPoints() {
 		points = new ArrayList<Point>();
 		
@@ -66,19 +118,6 @@ public class ShowPointsActivity extends Activity implements OnItemSelectedListen
 		points.add(sf);
 		points.add(cathedral);
 		points.add(arc);
-		
-	}
-
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position,
-			long id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> parent) {
-		// TODO Auto-generated method stub
 		
 	}
 
