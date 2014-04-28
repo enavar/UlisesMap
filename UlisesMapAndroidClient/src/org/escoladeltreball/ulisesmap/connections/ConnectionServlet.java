@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -19,25 +20,26 @@ public class ConnectionServlet {
 	public static final String ROUTES_SERVLET = "RoutesServlet";
 	public static final String POINTS_SERVLET = "PointsServlet";
 	private static final String URL = "http://wiam2-ulisesmap.rhcloud.com/";
-	private HttpPost post;
+	private HttpGet get;
 	private HttpResponse response;
 	private HttpClient client;
 	
 	public ConnectionServlet(String nameServlet) {
 		client = new DefaultHttpClient();
         HttpConnectionParams.setConnectionTimeout(client.getParams(), 10000); //Timeout Limit
-        post = new HttpPost(URL + nameServlet);
+        get = new HttpGet(URL + nameServlet);
 	}
 	
 	public HttpResponse sendJSONObject(JSONObject jsonObject) throws ClientProtocolException, IOException {
 		StringEntity entity = new StringEntity(jsonObject.toString());
 		entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-		post.setEntity(entity);
-		response = client.execute(post);
+		
+		get.set
+		response = client.execute(get);
 		return response;
 	}
 	
 	public void setServlet(String nameServlet) {
-		post = new HttpPost(URL + nameServlet);
+		get = new HttpGet(URL + nameServlet);
 	}
 }
