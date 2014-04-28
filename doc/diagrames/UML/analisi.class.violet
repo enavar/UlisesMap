@@ -11,7 +11,7 @@ description : String</string>
     </void>
     <void property="name">
      <void property="text">
-      <string>Itinerary</string>
+      <string>Route</string>
      </void>
     </void>
    </object>
@@ -83,7 +83,7 @@ description : String</string>
     </void>
     <void property="name">
      <void property="text">
-      <string>PointInterest</string>
+      <string>Point</string>
      </void>
     </void>
    </object>
