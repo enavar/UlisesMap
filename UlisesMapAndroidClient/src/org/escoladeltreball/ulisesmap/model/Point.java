@@ -1,13 +1,16 @@
 package org.escoladeltreball.ulisesmap.model;
 
+import java.io.Serializable;
+
 import org.osmdroid.util.GeoPoint;
 
-public class Point {
+public class Point implements Serializable {
 
 	private String name;
 	private GeoPoint gp;
 	private String image;
 	private String description;
+	private boolean selected;
 
 	/* Constructor */
 
@@ -26,6 +29,14 @@ public class Point {
 	}
 
 	/* Getters and Setters */
+	
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 
 	public String getDescription() {
 		return description;
