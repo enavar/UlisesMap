@@ -117,7 +117,7 @@ public class MapActivity extends Activity {
 		GeoPoint gp1 = new GeoPoint(41.403, 2.174);
 		GeoPoint gp2 = new GeoPoint(41.383, 2.176);
 		GeoPoint gp3 = new GeoPoint(41.391, 2.180);
-
+		
 		sf = new Point("Sagrada Familia", gp1);
 		cathedral = new Point("Cathedral", gp2);
 		arc = new Point("Arc de Trium", gp3);

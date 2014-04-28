@@ -2,12 +2,7 @@ package org.escoladeltreball.ulisesmap.activities;
 
 
 
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URLConnection;
 
-import org.apache.http.HttpResponse;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.ConnectionServlet;
 import org.json.JSONException;
@@ -21,7 +16,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener {
 	
@@ -87,12 +81,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private boolean existLogin(String nameUser, String password) {
 		try {
 			ConnectionServlet servlet = new ConnectionServlet(ConnectionServlet.USERS_SERVLET);
-			JSONObject user = new JSONObject();
-			user.put("user", nameUser);
-			user.put("password", password);
-			HttpResponse response = servlet.sendJSONObject(user);
-		} catch (IOException e) {
-			Toast.makeText(this, R.string.error_connection, Toast.LENGTH_SHORT).show();
+			JSONObject [] user = new JSONObject[1];
+			user[0] = new JSONObject();
+			user[0].put("user", nameUser);
+			user[0].put("password", password);
+			servlet.execute(user);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
