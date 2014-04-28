@@ -44,14 +44,15 @@ public class LoginActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View view) {
 		if (view.equals(btn_enter)) {
-			//if (!check_anonymous.isChecked()) {
+			if (!check_anonymous.isChecked()) {
 				EditText editUser = (EditText) findViewById(R.id.edit_login);
 				EditText editPwd = (EditText) findViewById(R.id.edit_psw);
 				String user = editUser.getText().toString();
 				String pwd = editPwd.getText().toString();
 				existLogin(user, pwd);				
-			//}**/
-			//intentMenuActivity();
+			} else {
+			 intentMenuActivity();
+			}
 		} else if (view.equals(btn_register)) {
 			intentRegisterActivity();
 		} else {
