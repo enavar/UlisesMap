@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import net.sf.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 
 /*
  * Points    
@@ -34,9 +37,10 @@ public void connect(Connection e) {
 	 * Select query of table points
 	 * @return Array of JSONObject result of query
 	 * @throws SQLException
+	 * @throws JSONException 
 	 */
 	
-	public ArrayList<JSONObject> selectPoints() throws SQLException {
+	public ArrayList<JSONObject> selectPoints() throws SQLException, JSONException {
 		Statement stm;
 		ArrayList <JSONObject> arr = new ArrayList <JSONObject>();
 		try {

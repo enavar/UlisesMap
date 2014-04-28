@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import wiamDB.Points;
-import net.sf.json.JSONObject;
+
 
 /*
  * PointsServlet    
@@ -58,12 +60,12 @@ public class PointsServlet {
 			// input client dates
 			
 			// output server dates
-			ArrayList<JSONObject> points = p.selectPoints();
-			PrintWriter out = response.getWriter();
-			for (int i = 0; i < points.size(); i++) {
-				out.print(points.get(i));
-			}
-			out.flush();
+			//ArrayList points = p.selectPoints();
+			//PrintWriter out = response.getWriter();
+			//for (int i = 0; i < points.size(); i++) {
+			//	out.print(points.get(i));
+			//}
+			//out.flush();
 		}
 
 

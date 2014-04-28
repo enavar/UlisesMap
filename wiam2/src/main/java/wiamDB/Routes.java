@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import net.sf.json.JSONObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /*
  * Routes    
@@ -33,9 +36,10 @@ public void connect(Connection e) {
  * @param routeName the name of selected route
  * @return JSONObject result of query
  * @throws SQLException
+ * @throws JSONException 
  */
 
-public JSONObject selectRoutesInfo(String routeName) throws SQLException {
+public JSONObject selectRoutesInfo(String routeName) throws SQLException, JSONException {
 	Statement stm;
 	JSONObject json = new JSONObject();
 	try {

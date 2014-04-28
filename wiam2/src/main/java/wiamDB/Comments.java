@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import net.sf.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 
 /*
  * Valoration    
@@ -35,9 +38,10 @@ private Connection con;
 	 * @param routeName the name of selected route
 	 * @return array of JSONObject result of query
 	 * @throws SQLException
+	 * @throws JSONException 
 	 */
 	
-	public ArrayList <JSONObject> selectComments(String routeName) throws SQLException {
+	public ArrayList <JSONObject> selectComments(String routeName) throws SQLException, JSONException {
 		Statement stm;
 		ArrayList <JSONObject> arr = new ArrayList <JSONObject>();
 		try {
