@@ -70,7 +70,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 	
 	private void intentRegisterActivity() {
-		
+		Intent intent = new Intent(this, RegisterActivity.class);
+		startActivity(intent);		
 	}
 	
 	private void intentMenuActivity() {
