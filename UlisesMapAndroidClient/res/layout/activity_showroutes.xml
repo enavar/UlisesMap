@@ -7,31 +7,30 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ShowPointsActivity" >
+    tools:context=".ShowRoutesActivity" >
     
-    <Spinner
-    android:id="@+id/zone"
+	<Spinner
+    android:id="@+id/cityRoute"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
-    android:layout_toLeftOf="@+id/toMap" />
-
-  
-    <ListView
-        android:id="@+id/listView1"
+    android:layout_toLeftOf="@+id/toMapRoute" />
+	
+	<ListView
+        android:id="@+id/listViewRoutes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/zone" />
-
-    <Button
-        android:id="@+id/toMap"
+        android:layout_below="@id/cityRoute" />
+	
+	<Button
+        android:id="@+id/toMapRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/zone"
-        android:layout_alignBottom="@+id/zone"
-        android:layout_alignRight="@+id/listView1"
-        android:text="@string/button_map" />
-
+        android:layout_alignBaseline="@id/cityRoute"
+        android:layout_alignBottom="@id/cityRoute"
+        android:layout_alignRight="@id/listViewRoutes"
+        android:text="@string/button_map" />	  
+	  
+    
 </RelativeLayout>
-
