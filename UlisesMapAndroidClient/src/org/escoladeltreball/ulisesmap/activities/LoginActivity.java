@@ -27,9 +27,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		btn_register = (Button) findViewById(R.id.button_register);
-		btn_enter = (Button) findViewById(R.id.button_enter);
-		check_anonymous = (CheckBox) findViewById(R.id.check_anonymous);
+		btn_register = (Button) findViewById(R.id.buttonRegister);
+		btn_enter = (Button) findViewById(R.id.buttonEnter);
+		check_anonymous = (CheckBox) findViewById(R.id.checkAnonymous);
 		btn_register.setOnClickListener(this);
 		btn_enter.setOnClickListener(this);
 		check_anonymous.setOnClickListener(this);
@@ -40,7 +40,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		if (view.equals(btn_enter)) {
 			if (!check_anonymous.isChecked()) {
 				EditText editUser = (EditText) findViewById(R.id.edit_login);
-				EditText editPwd = (EditText) findViewById(R.id.edit_psw);
+				EditText editPwd = (EditText) findViewById(R.id.editPsw);
 				String user = editUser.getText().toString();
 				String pwd = editPwd.getText().toString();
 				existLogin(user, pwd);				
@@ -56,7 +56,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	
 	private void checkOptionAnonymous() {
 		EditText editUser = (EditText) findViewById(R.id.edit_login);
-		EditText editPsw = (EditText) findViewById(R.id.edit_psw);
+		EditText editPsw = (EditText) findViewById(R.id.editPsw);
 		if (check_anonymous.isChecked()) {
 			editUser.setEnabled(false);
 			editUser.setFocusable(false);

@@ -18,7 +18,7 @@
 		/>
 	
 	<EditText
-		android:id="@+id/edit_psw"
+		android:id="@+id/editPsw"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:inputType="textPassword"
@@ -26,21 +26,21 @@
 		/>
 	
 	<CheckBox
-		android:id="@+id/check_anonymous"
+		android:id="@+id/checkAnonymous"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/check_anonymous"		
 		/>
 	
 	<Button
-		android:id="@+id/button_enter"
+		android:id="@+id/buttonEnter"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/button_enter"
 		/>
 	
 	<Button
-		android:id="@+id/button_register"
+		android:id="@+id/buttonRegister"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/button_register"
