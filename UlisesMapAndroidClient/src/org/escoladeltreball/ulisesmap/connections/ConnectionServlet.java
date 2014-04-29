@@ -1,7 +1,6 @@
 package org.escoladeltreball.ulisesmap.connections;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -9,8 +8,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
@@ -38,7 +35,7 @@ public class ConnectionServlet extends AsyncTask<JSONObject, Integer, HttpRespon
 			StringEntity entity = new StringEntity(jsonObjects[0].toString());
 			post.setHeader(HTTP.CONTENT_TYPE,"application/json");
 			post.setEntity(entity);
-			response =client.execute(post);
+			response = client.execute(post);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
