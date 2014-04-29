@@ -1,44 +1,48 @@
 package org.escoladeltreball.ulisesmap.connections;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
-import org.apache.http.HttpResponse;
+import java.net.URL;
+import java.net.URLConnection;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
-public class ConnectionServlet extends AsyncTask<JSONObject, Integer, HttpResponse> {
+public class ConnectionServlet extends AsyncTask<JSONObject, Integer, String> {
 	
 	public static final String USERS_SERVLET = "UsersServlet";
 	public static final String ROUTES_SERVLET = "RoutesServlet";
 	public static final String POINTS_SERVLET = "PointsServlet";
 	private static final String URL = "http://wiam2-ulisesmap.rhcloud.com/";
-	private final HttpClient client = new DefaultHttpClient();
 	private String myURL;
-	private HttpPost post;
-	private HttpResponse response;
+	private String response;
 	
 	public ConnectionServlet(String nameServlet) {
 		super();
 		this.myURL = URL + nameServlet;
 	}
 
-	protected HttpResponse doInBackground(JSONObject... jsonObjects) {
+	protected String doInBackground(JSONObject... jsonObjects) {
 		try {
-			post = new HttpPost(myURL);
-			StringEntity entity = new StringEntity(jsonObjects[0].toString());
-			post.setHeader(HTTP.CONTENT_TYPE,"application/json");
-			post.setEntity(entity);
-			System.out.println("Entity " + entity.toString());
-			System.out.println("post " + post.toString());
-			response = client.execute(post);
-			System.out.println(response.toString());
+			URL url = new URL(myURL);
+			URLConnection connection = url.openConnection();
+			connection.setDoOutput(true);
+			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+			out.write(jsonObjects[0].toString());
+			out.close();
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			String returnString="";
+			Integer value = 0;
+			while((returnString = in.readLine()) != null) {
+				value = Integer.parseInt(returnString);
+			}
+			in.close();
+			response = value.toString();
+			System.out.println(response);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
