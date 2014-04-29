@@ -33,6 +33,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		btn_register.setOnClickListener(this);
 		btn_enter.setOnClickListener(this);
 		check_anonymous.setOnClickListener(this);
+		System.out.println("sddhfgh");
 	}
 
 	@Override
@@ -82,8 +83,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private boolean existLogin(String nameUser, String password) {
 		try {
 			ConnectionServlet servlet = new ConnectionServlet(ConnectionServlet.USERS_SERVLET);
-			JSONObject [] user = new JSONObject[1];
-			user[0] = new JSONObject();
+			JSONObject [] user = {new JSONObject()};
 			user[0].put("user", nameUser);
 			user[0].put("password", password);
 			servlet.execute(user);

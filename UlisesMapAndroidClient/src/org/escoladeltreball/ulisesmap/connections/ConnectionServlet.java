@@ -25,17 +25,20 @@ public class ConnectionServlet extends AsyncTask<JSONObject, Integer, HttpRespon
 	private HttpResponse response;
 	
 	public ConnectionServlet(String nameServlet) {
+		super();
 		this.myURL = URL + nameServlet;
 	}
 
-	@Override
 	protected HttpResponse doInBackground(JSONObject... jsonObjects) {
 		try {
 			post = new HttpPost(myURL);
 			StringEntity entity = new StringEntity(jsonObjects[0].toString());
 			post.setHeader(HTTP.CONTENT_TYPE,"application/json");
 			post.setEntity(entity);
+			System.out.println("Entity " + entity.toString());
+			System.out.println("post " + post.toString());
 			response = client.execute(post);
+			System.out.println(response.toString());
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
