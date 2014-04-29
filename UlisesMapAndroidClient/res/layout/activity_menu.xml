@@ -10,14 +10,14 @@
 	tools:context=".MenuActivity">
 	 
 	<Button
-		android:id="@+id/button_route"
+		android:id="@+id/buttonRoute"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/button_route"
 		/>
 	
 	<Button
-		android:id="@+id/button_point"
+		android:id="@+id/buttonPoint"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/button_point"
