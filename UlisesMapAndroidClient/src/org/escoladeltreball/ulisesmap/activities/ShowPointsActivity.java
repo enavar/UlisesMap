@@ -108,16 +108,19 @@ public class ShowPointsActivity extends Activity implements OnItemSelectedListen
 		points = new ArrayList<Point>();
 		
 		GeoPoint gp1 = new GeoPoint(41.403, 2.174);
-		GeoPoint gp2 = new GeoPoint(41.383, 2.176);
+		GeoPoint gp2 = new GeoPoint(41.383, 2.176);		
 		GeoPoint gp3 = new GeoPoint(41.391, 2.180);
+		GeoPoint gp4 = new GeoPoint(41.371, 2.178);
 		String image = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Sagrada_Familia_01.jpg/330px-Sagrada_Familia_01.jpg";
-		Point sf = new Point("Sagrada Familia", gp1, image, "desc");
-		Point cathedral = new Point("Cathedral", gp2, image, "desc");
-		Point arc = new Point("Arc de Trium", gp3, image, "desc");
+		Point pG = new Point("parkGuell", gp1, "http://wiam2-ulisesmap.rhcloud.com/images/parkGuell.jpg", "desc");
+		Point cathedral = new Point("Cathedral", gp2, "http://wiam2-ulisesmap.rhcloud.com/images/catedral.jpg", "desc");
+		Point arc = new Point("Arc de Trium", gp3, "http://wiam2-ulisesmap.rhcloud.com/images/arc.jpg", "desc");
+		Point sf = new Point("Sagrada Familia", gp4, image, "desc");
 		
-		points.add(sf);
+		points.add(pG);
 		points.add(cathedral);
 		points.add(arc);
+		points.add(sf);
 		
 	}
 
