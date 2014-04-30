@@ -10,12 +10,12 @@
     tools:context=".ShowRoutesActivity" >
     
 	<Spinner
-    android:id="@+id/cityRoute"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:layout_toLeftOf="@+id/toMapRoute" />
+    	android:id="@+id/cityRoute"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentLeft="true"
+    	android:layout_alignParentTop="true"
+    	android:layout_toLeftOf="@+id/toMapRoute" />
 	
 	<ListView
         android:id="@+id/listViewRoutes"
