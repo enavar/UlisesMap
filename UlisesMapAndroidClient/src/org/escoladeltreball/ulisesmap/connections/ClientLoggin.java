@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
-public class ConnectionServlet extends AsyncTask<JSONObject, Integer, String> {
+public class ClientLoggin extends AsyncTask<JSONObject, Integer, String> {
 	
 	public static final String USERS_SERVLET = "UsersServlet";
 	public static final String ROUTES_SERVLET = "RoutesServlet";
@@ -21,7 +21,7 @@ public class ConnectionServlet extends AsyncTask<JSONObject, Integer, String> {
 	private String myURL;
 	private String response;
 	
-	public ConnectionServlet(String nameServlet) {
+	public ClientLoggin(String nameServlet) {
 		super();
 		this.myURL = URL + nameServlet;
 	}
@@ -42,12 +42,15 @@ public class ConnectionServlet extends AsyncTask<JSONObject, Integer, String> {
 			}
 			in.close();
 			response = value.toString();
-			System.out.println(response);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return response;
+	}
+
+	public String getResponse() {
 		return response;
 	}
 }
