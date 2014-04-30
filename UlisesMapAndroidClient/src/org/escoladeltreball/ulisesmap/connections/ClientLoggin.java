@@ -14,9 +14,8 @@ import android.os.AsyncTask;
 
 public class ClientLoggin extends AsyncTask<JSONObject, Integer, String> {
 	
-	public static final String USERS_SERVLET = "UsersServlet";
-	public static final String ROUTES_SERVLET = "RoutesServlet";
-	public static final String POINTS_SERVLET = "PointsServlet";
+	public static final String SERVLET_USER_INSERT = "ServletUserInsert";
+	public static final String SERVLET_CHECK_USER = "ServletCheckUser";
 	private static final String URL = "http://wiam2-ulisesmap.rhcloud.com/";
 	private String myURL;
 	private String response;
@@ -35,13 +34,7 @@ public class ClientLoggin extends AsyncTask<JSONObject, Integer, String> {
 			out.write(jsonObjects[0].toString());
 			out.close();
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String returnString="";
-			Integer value = 0;
-			while((returnString = in.readLine()) != null) {
-				value = Integer.parseInt(returnString);
-			}
-			in.close();
-			response = value.toString();
+			response = in.readLine();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
