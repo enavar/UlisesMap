@@ -4,7 +4,7 @@ package org.escoladeltreball.ulisesmap.activities;
 
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.connections.ConnectionServlet;
+import org.escoladeltreball.ulisesmap.connections.ClientLoggin;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,15 +82,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 	
 	private boolean existLogin(String nameUser, String password) {
 		try {
-			ConnectionServlet servlet = new ConnectionServlet(ConnectionServlet.USERS_SERVLET);
+			ClientLoggin servlet = new ClientLoggin(ClientLoggin.SERVLET_CHECK_USER);
 			JSONObject [] user = {new JSONObject()};
-			user[0].put("user", nameUser);
+			user[0].put("name", nameUser);
 			user[0].put("password", password);
 			servlet.execute(user);
 		} catch (JSONException e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return false;
 	}
 }

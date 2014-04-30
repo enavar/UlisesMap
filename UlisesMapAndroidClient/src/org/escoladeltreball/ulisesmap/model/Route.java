@@ -5,14 +5,18 @@ import java.util.HashSet;
 public class Route {
 	
 	private String name;
+	private String description;
 	private HashSet<Point> points;
 	private HashSet<Comment> comments;
 	private HashSet<Valoration> valorations;
-	
-	public Route(String name, HashSet<Point> points, HashSet<Comment> comments,
+	private float valorationAverage;
+		
+	public Route(String name, String description, float valorationAverage, HashSet<Point> points, HashSet<Comment> comments,
 			HashSet<Valoration> valorations) {
 		super();
 		this.name = name;
+		this.description = description;
+		this.valorationAverage = valorationAverage;
 		this.points = points;
 		this.comments = comments;
 		this.valorations = valorations;
@@ -49,27 +53,16 @@ public class Route {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
 
-	public String[] getNamesPoints() {
-		String[] namesPoints= new String[totalPoints()];
-		int i = 0;
-		for (Point point : points) {
-			namesPoints[i] = point.getName();
-			i++;
-		}
-		return namesPoints;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
-	public int totalPoints() {
-		return points.size();
-	}
-	
-	public float valorationAverage() {
-		float points = 0;
-		for (Valoration valoration : valorations) {
-			points += valoration.getValoration(); 
-		}
-		float pointsAverage = points / valorations.size(); 
-		return pointsAverage;
+
+	public float getValorationAverage() {
+		return valorationAverage;
 	}
 }
