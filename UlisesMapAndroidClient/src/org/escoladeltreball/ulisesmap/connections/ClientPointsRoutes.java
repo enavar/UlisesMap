@@ -11,32 +11,36 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
-public class ClientPoints extends AsyncTask<JSONObject, Integer, String>{
+public class ClientPointsRoutes extends AsyncTask<JSONObject, Integer, String>{
 	
-	private static final String SERVLET_POINTS = "http://wiam2-ulisesmap.rhcloud.com/ServletPoints";
-	private String arrayPoints;
+	public static final String SERVLET_ROUTES = "ServletRoutes";
+	public static final String SERVLET_POINTS = "ServletPoints";
+	private static String URL = "http://wiam2-ulisesmap.rhcloud.com/";
+	private String myURL;
+	private String array;
 	
-	public ClientPoints(String nameServlet) {
+	public ClientPointsRoutes(String nameServlet) {
 		super();
+		this.myURL = URL + nameServlet;
 	}
 
 	protected String doInBackground(JSONObject... jsonObjects) {
 		try {
-			URL url = new URL(SERVLET_POINTS);
+			URL url = new URL(myURL);
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			arrayPoints=in.readLine();
+			array=in.readLine();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return arrayPoints;
+		return array;
 	}
 
 	public String getResponse() {
-		return arrayPoints;
+		return array;
 	}
 
 }
