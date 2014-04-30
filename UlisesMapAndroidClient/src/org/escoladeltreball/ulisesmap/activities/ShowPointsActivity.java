@@ -26,9 +26,9 @@ import android.widget.Spinner;
 
 public class ShowPointsActivity extends Activity implements OnItemSelectedListener {
 	
-	ArrayList<Point> points;
-	ArrayList<Point> selectedPoints;
-	Button map;
+	private ArrayList<Point> points;
+	private ArrayList<Point> selectedPoints;
+	private Button map;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
