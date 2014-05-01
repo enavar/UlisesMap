@@ -2,7 +2,6 @@ package org.escoladeltreball.ulisesmap;
 
 import java.util.ArrayList;
 
-import org.escoladeltreball.ulisesmap.model.Point;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polyline;
@@ -23,11 +22,6 @@ import android.graphics.drawable.Drawable;
 
 public class MapActivity extends Activity {
 
-	// for testing
-	Point sf;
-	Point cathedral;
-	Point arc;
-
 	// for MapView
 	Road road;
 	MapView map;
@@ -39,8 +33,8 @@ public class MapActivity extends Activity {
 		setContentView(R.layout.activity_map);
 
 		// get an array with points from ShowPointsActivity
-		ArrayList<Point> selectedPoints = (ArrayList<Point>) getIntent()
-				.getSerializableExtra("selectedPoints");
+		ArrayList<GeoPoint> selectedPoints = (ArrayList<GeoPoint>) getIntent()
+				.getSerializableExtra("selectedPoints");		
 
 		// get instance of a map
 		map = (MapView) findViewById(R.id.mapView);
@@ -53,26 +47,11 @@ public class MapActivity extends Activity {
 		// set zoom and centered a map
 		IMapController mapController = map.getController();
 		mapController.setZoom(14);
-		mapController.setCenter(selectedPoints.get(0).getGp());
+		mapController.setCenter(selectedPoints.get(0));
 
 		// draw the road
-		if (selectedPoints.size() < 3) {
-			GeoPoint startPoint = selectedPoints.get(0).getGp();
-			GeoPoint endPoint = selectedPoints.get(selectedPoints.size() - 1)
-					.getGp();
-			getRoadAsync(startPoint, endPoint);
-		} else {
-			ArrayList<Point> pointsToDraw = selectedPoints;
-			Point startPoint;
-			for (int i = 0; i < pointsToDraw.size() - 1; i++) {
-				startPoint = getStartPoint(pointsToDraw);
-				pointsToDraw.remove(startPoint);
-				Point nextPoint = getNearestPoint(startPoint, pointsToDraw);
-				getRoadAsync(startPoint.getGp(), nextPoint.getGp());
-				startPoint = nextPoint;
-				pointsToDraw.remove(nextPoint);			
-			}
-		}
+		getRoadAsync(selectedPoints);
+		
 
 	}
 
@@ -97,7 +76,7 @@ public class MapActivity extends Activity {
 	}
 
 	/**
-	 * Update the map when the calculation of teh road is over
+	 * Update the map when the calculation of the road is over
 	 * 
 	 * @param road
 	 */
@@ -109,23 +88,36 @@ public class MapActivity extends Activity {
 					.show();
 		roadOverlay = RoadManager.buildRoadOverlay(road, map.getContext());
 		map.getOverlays().add(roadOverlay);
-		//map.invalidate();
+		map.invalidate();
 
 	}
 
 	/**
-	 * Start the Async task to get a road
+	 * Build the shortest route and start the Async task to get a road	 * 
 	 * 
-	 * @param start
-	 * @param destination
+	 * @param selectedPoints an array with a geopoints
 	 */
-	public void getRoadAsync(GeoPoint start, GeoPoint destination) {
-		ArrayList<GeoPoint> waypoints = new ArrayList<GeoPoint>(2);
-		waypoints.add(start);
-		// intermediate waypoints can be added here:
-		// waypoints.add(new GeoPoint(cathedral.getGp()));
-		waypoints.add(destination);
-		new UpdateRoadTask().execute(waypoints);
+	public void getRoadAsync(ArrayList<GeoPoint> selectedPoints) {
+		ArrayList<GeoPoint> pointsToDraw = new ArrayList<GeoPoint>();
+		//check if we have just two points
+		if (selectedPoints.size() < 3) {
+			pointsToDraw.add(selectedPoints.get(0));
+			pointsToDraw.add(selectedPoints.get(1));
+			//orden an array to build the shortest way
+			// there is a issue when all the points are choosen. The route doesn't visualize correctly
+		} else {
+			GeoPoint startPoint = getStartPoint(selectedPoints);
+			pointsToDraw.add(startPoint);
+			selectedPoints.remove(startPoint);
+			for (int i = 0; i < selectedPoints.size(); i++) {
+				GeoPoint nextPoint = getNearestPoint(startPoint, selectedPoints);
+				pointsToDraw.add(nextPoint);
+				startPoint = nextPoint;
+				selectedPoints.remove(nextPoint);
+			}
+			pointsToDraw.add(selectedPoints.get(0));
+		}
+		new UpdateRoadTask().execute(pointsToDraw);
 	}
 
 	public void makeMarkers() {
@@ -161,11 +153,11 @@ public class MapActivity extends Activity {
 	 *            an array with selected points
 	 * @return a star point
 	 */
-	public Point getStartPoint(ArrayList<Point> points) {
-		Point point = points.get(0);
+	public GeoPoint getStartPoint(ArrayList<GeoPoint> points) {
+		GeoPoint point = points.get(0);
 		for (int i = 1; i < points.size(); i++) {
-			Point nextPoint = points.get(i);
-			if (point.getGp().getLatitude() > nextPoint.getGp().getLatitude()) {
+			GeoPoint nextPoint = points.get(i);
+			if (point.getLatitude() > nextPoint.getLatitude()) {
 				point = nextPoint;
 			}
 		}
@@ -181,14 +173,16 @@ public class MapActivity extends Activity {
 	 *            an array with selected points
 	 * @return nearest point to start point
 	 */
-	public Point getNearestPoint(Point startPoint, ArrayList<Point> points) {
-		Point nearestPoint = points.get(0);
-		int distance1 = startPoint.getGp().distanceTo(nearestPoint.getGp());
+	public GeoPoint getNearestPoint(GeoPoint startPoint,
+			ArrayList<GeoPoint> points) {
+		GeoPoint nearestPoint = points.get(0);
+		int minDistance = startPoint.distanceTo(nearestPoint);
 		for (int i = 1; i < points.size(); i++) {
-			Point nextPoint = points.get(i);
-			int distance2 = startPoint.getGp().distanceTo(nextPoint.getGp());
-			if (distance1 > distance2) {
+			GeoPoint nextPoint = points.get(i);
+			int distance = startPoint.distanceTo(nextPoint);
+			if (minDistance > distance) {
 				nearestPoint = nextPoint;
+				minDistance = distance;
 			}
 		}
 		return nearestPoint;

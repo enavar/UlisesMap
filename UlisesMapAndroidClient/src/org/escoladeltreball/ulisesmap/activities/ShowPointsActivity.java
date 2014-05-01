@@ -27,7 +27,7 @@ import android.widget.Spinner;
 public class ShowPointsActivity extends Activity implements OnItemSelectedListener {
 	
 	private ArrayList<Point> points;
-	private ArrayList<Point> selectedPoints;
+	private ArrayList<GeoPoint> selectedPoints;
 	private Button map;
 	
 	@Override
@@ -92,11 +92,11 @@ public class ShowPointsActivity extends Activity implements OnItemSelectedListen
 	 * Create an array with selected points
 	 */
 	private void getSelectedPoints() {
-		selectedPoints = new ArrayList<Point>();
+		selectedPoints = new ArrayList<GeoPoint>();
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
 			if (p.isSelected()) {
-				selectedPoints.add(p);
+				selectedPoints.add(p.getGp());
 			}
 		}
 	}
@@ -107,14 +107,14 @@ public class ShowPointsActivity extends Activity implements OnItemSelectedListen
 	private void getPoints() {
 		points = new ArrayList<Point>();
 		
-		GeoPoint gp1 = new GeoPoint(41.403, 2.174);
-		GeoPoint gp2 = new GeoPoint(41.383, 2.176);		
-		GeoPoint gp3 = new GeoPoint(41.391, 2.180);
-		GeoPoint gp4 = new GeoPoint(41.371, 2.178);
+		GeoPoint gp1 = new GeoPoint(41.4144948, 2.152694);
+		GeoPoint gp2 = new GeoPoint(41.3847092, 2.175827);		
+		GeoPoint gp3 = new GeoPoint(41.391646, 2.180271);
+		GeoPoint gp4 = new GeoPoint(41.4035707, 2.1744722);
 		String image = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Sagrada_Familia_01.jpg/330px-Sagrada_Familia_01.jpg";
 		Point pG = new Point("parkGuell", gp1, "http://wiam2-ulisesmap.rhcloud.com/images/parkGuell.jpg", "desc");
 		Point cathedral = new Point("Cathedral", gp2, "http://wiam2-ulisesmap.rhcloud.com/images/catedral.jpg", "desc");
-		Point arc = new Point("Arc de Trium", gp3, "http://wiam2-ulisesmap.rhcloud.com/images/arc.jpg", "desc");
+		Point arc = new Point("Arc de Triomf", gp3, "http://wiam2-ulisesmap.rhcloud.com/images/arc.jpg", "desc");
 		Point sf = new Point("Sagrada Familia", gp4, image, "desc");
 		
 		points.add(pG);
