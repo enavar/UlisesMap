@@ -133,4 +133,59 @@ insert into points values (
 	'The Natural History Museum of Barcelona consists of four centres located in three strategic parts of the city: Ciutadella Park, Montjuïc Mountain and the Forum. Ciutadella Park houses two museums, the Martorell Museum (the former geology building) and the Laboratory of Nature (the former zoology building, called El Castell dels tres Dragons, or the Castle of the Three Dragons). Montjuïc Mountain is home to the Botanical Garden, the Botanical Institute, a research centre now under the combined auspices of the CSIC (the Scientific Research Council) and Barcelona City Council) and the Historic Botanical Garden, recently re-opened to the public. The Forum houses the Museu Blau (the Blue Museum), a centre with excellent modern facilities specifically designed for public use (exhibitions, workshops, conferences, media libraries, etc.).',
 	'Museu_Blau.jpg',
 	'http://www.museuciencies.cat/');
-
+insert into points values (
+	'Sagrada Família',
+	41.403570700,
+	2.174472199,
+	'Carrer de Mallorca, 401',
+	'The Basílica i Temple Expiatori de la Sagrada Família, is a large Roman Catholic church in Barcelona, Spain, designed by Catalan architect Antoni Gaudí (1852–1926). Although incomplete, the church is a UNESCO World Heritage Site, and in November 2010 Pope Benedict XVI consecrated and proclaimed it a minor basilica, as distinct from a cathedral which must be the seat of a bishop. Construction of Sagrada Família had commenced in 1882, Gaudí became involved in 1883, taking over the project and transforming it with his architectural and engineering style, combining Gothic and curvilinear Art Nouveau forms. Gaudí devoted his last years to the project, and at the time of his death at age 73 in 1926 less than a quarter of the project was complete. Sagrada Família’s construction progressed slowly, as it relied on private donations and was interrupted by the Spanish Civil War, only to resume intermittent progress in the 1950s. Construction passed the midpoint in 2010 with some of the project’s greatest challenges remaining and an anticipated completion date of 2026, the centenary of Gaudí’s death.',
+	'Sagrada_Família.jpg',
+	'www.sagradafamilia.cat/‎');
+ insert into points values (
+	'Park Güell'
+	41.414494800,
+	2.152694500,
+	'Carre d’Olot, s/n',
+	'When Park Güell began to be built in 1900 Barcelona was a modern and cosmopolitan metropolis whose economy was based on the strength of its industry and which had over half a million inhabitants. Its walls had been knocked down nearly half a century earlier and the new city, the Eixample planned by engineer Ildefons Cerdà, had grown spectacularly from 1860 onwards, in what was the largest 19th century city development project in Europe.',
+	'parkGuell.jpg',
+	'http://www.parkguell.cat');
+insert into points values (
+	'Casa Batlló',
+	41.391616400,
+	2.165013199,
+	'Passeig de Gràcia, 43',
+	'Casa Batlló, built between 1904 and 1906 in the heart of the city, is the most emblematic work of the brilliant Catalan architect. Gaudí gave Casa Batlló a facade that is original, fantastical and full of imagination. He replaced the original facade with a new composition of stone and glass. He ordered the external walls to be redesigned to give them a wavy shape, which was then plastered with lime mortar and covered with a mosaic of fragments of coloured glass and ceramic discs.'
+	'Gaudi-Batllo.jpg',	
+	'http://www.casabatllo.es/‎');
+insert into points values (
+	'Casa Milà - La Pedrera',
+	41.395380100,
+	2.161941399,
+	'Carrer de Provença, 261-265',
+	'Casa Milà, popularly known as ‘La Pedrera’ (the stone quarry), an ironic allusion to the resemblance of its façade to an open quarry, was constructed between 1906 and 1912 by Antoni Gaudí (1852-1926). For its uniqueness, artistic and heritage value have received major recognition and in 1984 was inscribed on UNESCO World Heritage List, for its exceptional universal value.',
+	'Casa_Mila.jpg',
+	'http://www.lapedrera.com/');
+insert into points values (
+	'La Catedral de Santa Eulalia de Barcelona',
+	41.383962000,
+	2.176199099,
+	'Pla de la Seu, s/n',
+	'The Cathedral of Barcelona is comprised of three naves, but just a single apse and ambulatory. The naves have five sections: that closest to the façade is the longest in order to accommodate the dimensions of the cimborio, which is adjacent to the main entrance.The typical structure used in Catalan Gothic constructions, arranged to permit use of the spaces within the buttresses, allowed rows of secondary chapels to be opened up in the Cathedral. There are two chapels in each section of the naves, encircling the entire basilica.',
+	'catedral.jpg',
+	'http://www.catedralbcn.org/');
+insert into points values (
+	'Arc de Triomf de Barcelona',
+	41.391011100,
+	2.180732199,
+	'Passeig de Lluís Companys',
+	'The Arc de Triomf is an arch in the manner of a memorial or triumphal arch in Barcelona (Catalonia, Spain). It was built as the main access gate for the 1888 Barcelona World Fair by architect Josep Vilaseca i Casanovas. The arch is built in reddish brickwork in the Neo-Mudéjar style. The front frieze contains the stone sculpture Barcelona rep les nacions (Catalan for "Barcelona welcomes the nations") by Josep Reynés. The opposite frieze contains a stone carving entitled Recompensa (Recompense), a work from Josep Llimona’s the earliest period, representing the granting of awards to the participants in the World Exposition. The friezes along the sides of the arch include allegories of Agriculture and Industry, works by Antoni Vilanova, and of Trade and Art by Torquat Tassó. The arch presides over Passeig de Lluís Companys, a wide promenade leading to the Ciutadella Park. It is located at the top of the promenade, where it meets Passeig de Sant Joan. Similar structures, though with other uses or aims, can be found in Paris (France), London (England), Brooklyn (New York, USA) and Bucharest (Romania), among many others.',
+	'arc.jpg',
+	null);
+insert into points values (
+	'Parc de la Ciutadella',
+	41.388916,
+	2.183576,
+	'Passeig de Picasso, 21',
+	'Overflowing with largely centenarian vegetation and very rich in plant species, the Parc de la Ciutadella contains a large diversity of features which make it especially valuable. The monumental waterfall, the buildings constructed in the second half of the nineteenth century and today converted into museums, the lake where visitors can row boats and the paths and numerous sculptures in the park are but a few examples. The Barcelona zoo also stands in the grounds of the Park.'	
+	'Parc_de_la_Ciutadella.jpg',
+	null);
