@@ -4,6 +4,10 @@ import java.util.HashSet;
 
 public class Route {
 	
+	public static final String FIELD_NAME = "name";
+	public static final String FIELD_DESCRIPTION = "description";
+	public static final String FIELD_AVG = "avg";
+	
 	private String name;
 	private String description;
 	private HashSet<Point> points;
@@ -13,13 +17,18 @@ public class Route {
 		
 	public Route(String name, String description, float valorationAverage, HashSet<Point> points, HashSet<Comment> comments,
 			HashSet<Valoration> valorations) {
-		super();
 		this.name = name;
 		this.description = description;
 		this.valorationAverage = valorationAverage;
 		this.points = points;
 		this.comments = comments;
 		this.valorations = valorations;
+	}
+	
+	public Route(String name, String description, float valorationAverage) {
+		this.name = name;
+		this.description = description;
+		this.valorationAverage = valorationAverage;
 	}
 
 	public HashSet<Point> getPoints() {
