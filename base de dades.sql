@@ -1,8 +1,9 @@
 create table users (name varchar(20),password text,PRIMARY KEY(name));
 create table routes (name varchar(50),description text,PRIMARY KEY(name));
 create table points (name varchar(50),lat numeric(12,9),lon numeric(12,9),street text, description text, image text, url text,PRIMARY KEY(name));
-create table valoration (def int,fk_route varchar(15) references routes(name),fk_user varchar(20) references users(name),PRIMARY KEY (fk_user,fk_route));
-create table comments (def text,fk_route varchar(15) references routes(name),fk_user varchar(20) references users(name),PRIMARY KEY (fk_user,fk_route));
+create table valoration (def int,fk_route varchar(50) references routes(name),fk_user varchar(20) references users(name),PRIMARY KEY (fk_user,fk_route));
+create table comments (def text,fk_route varchar(50) references routes(name),fk_user varchar(20) references users(name),PRIMARY KEY (fk_user,fk_route));
+create table relationRP (routeName varchar(50) references routes(name),pointName varchar(50) references points(name),position integer);
 
 insert into users values ('admin', md5('admin'));
 insert into users values ('castorp', md5('buscargrial'));
@@ -133,4 +134,24 @@ insert into points values (
 	'The Natural History Museum of Barcelona consists of four centres located in three strategic parts of the city: Ciutadella Park, Montjuïc Mountain and the Forum. Ciutadella Park houses two museums, the Martorell Museum (the former geology building) and the Laboratory of Nature (the former zoology building, called El Castell dels tres Dragons, or the Castle of the Three Dragons). Montjuïc Mountain is home to the Botanical Garden, the Botanical Institute, a research centre now under the combined auspices of the CSIC (the Scientific Research Council) and Barcelona City Council) and the Historic Botanical Garden, recently re-opened to the public. The Forum houses the Museu Blau (the Blue Museum), a centre with excellent modern facilities specifically designed for public use (exhibitions, workshops, conferences, media libraries, etc.).',
 	'Museu_Blau.jpg',
 	'http://www.museuciencies.cat/');
+	
+insert into routes values('murder route','a terrifing trip for most famous and espactacular killings in bcn');
+insert into routes values('museum route','instructing trip for most interesting museum in bcn');
+insert into routes values('FC Barcelona route','amazing route for soccer fans');
+
+
+insert into valoration values(5,'FC Barcelona route','admin');
+insert into valoration values(1,'FC Barcelona route','castorp');
+insert into valoration values(2,'murder route','ponyo');
+
+insert into comments values ('amazing,fabulous','FC Barcelona route','admin');
+insert into comments values ('terrible,boring and sobrevalorated','FC Barcelona route','castorp');
+insert into comments values ('horrible','murder route','ponyo');
+
+
+insert into relationRP values('museum route','Museu d’Art Contemporani de Barcelona',1);
+insert into relationRP values('museum route','Museu Picasso',2);
+insert into relationRP values('museum route','Museu Nacional d’Art de Catalunya',3);
+insert into relationRP values('museum route','Museu Blau',4);
+insert into relationRP values('museum route','Museu de la Xocolata',5);
 
