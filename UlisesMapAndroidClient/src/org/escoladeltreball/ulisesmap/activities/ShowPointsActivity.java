@@ -2,13 +2,13 @@ package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.MapActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.osmdroid.util.GeoPoint;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ import android.widget.Spinner;
 
 
 
-public class ShowPointsActivity extends Activity implements OnItemSelectedListener {
+public class ShowPointsActivity extends BaseActivity implements OnItemSelectedListener {
 	
 	private ArrayList<Point> points;
 	private ArrayList<GeoPoint> selectedPoints;
