@@ -26,7 +26,6 @@ public class Point implements Serializable {
 	/* Constructor */
 
 	public Point(String name, GeoPoint gp, String street, String description, String image, String url) {
-		super();
 		this.name = name;
 		this.gp = gp;
 		this.image = URL_SERVER + image;
@@ -36,7 +35,6 @@ public class Point implements Serializable {
 	}
 
 	public Point(String name, GeoPoint gp) {
-		super();
 		this.name = name;
 		this.gp = gp;
 	}

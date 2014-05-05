@@ -17,7 +17,6 @@ public class Route {
 		
 	public Route(String name, String description, float valorationAverage, HashSet<Point> points, HashSet<Comment> comments,
 			HashSet<Valoration> valorations) {
-		super();
 		this.name = name;
 		this.description = description;
 		this.valorationAverage = valorationAverage;
@@ -27,7 +26,6 @@ public class Route {
 	}
 	
 	public Route(String name, String description, float valorationAverage) {
-		super();
 		this.name = name;
 		this.description = description;
 		this.valorationAverage = valorationAverage;

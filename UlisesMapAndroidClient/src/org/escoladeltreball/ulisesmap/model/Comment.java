@@ -2,6 +2,7 @@ package org.escoladeltreball.ulisesmap.model;
 
 public class Comment {
 	
+	public static final int POSITION_COMMENT = 0;
 	public static final String FIELD_DEFITION = "def";
 	public static final String FIELD_ROUTE = "fk_route";
 	public static final String FIELD_USER = "fk_user";
@@ -11,10 +12,14 @@ public class Comment {
 	private Route route;
 			
 	public Comment(String definition, User user, Route route) {
-		super();
 		this.definition = definition;
 		this.user = user;
 		this.route = route;
+	}
+	
+	public Comment(String definition, User user) {
+		this.definition = definition;
+		this.user = user;
 	}
 
 	public String getDefinition() {
