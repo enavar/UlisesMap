@@ -2,13 +2,14 @@ package org.escoladeltreball.ulisesmap.model;
 
 public class User {
 	
-	private int id;
+	public static final String FIELD_NAME = "name";
+	public static final String FIELD_PSW = "password";
+	
 	private String name;
 	private String password;
 	
-	public User(int id, String name, String password) {
+	public User(String name, String password) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.password = password;
 	}
@@ -19,10 +20,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {

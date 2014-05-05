@@ -2,6 +2,10 @@ package org.escoladeltreball.ulisesmap.model;
 
 public class Valoration {
 	
+	public static final String FIELD_VALORATION = "def";
+	public static final String FIELD_ROUTE = "fk_route";
+	public static final String FIELD_USER = "fk_user";
+	
 	private int valoration;
 	private User user;
 	private Route route;

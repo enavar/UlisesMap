@@ -4,6 +4,9 @@ import java.util.HashSet;
 
 public class Route {
 	
+	public static final String FIELD_NAME = "name";
+	public static final String FIELD_DESCRIPTION = "description";
+	
 	private String name;
 	private String description;
 	private HashSet<Point> points;

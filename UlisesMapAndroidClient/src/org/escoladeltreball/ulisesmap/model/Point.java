@@ -4,27 +4,45 @@ import java.io.Serializable;
 
 import org.osmdroid.util.GeoPoint;
 
+@SuppressWarnings("serial")
 public class Point implements Serializable {
 
+	public static final String FIELD_NAME = "name";
+	public static final String FIELD_LAT = "lat";
+	public static final String FIELD_LON = "lon";
+	public static final String FIELD_STREET = "street";
+	public static final String FIELD_DESCRIPTION = "description";
+	public static final String FIELD_IMAGE = "image";
+	public static final String FIELD_URL = "url";
+	
 	private String name;
 	private GeoPoint gp;
-	private String image;
+	private String street;	
 	private String description;
+	private String image;
+	private String url;	
 	private boolean selected;
 
 	/* Constructor */
 
-	public Point(String name, GeoPoint gp, String image, String description) {
+	public Point(String name, GeoPoint gp, String street, String description, String image, String url) {
 		super();
 		this.name = name;
 		this.gp = gp;
 		this.image = image;
 		this.description = description;
+		this.street = street;
+		this.url = url;
 	}
 
 	public Point(String name, GeoPoint gp) {
 		super();
 		this.name = name;
+		this.gp = gp;
+	}
+	
+	public Point(GeoPoint gp) {
+		super();
 		this.gp = gp;
 	}
 
@@ -50,16 +68,8 @@ public class Point implements Serializable {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public GeoPoint getGp() {
 		return gp;
-	}
-
-	public void setGp(GeoPoint gp) {
-		this.gp = gp;
 	}
 
 	public String getImage() {
@@ -68,5 +78,21 @@ public class Point implements Serializable {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }
