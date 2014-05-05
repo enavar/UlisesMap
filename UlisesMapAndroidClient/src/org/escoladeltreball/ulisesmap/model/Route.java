@@ -6,6 +6,7 @@ public class Route {
 	
 	public static final String FIELD_NAME = "name";
 	public static final String FIELD_DESCRIPTION = "description";
+	public static final String FIELD_AVG = "avg";
 	
 	private String name;
 	private String description;
@@ -23,6 +24,13 @@ public class Route {
 		this.points = points;
 		this.comments = comments;
 		this.valorations = valorations;
+	}
+	
+	public Route(String name, String description, float valorationAverage) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.valorationAverage = valorationAverage;
 	}
 
 	public HashSet<Point> getPoints() {
