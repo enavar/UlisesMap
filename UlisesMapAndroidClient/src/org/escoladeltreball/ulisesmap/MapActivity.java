@@ -2,10 +2,12 @@ package org.escoladeltreball.ulisesmap;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
+import org.osmdroid.bonuspack.routing.OSRMRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.bonuspack.routing.RoadNode;
@@ -16,12 +18,15 @@ import org.osmdroid.views.MapView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.RadioButton;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
 
 public class MapActivity extends BaseActivity {
 
 	// for MapView
+	RoadManager roadManager;
 	Road road;
 	MapView map;
 	Polyline roadOverlay;
@@ -48,12 +53,23 @@ public class MapActivity extends BaseActivity {
 		mapController.setZoom(14);
 		mapController.setCenter(selectedPoints.get(0));
 
-		//show Poins of interest on the map
+		// show Poins of interest on the map
 		makePointsMarkers(selectedPoints);
 		// draw the road
-		getRoadAsync(selectedPoints);		
+		getRoadAsync(selectedPoints);
 
 		// For implement GPS
+		GPSTracker tracker = new GPSTracker(this);
+		GeoPoint myLocation = null;
+		if (tracker.canGetLocation() == false) {
+			tracker.showSettingsAlert();
+		} else {
+			myLocation = new GeoPoint(tracker.getLatitude(),
+					tracker.getLongitude());
+			Toast.makeText(this, myLocation.toString(), Toast.LENGTH_LONG)
+					.show();
+		}
+
 		/*
 		 * CheckBox myGps = (CheckBox) findViewById(R.id.myGPS); if
 		 * (myGps.isChecked()) { showRoutefromMyCurrentLocation(); }
@@ -68,18 +84,27 @@ public class MapActivity extends BaseActivity {
 		protected Road doInBackground(Object... params) {
 			@SuppressWarnings("unchecked")
 			ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
-			
-			//Default  type of route. Quickest drive time route.
-			//RoadManager roadManager = new OSRMRoadManager();
-			
-			//Sending request for get specific roadManager
-			RoadManager roadManager = new MapQuestRoadManager("Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
-			//for get bicycle route
-			//roadManager.addRequestOption("routeType=bicycle");
-			//for get walking route
+
+			//For implement. Now load walking mode
+			if (false) {
+				// for quickest drive time route.
+				roadManager = new OSRMRoadManager();
+			} else {
+				// Sending request for get specific roadManager
+				roadManager = new MapQuestRoadManager(
+						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
+				if (true) {
+					roadManager.addRequestOption("routeType=pedestrian");
+				} else {
+					// for get bicycle route
+					roadManager.addRequestOption("routeType=bicycle");
+				}
+			}
+
 			roadManager.addRequestOption("routeType=pedestrian");
-			
-			return roadManager.getRoad(waypoints);		}
+
+			return roadManager.getRoad(waypoints);
+		}
 
 		protected void onPostExecute(Road result) {
 			road = result;

@@ -39,17 +39,28 @@ public class BaseActivity extends Activity {
 	            Toast.makeText(this, "Search is Selected", Toast.LENGTH_SHORT).show();
 	            return true;
 	 
-	        case R.id.menu_share:
-	            Toast.makeText(this, "Share is Selected", Toast.LENGTH_SHORT).show();
-	            return true;
+	        case R.id.car:
+	        	changeMenuItemStatus(item);
+	            
+	        case R.id.bicycle:
+	        	changeMenuItemStatus(item);
+	            
+	        case R.id.walk:
+	        	changeMenuItemStatus(item);
 	 
 	        case R.id.myGPS:
 	        	if (item.isChecked()) item.setChecked(false);
 	            else item.setChecked(true);
-	            return false; 
+	            return true; 
 	 
 	        default:
 	            return super.onOptionsItemSelected(item);
 	        }
+	    }
+	    
+	    public boolean changeMenuItemStatus(MenuItem item) {
+	    	if (item.isChecked()) item.setChecked(false);
+            else item.setChecked(true);
+            return true;
 	    }
 }

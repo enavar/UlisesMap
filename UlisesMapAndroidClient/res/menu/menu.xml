@@ -7,11 +7,23 @@
     <item android:id="@+id/menu_search"
           android:title="Search" />
  
-    <item android:id="@+id/menu_share"
-          android:title="Share" />
+    <item android:id="@+id/menu_route"
+          android:title="Route">
+      <menu >
+        <group android:checkableBehavior="single">          
+          <item android:id="@+id/car"
+				android:title="drive route" />
+          <item android:id="@+id/bicycle"
+				android:title="bicycle route" />
+          <item android:id="@+id/walk"
+				android:title="walking route"
+				android:checked="true" />
+        </group>
+      </menu>
+    </item>
  
-    <item android:id="@+id/menu_preferences"
-          android:title="Preferences">
+    <item android:id="@+id/menu_gps"
+          android:title="GPS">
       <menu >
         <group android:checkableBehavior="all">          
           <item android:id="@+id/myGPS"
