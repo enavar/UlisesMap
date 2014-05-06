@@ -112,8 +112,7 @@ public class ClientLogginTest extends TestCase {
 		String response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user02;
-		clientCheckUser.execute(users).get();
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user03;
 		response = clientCheckUser.execute(users).get();
