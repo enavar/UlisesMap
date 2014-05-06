@@ -14,6 +14,17 @@ import org.osmdroid.util.GeoPoint;
 
 public class Converter {
 	
+	public static JSONObject convertUserToJSONObject(String name, String password) {
+		JSONObject jsonObjectUser = new JSONObject();
+		try {			
+			jsonObjectUser.put(User.FIELD_NAME, name);
+			jsonObjectUser.put(User.FIELD_PSW, password);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObjectUser;
+	}
+	
 	public static ArrayList<Route> convertStringToRoutes(String arrayRoutes) {
 		ArrayList<Route> routes = new ArrayList<Route>();
 		try {
