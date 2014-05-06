@@ -42,12 +42,19 @@ public class GPSTracker implements LocationListener {
     
     public GPSTracker(Context context) {
         this.mContext = context;
+        initGPSTracker();
     }
     
 	/* Getters and Setters */
     
+    
+    
 	public double getLatitude() {
 		return latitude;
+	}
+
+	public boolean isCanGetLocation() {
+		return canGetLocation;
 	}
 
 	public void setLatitude(double latitude) {
@@ -65,7 +72,32 @@ public class GPSTracker implements LocationListener {
 	/* Interface methods */
 
 	@Override
-	public void onLocationChanged(Location location) {
+	public void onLocationChanged(Location location) {		
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/* Own methods */
+	
+	public void initGPSTracker() {
+		
 		try {
             locationManager = (LocationManager) mContext
                     .getSystemService(Context.LOCATION_SERVICE);
@@ -128,26 +160,6 @@ public class GPSTracker implements LocationListener {
         }
 		
 	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	/* Own methods */
 	
 	   /**
      * Function to show settings alert dialog On pressing Settings button will
@@ -183,15 +195,6 @@ public class GPSTracker implements LocationListener {
 
         // Showing Alert Message
         alertDialog.show();
-    }
-    
-    /**
-     * Function to check GPS/wifi enabled
-     * 
-     * @return boolean
-     * */
-    public boolean canGetLocation() {
-        return this.canGetLocation;
     }
 
 }

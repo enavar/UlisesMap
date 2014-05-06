@@ -3,6 +3,7 @@ package org.escoladeltreball.ulisesmap;
 import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
+import org.escoladeltreball.ulisesmap.model.Settings;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polyline;
@@ -55,18 +56,19 @@ public class MapActivity extends BaseActivity {
 
 		// show Poins of interest on the map
 		makePointsMarkers(selectedPoints);
+		
 		// draw the road
 		getRoadAsync(selectedPoints);
 
 		// For implement GPS
 		GPSTracker tracker = new GPSTracker(this);
 		GeoPoint myLocation = null;
-		if (tracker.canGetLocation() == false) {
+		if (tracker.isCanGetLocation() == false) {
 			tracker.showSettingsAlert();
 		} else {
 			myLocation = new GeoPoint(tracker.getLatitude(),
 					tracker.getLongitude());
-			Toast.makeText(this, myLocation.toString(), Toast.LENGTH_LONG)
+			Toast.makeText(this, "Lat: " + myLocation.getLatitude() + " Lon: " + myLocation.getLongitude(), Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -85,23 +87,26 @@ public class MapActivity extends BaseActivity {
 			@SuppressWarnings("unchecked")
 			ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
 
-			//For implement. Now load walking mode
-			if (false) {
+			if (Settings.routeType == R.id.car) {
 				// for quickest drive time route.
 				roadManager = new OSRMRoadManager();
-			} else {
+			} else if (Settings.routeType == R.id.walk) {
 				// Sending request for get specific roadManager
 				roadManager = new MapQuestRoadManager(
 						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
-				if (true) {
-					roadManager.addRequestOption("routeType=pedestrian");
-				} else {
-					// for get bicycle route
+				//for get walking route
+				roadManager.addRequestOption("routeType=pedestrian");
+			} else if (Settings.routeType == R.id.bicycle) {
+				// Sending request for get specific roadManager
+				roadManager = new MapQuestRoadManager(
+						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
+				// for get bicycle route
 					roadManager.addRequestOption("routeType=bicycle");
-				}
+			} else {
+				roadManager = new MapQuestRoadManager(
+						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
+				roadManager.addRequestOption("routeType=pedestrian");
 			}
-
-			roadManager.addRequestOption("routeType=pedestrian");
 
 			return roadManager.getRoad(waypoints);
 		}
