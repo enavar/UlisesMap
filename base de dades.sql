@@ -59,7 +59,7 @@ insert into points values (
 	'Museu de la Xocolata',
 	41.387677000,
 	2.181664900,
-	'Museu de la Xocolata is a private museum in Barcelona, Catalonia, Spain, owned by the Gremi de Pastisseria de Barcelona (the city pastry-makers’ guild).',
+	'Museu de la Xocolata is a private museum in Barcelona, Catalonia, Spain, owned by the Gremi de Pastisseria de Barcelona (the city pastry-makers guild).',
 	'Museu_de_la_Xocolata_de_Barcelona.JPG',
 	'http://www.museuxocolata.cat/');
 insert into points values (
