@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 
 public class ClientRoutesDescription extends AsyncTask<String, Integer, String> {
 	
-	private static String URL = "http://wiam2-ulisesmap.rhcloud.com/ServletRoutesDescription";
+	private static String URL = "http://ulises-ulisesmap.rhcloud.com/ServletRoutesDescription";
 	private String dictionary;
 	
 	@Override

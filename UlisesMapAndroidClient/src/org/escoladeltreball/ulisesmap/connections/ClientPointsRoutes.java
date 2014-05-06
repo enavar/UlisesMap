@@ -15,7 +15,7 @@ public class ClientPointsRoutes extends AsyncTask<JSONObject, Integer, String> {
 	
 	public static final String SERVLET_ROUTES = "ServletRoutes";
 	public static final String SERVLET_POINTS = "ServletPoints";
-	private static String URL = "http://wiam2-ulisesmap.rhcloud.com/";
+	private static String URL = "http://ulises-ulisesmap.rhcloud.com/";
 	private String myURL;
 	private String array;
 	

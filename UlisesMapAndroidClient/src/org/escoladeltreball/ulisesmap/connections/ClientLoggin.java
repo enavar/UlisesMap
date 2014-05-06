@@ -16,7 +16,7 @@ public class ClientLoggin extends AsyncTask<JSONObject, Integer, String> {
 	
 	public static final String SERVLET_USER_INSERT = "ServletUserInsert";
 	public static final String SERVLET_CHECK_USER = "ServletCheckUser";
-	private static final String URL = "http://wiam2-ulisesmap.rhcloud.com/";
+	private static final String URL = "http://ulises-ulisesmap.rhcloud.com/";
 	private String myURL;
 	private String response;
 	
