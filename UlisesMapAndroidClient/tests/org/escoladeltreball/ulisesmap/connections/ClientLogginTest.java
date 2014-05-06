@@ -1,14 +1,13 @@
 package org.escoladeltreball.ulisesmap.connections;
 
-import junit.framework.Assert;
+
+
+import junit.framework.TestCase;
 
 import org.escoladeltreball.ulisesmap.model.User;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
 
-public class ClientLogginTest {
+public class ClientLogginTest extends TestCase {
 	
 	private static final String TRUE = "Welcome!";
 	private static final String FALSE = "Try again";
@@ -35,8 +34,8 @@ public class ClientLogginTest {
 	private JSONObject user20;
 	private JSONObject userNull;
 	
-	@Before
-	public void setUp() throws JSONException{
+	protected void setUp() throws Exception {
+		super.setUp();
 		clientCheckUser = new ClientLoggin(ClientLoggin.SERVLET_CHECK_USER);
 		user01 = new JSONObject();
 		user01.put(User.FIELD_NAME, "admin");
@@ -99,105 +98,106 @@ public class ClientLogginTest {
 		user20.put(User.FIELD_NAME, "coral");
 		user20.put(User.FIELD_PSW, "mari");
 		userNull = new JSONObject();
-		
 	}
 	
-	@Test
+	protected void tearDown() throws Exception {
+        super.tearDown();
+    }
+	
 	public void testUserExist() {
 		JSONObject [] users = new JSONObject[1];
 		users[0] = user01;
 		clientCheckUser.execute(users);
 		String response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user02;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user03;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user04;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user05;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user06;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user07;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user08;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user09;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 		users[0] = user10;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(TRUE, response);
+		assertEquals(TRUE, response);
 	}
-	
-	@Test
+
 	public void testUserNotExist() {
 		JSONObject [] users = new JSONObject[1];
 		users[0] = user11;
 		clientCheckUser.execute(users);
 		String response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user12;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user13;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user14;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user15;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user16;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user17;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user18;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user19;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 		users[0] = user20;
 		clientCheckUser.execute(users);
 		response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 	}
 	
-	@Test
 	public void testUserNull() {
 		JSONObject [] users = new JSONObject[1];
 		users[0] = userNull;
 		clientCheckUser.execute(users);
 		String response = clientCheckUser.getResponse();
-		Assert.assertEquals(FALSE, response);
+		assertEquals(FALSE, response);
 	}
+
 }
