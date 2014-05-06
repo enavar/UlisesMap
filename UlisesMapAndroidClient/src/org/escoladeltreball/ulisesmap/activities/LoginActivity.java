@@ -5,6 +5,7 @@ package org.escoladeltreball.ulisesmap.activities;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.ClientLoggin;
+import org.escoladeltreball.ulisesmap.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +34,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		btn_register.setOnClickListener(this);
 		btn_enter.setOnClickListener(this);
 		check_anonymous.setOnClickListener(this);
-		System.out.println("sddhfgh");
 	}
 
 	@Override
@@ -84,8 +84,8 @@ public class LoginActivity extends Activity implements OnClickListener {
 		try {
 			ClientLoggin servlet = new ClientLoggin(ClientLoggin.SERVLET_CHECK_USER);
 			JSONObject [] user = {new JSONObject()};
-			user[0].put("name", nameUser);
-			user[0].put("password", password);
+			user[0].put(User.FIELD_NAME, nameUser);
+			user[0].put(User.FIELD_PSW, password);
 			servlet.execute(user);
 		} catch (JSONException e) {
 			e.printStackTrace();
