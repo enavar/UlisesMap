@@ -29,8 +29,10 @@ public class ClientPointsRoutes extends AsyncTask<JSONObject, Integer, String> {
 			URL url = new URL(myURL);
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
+			System.out.println("es connecta");
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			array=in.readLine();
+			System.out.println("rep: " + array);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -6,11 +6,15 @@ import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.MapActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
+import org.escoladeltreball.ulisesmap.connections.ClientPointsRoutes;
+import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.Point;
+import org.json.JSONObject;
 import org.osmdroid.util.GeoPoint;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +109,12 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 	 * Used for testing only
 	 */
 	private void getPoints() {
-		points = new ArrayList<Point>();
+		ClientPointsRoutes client = new ClientPointsRoutes(ClientPointsRoutes.SERVLET_POINTS);
+		client.execute();
+		String response = client.getResponse();
+		points = Converter.convertStringToPoints(response);
+		
+		/**points = new ArrayList<Point>();
 		
 		GeoPoint gp1 = new GeoPoint(41.4144948, 2.152694);
 		GeoPoint gp2 = new GeoPoint(41.3847092, 2.175827);		
@@ -121,7 +130,7 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 		points.add(cathedral);
 		points.add(arc);
 		points.add(sf);
-		
+		**/
 	}
 
 }
