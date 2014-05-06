@@ -2,6 +2,8 @@ package org.escoladeltreball.ulisesmap.connections;
 
 
 
+import java.util.concurrent.ExecutionException;
+
 import junit.framework.TestCase;
 
 import org.escoladeltreball.ulisesmap.model.User;
@@ -104,100 +106,80 @@ public class ClientLogginTest extends TestCase {
         super.tearDown();
     }
 	
-	/*public void testUserExist() {
+	public void testUserExist() throws InterruptedException, ExecutionException {
 		JSONObject [] users = new JSONObject[1];
 		users[0] = user01;
-		clientCheckUser.execute(users);
-		String response = clientCheckUser.getResponse();
+		String response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user02;
-		clientCheckUser.execute(users);
+		clientCheckUser.execute(users).get();
 		response = clientCheckUser.getResponse();
 		assertEquals(TRUE, response);
 		users[0] = user03;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user04;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user05;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user06;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user07;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user08;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user09;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 		users[0] = user10;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(TRUE, response);
 	}
 
-	public void testUserNotExist() {
+	public void testUserNotExist() throws InterruptedException, ExecutionException {
 		JSONObject [] users = new JSONObject[1];
 		users[0] = user11;
-		clientCheckUser.execute(users);
-		String response = clientCheckUser.getResponse();
+		String response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user12;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user13;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user14;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user15;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user16;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user17;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user18;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user19;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 		users[0] = user20;
-		clientCheckUser.execute(users);
-		response = clientCheckUser.getResponse();
+		response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
 	}
 	
-	public void testUserNull() {
+	public void testUserNull() throws InterruptedException, ExecutionException {
 		JSONObject [] users = new JSONObject[1];
 		users[0] = userNull;
-		clientCheckUser.execute(users);
-		String response = clientCheckUser.getResponse();
+		String response = clientCheckUser.execute(users).get();
 		assertEquals(FALSE, response);
-	}*/
+	}
 
 }
