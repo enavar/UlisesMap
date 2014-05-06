@@ -2,9 +2,11 @@ package org.escoladeltreball.ulisesmap;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polyline;
+import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
 import org.osmdroid.bonuspack.routing.OSRMRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
@@ -16,13 +18,15 @@ import org.osmdroid.views.MapView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.RadioButton;
 import android.widget.Toast;
-import android.app.Activity;
 import android.graphics.drawable.Drawable;
 
-public class MapActivity extends Activity {
+public class MapActivity extends BaseActivity {
 
 	// for MapView
+	RoadManager roadManager;
 	Road road;
 	MapView map;
 	Polyline roadOverlay;
@@ -34,7 +38,7 @@ public class MapActivity extends Activity {
 
 		// get an array with points from ShowPointsActivity
 		ArrayList<GeoPoint> selectedPoints = (ArrayList<GeoPoint>) getIntent()
-				.getSerializableExtra("selectedPoints");		
+				.getSerializableExtra("selectedPoints");
 
 		// get instance of a map
 		map = (MapView) findViewById(R.id.mapView);
@@ -49,9 +53,27 @@ public class MapActivity extends Activity {
 		mapController.setZoom(14);
 		mapController.setCenter(selectedPoints.get(0));
 
+		// show Poins of interest on the map
+		makePointsMarkers(selectedPoints);
 		// draw the road
 		getRoadAsync(selectedPoints);
-		
+
+		// For implement GPS
+		GPSTracker tracker = new GPSTracker(this);
+		GeoPoint myLocation = null;
+		if (tracker.canGetLocation() == false) {
+			tracker.showSettingsAlert();
+		} else {
+			myLocation = new GeoPoint(tracker.getLatitude(),
+					tracker.getLongitude());
+			Toast.makeText(this, myLocation.toString(), Toast.LENGTH_LONG)
+					.show();
+		}
+
+		/*
+		 * CheckBox myGps = (CheckBox) findViewById(R.id.myGPS); if
+		 * (myGps.isChecked()) { showRoutefromMyCurrentLocation(); }
+		 */
 
 	}
 
@@ -63,14 +85,30 @@ public class MapActivity extends Activity {
 			@SuppressWarnings("unchecked")
 			ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
 
-			RoadManager roadManager = new OSRMRoadManager();
+			//For implement. Now load walking mode
+			if (false) {
+				// for quickest drive time route.
+				roadManager = new OSRMRoadManager();
+			} else {
+				// Sending request for get specific roadManager
+				roadManager = new MapQuestRoadManager(
+						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
+				if (true) {
+					roadManager.addRequestOption("routeType=pedestrian");
+				} else {
+					// for get bicycle route
+					roadManager.addRequestOption("routeType=bicycle");
+				}
+			}
+
+			roadManager.addRequestOption("routeType=pedestrian");
 
 			return roadManager.getRoad(waypoints);
 		}
 
 		protected void onPostExecute(Road result) {
 			road = result;
-			makeMarkers();
+			makeNavigationMarkers();
 			updateUIWithRoad(result);
 		}
 	}
@@ -93,18 +131,20 @@ public class MapActivity extends Activity {
 	}
 
 	/**
-	 * Build the shortest route and start the Async task to get a road	 * 
+	 * Build the shortest route and start the Async task to get a road *
 	 * 
-	 * @param selectedPoints an array with a geopoints
+	 * @param selectedPoints
+	 *            an array with a geopoints
 	 */
 	public void getRoadAsync(ArrayList<GeoPoint> selectedPoints) {
 		ArrayList<GeoPoint> pointsToDraw = new ArrayList<GeoPoint>();
-		//check if we have just two points
+		// check if we have just two points
 		if (selectedPoints.size() < 3) {
 			pointsToDraw.add(selectedPoints.get(0));
 			pointsToDraw.add(selectedPoints.get(1));
-			//orden an array to build the shortest way
-			// there is a issue when all the points are choosen. The route doesn't visualize correctly
+			// orden an array to build the shortest way
+			// there is a issue when all the points are choosen. The route
+			// doesn't visualize correctly
 		} else {
 			GeoPoint startPoint = getStartPoint(selectedPoints);
 			pointsToDraw.add(startPoint);
@@ -120,7 +160,7 @@ public class MapActivity extends Activity {
 		new UpdateRoadTask().execute(pointsToDraw);
 	}
 
-	public void makeMarkers() {
+	public void makeNavigationMarkers() {
 		// set Markers
 		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_node);
 		for (int i = 0; i < road.mNodes.size(); i++) {
@@ -142,6 +182,17 @@ public class MapActivity extends Activity {
 			// And put an icon showing the maneuver at this step:
 			Drawable icon = getResources().getDrawable(R.drawable.ic_continue);
 			nodeMarker.setImage(icon);
+		}
+	}
+
+	public void makePointsMarkers(ArrayList<GeoPoint> selectedPoints) {
+		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_a);
+		for (int i = 0; i < selectedPoints.size(); i++) {
+			Marker nodeMarker = new Marker(map);
+			nodeMarker.setPosition(selectedPoints.get(i));
+			nodeMarker.setIcon(nodeIcon);
+			nodeMarker.setTitle("Point " + (i + 1));
+			map.getOverlays().add(nodeMarker);
 		}
 	}
 
@@ -186,6 +237,11 @@ public class MapActivity extends Activity {
 			}
 		}
 		return nearestPoint;
-
 	}
+
+	/*
+	 * For implement Gps public void showRoutefromMyCurrentLocation() {
+	 * UpdateRoadTask asynctask = new UpdateRoadTask(); Road road =
+	 * asynctask.doInBackground(); asynctask.onPostExecute(road); }
+	 */
 }

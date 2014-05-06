@@ -2,13 +2,13 @@ package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.MapActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.osmdroid.util.GeoPoint;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ import android.widget.Spinner;
 
 
 
-public class ShowPointsActivity extends Activity implements OnItemSelectedListener {
+public class ShowPointsActivity extends BaseActivity implements OnItemSelectedListener {
 	
 	private ArrayList<Point> points;
 	private ArrayList<GeoPoint> selectedPoints;
@@ -112,10 +112,10 @@ public class ShowPointsActivity extends Activity implements OnItemSelectedListen
 		GeoPoint gp3 = new GeoPoint(41.391646, 2.180271);
 		GeoPoint gp4 = new GeoPoint(41.4035707, 2.1744722);
 		String image = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Sagrada_Familia_01.jpg/330px-Sagrada_Familia_01.jpg";
-		Point pG = new Point("parkGuell", gp1, "http://wiam2-ulisesmap.rhcloud.com/images/parkGuell.jpg", "desc");
-		Point cathedral = new Point("Cathedral", gp2, "http://wiam2-ulisesmap.rhcloud.com/images/catedral.jpg", "desc");
-		Point arc = new Point("Arc de Triomf", gp3, "http://wiam2-ulisesmap.rhcloud.com/images/arc.jpg", "desc");
-		Point sf = new Point("Sagrada Familia", gp4, image, "desc");
+		Point pG = new Point("parkGuell", gp1, null, null, "http://wiam-ulisesmap.rhcloud.com/images/catedral.jpg", "desc");
+		Point cathedral = new Point("Cathedral", gp2, null, null, "http://wiam2-ulisesmap.rhcloud.com/images/catedral.jpg", "desc");
+		Point arc = new Point("Arc de Triomf", gp3, null, null, "http://wiam2-ulisesmap.rhcloud.com/images/arc.jpg", "desc");
+		Point sf = new Point("Sagrada Familia", gp4, null, null, image, "desc");
 		
 		points.add(pG);
 		points.add(cathedral);
