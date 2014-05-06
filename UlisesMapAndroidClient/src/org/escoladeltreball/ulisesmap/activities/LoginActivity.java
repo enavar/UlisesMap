@@ -3,6 +3,8 @@ package org.escoladeltreball.ulisesmap.activities;
 
 
 
+import java.util.concurrent.ExecutionException;
+
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.ClientLoggin;
 import org.escoladeltreball.ulisesmap.model.User;
@@ -17,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener {
 	
@@ -44,7 +47,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 				EditText editPwd = (EditText) findViewById(R.id.editPsw);
 				String user = editUser.getText().toString();
 				String pwd = editPwd.getText().toString();
-				existLogin(user, pwd);				
+				if (existLogin(user, pwd)) {
+					intentMenuActivity();
+				} else {
+					Toast.makeText(this, ClientLoggin.FALSE_CHECK_USER, Toast.LENGTH_SHORT).show();
+				}
+				
 			} else {
 			 intentMenuActivity();
 			}
@@ -81,15 +89,20 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 	
 	private boolean existLogin(String nameUser, String password) {
+		String response = null;
 		try {
 			ClientLoggin servlet = new ClientLoggin(ClientLoggin.SERVLET_CHECK_USER);
 			JSONObject [] user = {new JSONObject()};
 			user[0].put(User.FIELD_NAME, nameUser);
 			user[0].put(User.FIELD_PSW, password);
-			servlet.execute(user);
+			response = servlet.execute(user).get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}		
-		return false;
+		return response.equals(ClientLoggin.TRUE_CHECK_USER);
 	}
 }

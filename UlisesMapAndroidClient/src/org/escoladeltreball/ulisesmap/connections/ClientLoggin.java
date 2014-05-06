@@ -16,6 +16,8 @@ public class ClientLoggin extends AsyncTask<JSONObject, Integer, String> {
 	
 	public static final String SERVLET_USER_INSERT = "ServletUserInsert";
 	public static final String SERVLET_CHECK_USER = "ServletCheckUser";
+	public static final String TRUE_CHECK_USER = "Welcome!";
+	public static final String FALSE_CHECK_USER = "Try again";
 	private static final String URL = "http://ulises-ulisesmap.rhcloud.com/";
 	private String myURL;
 	private String response;
@@ -30,20 +32,18 @@ public class ClientLoggin extends AsyncTask<JSONObject, Integer, String> {
 			URL url = new URL(myURL);
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
+			System.out.println("Connexio");
 			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
 			out.write(jsonObjects[0].toString());
 			out.close();
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			response = in.readLine();
+			System.out.println("Response: " + response);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return response;
-	}
-
-	public String getResponse() {
 		return response;
 	}
 }

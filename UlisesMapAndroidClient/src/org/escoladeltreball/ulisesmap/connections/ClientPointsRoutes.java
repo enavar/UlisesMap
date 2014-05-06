@@ -3,6 +3,7 @@ package org.escoladeltreball.ulisesmap.connections;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -29,19 +30,16 @@ public class ClientPointsRoutes extends AsyncTask<JSONObject, Integer, String> {
 			URL url = new URL(myURL);
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
-			System.out.println("es connecta");
+			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+			out.write("");
+			out.close();
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			array=in.readLine();
-			System.out.println("rep: " + array);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return array;
-	}
-
-	public String getResponse() {
 		return array;
 	}
 

@@ -104,7 +104,7 @@ public class ClientLogginTest extends TestCase {
         super.tearDown();
     }
 	
-	public void testUserExist() {
+	/*public void testUserExist() {
 		JSONObject [] users = new JSONObject[1];
 		users[0] = user01;
 		clientCheckUser.execute(users);
@@ -198,6 +198,6 @@ public class ClientLogginTest extends TestCase {
 		clientCheckUser.execute(users);
 		String response = clientCheckUser.getResponse();
 		assertEquals(FALSE, response);
-	}
+	}*/
 
 }

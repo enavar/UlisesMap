@@ -60,7 +60,9 @@ public class Converter {
 				String image = objPoint.getString(Point.FIELD_IMAGE);
 				GeoPoint geoPoint = new GeoPoint(lat, lon);
 				Point point = new Point(name, geoPoint, street, description, image, url);
-				points.add(point);
+				boolean add = points.add(point);
+				System.out.println("" + add + " " + name);
+				System.out.println(objPoint);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

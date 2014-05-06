@@ -26,7 +26,7 @@ public class ClientRoutesDescription extends AsyncTask<String, Integer, String> 
 			out.write(idRoute[0].toString());
 			out.close();
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			dictionary=in.readLine();
+			dictionary=in.readLine();			
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

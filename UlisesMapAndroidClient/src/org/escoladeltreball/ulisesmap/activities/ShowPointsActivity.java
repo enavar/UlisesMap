@@ -1,6 +1,7 @@
 package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.MapActivity;
@@ -9,14 +10,11 @@ import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
 import org.escoladeltreball.ulisesmap.connections.ClientPointsRoutes;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.Point;
-import org.json.JSONObject;
 import org.osmdroid.util.GeoPoint;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -108,9 +106,15 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 
 	private void getPoints() {
 		ClientPointsRoutes client = new ClientPointsRoutes(ClientPointsRoutes.SERVLET_POINTS);
-		client.execute();
-		String response = client.getResponse();
-		points = Converter.convertStringToPoints(response);
+		try {
+			String response = client.execute().get();
+			points = Converter.convertStringToPoints(response);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
 		
 		/**points = new ArrayList<Point>();		
 		GeoPoint gp1 = new GeoPoint(41.4144948, 2.152694);
