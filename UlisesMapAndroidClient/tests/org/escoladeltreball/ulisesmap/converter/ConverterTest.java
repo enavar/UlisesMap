@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.model.Route;
 import org.json.JSONException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+
 
 import junit.framework.TestCase;
 
