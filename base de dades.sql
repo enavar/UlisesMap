@@ -142,8 +142,8 @@ insert into points values (
 	'The Basílica i Temple Expiatori de la Sagrada Família, is a large Roman Catholic church in Barcelona, Spain, designed by Catalan architect Antoni Gaudí (1852–1926). Although incomplete, the church is a UNESCO World Heritage Site, and in November 2010 Pope Benedict XVI consecrated and proclaimed it a minor basilica, as distinct from a cathedral which must be the seat of a bishop. Construction of Sagrada Família had commenced in 1882, Gaudí became involved in 1883, taking over the project and transforming it with his architectural and engineering style, combining Gothic and curvilinear Art Nouveau forms. Gaudí devoted his last years to the project, and at the time of his death at age 73 in 1926 less than a quarter of the project was complete. Sagrada Família’s construction progressed slowly, as it relied on private donations and was interrupted by the Spanish Civil War, only to resume intermittent progress in the 1950s. Construction passed the midpoint in 2010 with some of the project’s greatest challenges remaining and an anticipated completion date of 2026, the centenary of Gaudí’s death.',
 	'Sagrada_Família.jpg',
 	'www.sagradafamilia.cat/‎');
- insert into points values (
-	'Park Güell'
+insert into points values (
+	'Park Güell',
 	41.414494800,
 	2.152694500,
 	'Carre d’Olot, s/n',
@@ -192,9 +192,9 @@ insert into points values (
 	null);
 insert into points values (
 	'Hospital de Sant Pau',
-	'Carrer de Sant Quintí, 89',
 	41.4143085,
 	2.174502999,
+	'Carrer de Sant Quintí, 89',
 	'The Hospital de la Santa Creu i Sant Pau came into being in 1401 with the merging of the six hospitals in the city of Barcelona at that time. Santa Creu, the Hospital of the Holy Cross, as it was called in those days, was right in the centre of the city, in what is now the Raval district, in one of the most important examples of Catalan Civil Gothic architecture. By the late nineteenth century, due to the rapid growth of Barcelona’s population and advances in medicine,the hospital became too small, and it was decided to construct a new building. Thanks to the bequest of the Catalan banker Pau Gil, the first stone of the new hospital, designed by Lluís Domènech i Montaner, was laid on 15 January 1902, though the new facilities would not be opened until 1930. After eighty years of healthcare activity in the Modernista complex, in 2009 the Hospital de la Santa Creu i Sant Pau moved to new premises built in the north-east of the precinct, thus commencing a new era for the historic pavilions of Domènech i Montaner.',
 	'Barcelona_Hospital_Sant_Pau.jpg',
 	'http://www.santpaubarcelona.org/');
