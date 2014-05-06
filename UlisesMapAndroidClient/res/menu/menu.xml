@@ -16,8 +16,7 @@
           <item android:id="@+id/bicycle"
 				android:title="bicycle route" />
           <item android:id="@+id/walk"
-				android:title="walking route"
-				android:checked="true" />
+				android:title="walking route" />
         </group>
       </menu>
     </item>

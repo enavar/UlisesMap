@@ -1,5 +1,7 @@
 package org.escoladeltreball.ulisesmap;
 
+import org.escoladeltreball.ulisesmap.model.Settings;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +14,7 @@ public class BaseActivity extends Activity {
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			
 
 		}
 		
@@ -21,6 +24,7 @@ public class BaseActivity extends Activity {
 	    {
 	        MenuInflater menuInflater = getMenuInflater();
 	        menuInflater.inflate(R.menu.menu, menu);
+	        menu.findItem(Settings.routeType).setChecked(true);
 	        return true;
 	    }
 	     
@@ -40,14 +44,11 @@ public class BaseActivity extends Activity {
 	            return true;
 	 
 	        case R.id.car:
-	        	changeMenuItemStatus(item);
-	            
+	        	changeMenuItemStatus(item);	            
 	        case R.id.bicycle:
-	        	changeMenuItemStatus(item);
-	            
+	        	changeMenuItemStatus(item);	            
 	        case R.id.walk:
-	        	changeMenuItemStatus(item);
-	 
+	        	changeMenuItemStatus(item);	 
 	        case R.id.myGPS:
 	        	if (item.isChecked()) item.setChecked(false);
 	            else item.setChecked(true);
@@ -57,10 +58,13 @@ public class BaseActivity extends Activity {
 	            return super.onOptionsItemSelected(item);
 	        }
 	    }
-	    
-	    public boolean changeMenuItemStatus(MenuItem item) {
-	    	if (item.isChecked()) item.setChecked(false);
-            else item.setChecked(true);
-            return true;
+
+	    public void changeMenuItemStatus(MenuItem item) {
+	    	if (item.isChecked()) {
+	    		item.setChecked(false);
+	    		Settings.routeType = item.getItemId();
+	    	} else {
+	    		item.setChecked(true);
+	    	}
 	    }
 }

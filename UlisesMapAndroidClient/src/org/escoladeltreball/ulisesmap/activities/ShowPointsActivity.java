@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -104,18 +105,14 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 			}
 		}
 	}
-	
-	/**
-	 * Used for testing only
-	 */
+
 	private void getPoints() {
 		ClientPointsRoutes client = new ClientPointsRoutes(ClientPointsRoutes.SERVLET_POINTS);
 		client.execute();
 		String response = client.getResponse();
 		points = Converter.convertStringToPoints(response);
 		
-		/**points = new ArrayList<Point>();
-		
+		/**points = new ArrayList<Point>();		
 		GeoPoint gp1 = new GeoPoint(41.4144948, 2.152694);
 		GeoPoint gp2 = new GeoPoint(41.3847092, 2.175827);		
 		GeoPoint gp3 = new GeoPoint(41.391646, 2.180271);
@@ -129,8 +126,8 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 		points.add(pG);
 		points.add(cathedral);
 		points.add(arc);
-		points.add(sf);
-		**/
+		points.add(sf);**/
 	}
+
 
 }
