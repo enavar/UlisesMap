@@ -189,3 +189,27 @@ insert into points values (
 	'Overflowing with largely centenarian vegetation and very rich in plant species, the Parc de la Ciutadella contains a large diversity of features which make it especially valuable. The monumental waterfall, the buildings constructed in the second half of the nineteenth century and today converted into museums, the lake where visitors can row boats and the paths and numerous sculptures in the park are but a few examples. The Barcelona zoo also stands in the grounds of the Park.'	
 	'Parc_de_la_Ciutadella.jpg',
 	null);
+insert into points values (
+	'Hospital de Sant Pau',
+	'Carrer de Sant Quintí, 89',
+	41.4143085,
+	2.174502999,
+	'The Hospital de la Santa Creu i Sant Pau came into being in 1401 with the merging of the six hospitals in the city of Barcelona at that time. Santa Creu, the Hospital of the Holy Cross, as it was called in those days, was right in the centre of the city, in what is now the Raval district, in one of the most important examples of Catalan Civil Gothic architecture. By the late nineteenth century, due to the rapid growth of Barcelona’s population and advances in medicine,the hospital became too small, and it was decided to construct a new building. Thanks to the bequest of the Catalan banker Pau Gil, the first stone of the new hospital, designed by Lluís Domènech i Montaner, was laid on 15 January 1902, though the new facilities would not be opened until 1930. After eighty years of healthcare activity in the Modernista complex, in 2009 the Hospital de la Santa Creu i Sant Pau moved to new premises built in the north-east of the precinct, thus commencing a new era for the historic pavilions of Domènech i Montaner.',
+	'Barcelona_Hospital_Sant_Pau.jpg',
+	'http://www.santpaubarcelona.org/');
+insert into points values (
+	'Torre Agbar',
+	41.4033333,
+	2.189444399,
+	'Avinguda Diagonal, 211',
+	'The Torre Agbar is a 38-story skyscraper / tower located between Avinguda Diagonal and Carrer Badajoz, near Plaça de les Glòries Catalanes, which marks the gateway to the new technological district of Barcelona, Catalonia, Spain. It was designed by French architect Jean Nouvel in association with the Spanish firm b720 Fermin Vazquez Arquitectos and built by Dragados. The Torre Agbar is located in the Poblenou neighbourhood of Barcelona and is named after its owners, the Agbar Group, a holding company whose interests include the Barcelona water company Aigües de Barcelona. The tower measures a total of 50,693 square metres, of which 30,000 are offices, 3,210 technical facilities, 8,132 services, including an auditorium, and 9,132 square metres for parking. It opened in June 2005 and was officially opened by King Juan Carlos I on 16 September 2005 and at a cost of 130 million euro. It is one in a collection of High-tech architecture examples in Barcelona.',
+	'torreAgbar.jpg',
+	'http://www.torreagbar.com/');
+insert into points values (
+	'El Parc del Laberint d’Horta',
+	41.4398348,
+	2.14627530,
+	'Passeig dels Castanyers, 1',
+	'The Parc del Laberint d’Horta is an historical garden in the Horta-Guinardó district in Barcelona, and the oldest of its kind in the city. Located in the former estate of the Desvalls family, next to the Collserola ridge, the park comprises an 18th-century neoclassical garden and a 19th-century romantic garden.',	
+	'Parc_del_Laberint.jpg',
+	null);
