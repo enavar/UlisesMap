@@ -49,7 +49,7 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 		spinner.setAdapter(arrayAdapter);
 		
 		//use for testing
-		getPoints();		
+		getTestPoints();		
 		
 		ListView list = (ListView) findViewById(R.id.listView1);
         LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -114,9 +114,10 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+	}
 		
-		
-		/**points = new ArrayList<Point>();		
+	private void getTestPoints() {
+		points = new ArrayList<Point>();		
 		GeoPoint gp1 = new GeoPoint(41.4144948, 2.152694);
 		GeoPoint gp2 = new GeoPoint(41.3847092, 2.175827);		
 		GeoPoint gp3 = new GeoPoint(41.391646, 2.180271);
@@ -130,7 +131,7 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 		points.add(pG);
 		points.add(cathedral);
 		points.add(arc);
-		points.add(sf);**/
+		points.add(sf);
 	}
 
 

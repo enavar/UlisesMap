@@ -1,6 +1,7 @@
 package org.escoladeltreball.ulisesmap;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.Settings;
@@ -19,9 +20,8 @@ import org.osmdroid.views.MapView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.RadioButton;
 import android.widget.Toast;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 public class MapActivity extends BaseActivity {
@@ -31,6 +31,7 @@ public class MapActivity extends BaseActivity {
 	Road road;
 	MapView map;
 	Polyline roadOverlay;
+	GPSTracker tracker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class MapActivity extends BaseActivity {
 
 		// get instance of a map
 		map = (MapView) findViewById(R.id.mapView);
-
 		// configure a map
 		map.setTileSource(TileSourceFactory.MAPNIK);
 		map.setBuiltInZoomControls(true);
@@ -51,31 +51,34 @@ public class MapActivity extends BaseActivity {
 
 		// set zoom and centered a map
 		IMapController mapController = map.getController();
-		mapController.setZoom(14);
+		mapController.setZoom(16);
 		mapController.setCenter(selectedPoints.get(0));
 
 		// show Poins of interest on the map
 		makePointsMarkers(selectedPoints);
-		
-		// draw the road
-		getRoadAsync(selectedPoints);
 
-		// For implement GPS
-		GPSTracker tracker = new GPSTracker(this);
-		GeoPoint myLocation = null;
-		if (tracker.isCanGetLocation() == false) {
-			tracker.showSettingsAlert();
-		} else {
-			myLocation = new GeoPoint(tracker.getLatitude(),
-					tracker.getLongitude());
-			Toast.makeText(this, "Lat: " + myLocation.getLatitude() + " Lon: " + myLocation.getLongitude(), Toast.LENGTH_LONG)
-					.show();
+		// Show user current position and draw a route to a start point
+		if (Settings.gps) {
+			tracker = new GPSTracker(this, map);
+			GeoPoint myLocation = null;
+			if (tracker.isCanGetLocation() == false) {
+				tracker.showSettingsAlert();
+			} else {
+				myLocation = new GeoPoint(tracker.getLatitude(), tracker.getLongitude());
+				showRoutefromMyCurrentLocation(myLocation,selectedPoints.get(0));				
+			}
 		}
 
-		/*
-		 * CheckBox myGps = (CheckBox) findViewById(R.id.myGPS); if
-		 * (myGps.isChecked()) { showRoutefromMyCurrentLocation(); }
-		 */
+		// draw the road
+		try {
+			getRoadAsync(selectedPoints);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -94,14 +97,14 @@ public class MapActivity extends BaseActivity {
 				// Sending request for get specific roadManager
 				roadManager = new MapQuestRoadManager(
 						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
-				//for get walking route
+				// for get walking route
 				roadManager.addRequestOption("routeType=pedestrian");
 			} else if (Settings.routeType == R.id.bicycle) {
 				// Sending request for get specific roadManager
 				roadManager = new MapQuestRoadManager(
 						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
 				// for get bicycle route
-					roadManager.addRequestOption("routeType=bicycle");
+				roadManager.addRequestOption("routeType=bicycle");
 			} else {
 				roadManager = new MapQuestRoadManager(
 						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
@@ -111,11 +114,6 @@ public class MapActivity extends BaseActivity {
 			return roadManager.getRoad(waypoints);
 		}
 
-		protected void onPostExecute(Road result) {
-			road = result;
-			makeNavigationMarkers();
-			updateUIWithRoad(result);
-		}
 	}
 
 	/**
@@ -123,13 +121,14 @@ public class MapActivity extends BaseActivity {
 	 * 
 	 * @param road
 	 */
-	void updateUIWithRoad(Road road) {
+	void updateUIWithRoad(Road road, int color) {
 
 		if (road.mStatus != Road.STATUS_OK)
 			Toast.makeText(map.getContext(),
 					"We have a problem to get the route", Toast.LENGTH_SHORT)
 					.show();
 		roadOverlay = RoadManager.buildRoadOverlay(road, map.getContext());
+		roadOverlay.setColor(color);
 		map.getOverlays().add(roadOverlay);
 		map.invalidate();
 
@@ -140,8 +139,11 @@ public class MapActivity extends BaseActivity {
 	 * 
 	 * @param selectedPoints
 	 *            an array with a geopoints
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
-	public void getRoadAsync(ArrayList<GeoPoint> selectedPoints) {
+	public void getRoadAsync(ArrayList<GeoPoint> selectedPoints)
+			throws InterruptedException, ExecutionException {
 		ArrayList<GeoPoint> pointsToDraw = new ArrayList<GeoPoint>();
 		// check if we have just two points
 		if (selectedPoints.size() < 3) {
@@ -163,6 +165,9 @@ public class MapActivity extends BaseActivity {
 			pointsToDraw.add(selectedPoints.get(0));
 		}
 		new UpdateRoadTask().execute(pointsToDraw);
+		road = new UpdateRoadTask().execute(pointsToDraw).get();
+		updateUIWithRoad(road, Color.BLUE);
+		makeNavigationMarkers();
 	}
 
 	public void makeNavigationMarkers() {
@@ -244,9 +249,23 @@ public class MapActivity extends BaseActivity {
 		return nearestPoint;
 	}
 
-	/*
-	 * For implement Gps public void showRoutefromMyCurrentLocation() {
-	 * UpdateRoadTask asynctask = new UpdateRoadTask(); Road road =
-	 * asynctask.doInBackground(); asynctask.onPostExecute(road); }
-	 */
+	public void showRoutefromMyCurrentLocation(GeoPoint a, GeoPoint b) {
+		UpdateRoadTask asynctask = new UpdateRoadTask();
+		Road road = null;
+		ArrayList<GeoPoint> ar = new ArrayList<GeoPoint>();
+		ar.add(a);
+		ar.add(b);
+		try {
+			road = asynctask.execute(ar).get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		updateUIWithRoad(road, Color.GREEN);
+
+	}
+
 }
