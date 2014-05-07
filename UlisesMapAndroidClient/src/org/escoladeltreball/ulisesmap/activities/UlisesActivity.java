@@ -1,6 +1,7 @@
 package org.escoladeltreball.ulisesmap.activities;
 
-import android.R;
+import org.escoladeltreball.ulisesmap.R;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ public class UlisesActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_ulises);
 		
 		Handler mHandler = new Handler();
 
