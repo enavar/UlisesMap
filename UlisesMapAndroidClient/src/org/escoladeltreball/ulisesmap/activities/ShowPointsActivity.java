@@ -7,7 +7,7 @@ import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.MapActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
-import org.escoladeltreball.ulisesmap.connections.ClientPointsRoutes;
+import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.osmdroid.util.GeoPoint;
@@ -49,7 +49,7 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 		spinner.setAdapter(arrayAdapter);
 		
 		//use for testing
-		getTestPoints();		
+		getPoints();		
 		
 		ListView list = (ListView) findViewById(R.id.listView1);
         LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -105,7 +105,7 @@ public class ShowPointsActivity extends BaseActivity implements OnItemSelectedLi
 	}
 
 	private void getPoints() {
-		ClientPointsRoutes client = new ClientPointsRoutes(ClientPointsRoutes.SERVLET_POINTS);
+		Client client = new Client(Client.SERVLET_POINT);
 		try {
 			String response = client.execute().get();
 			points = Converter.convertStringToPoints(response);

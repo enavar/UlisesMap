@@ -6,7 +6,7 @@ package org.escoladeltreball.ulisesmap.activities;
 import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.connections.ClientLoggin;
+import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +50,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				if (existLogin(user, pwd)) {
 					intentMenuActivity();
 				} else {
-					Toast.makeText(this, ClientLoggin.FALSE_CHECK_USER, Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, Client.FALSE_CHECK_USER, Toast.LENGTH_SHORT).show();
 				}
 				
 			} else {
@@ -91,11 +91,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private boolean existLogin(String nameUser, String password) {
 		String response = null;
 		try {
-			ClientLoggin servlet = new ClientLoggin(ClientLoggin.SERVLET_CHECK_USER);
+			Client client = new Client(Client.SERVLET_CHECK_USER);
 			JSONObject [] user = {new JSONObject()};
 			user[0].put(User.FIELD_NAME, nameUser);
 			user[0].put(User.FIELD_PSW, password);
-			response = servlet.execute(user).get();
+			response = client.execute(user).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -103,6 +103,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}		
-		return response.equals(ClientLoggin.TRUE_CHECK_USER);
+		return response.equals(Client.TRUE_CHECK_USER);
 	}
 }
