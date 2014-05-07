@@ -50,7 +50,6 @@ public class Converter {
 			JSONArray jSONArrayPoints = new JSONArray(arrayPoints);
 			int size = jSONArrayPoints.length();
 			for (int i = 0; i < size; i++) {
-				System.out.println(i + "/" + size);
 				JSONObject objPoint = jSONArrayPoints.getJSONObject(i);
 				String name = objPoint.getString(Point.FIELD_NAME);
 				double lat = objPoint.getDouble(Point.FIELD_LAT);
