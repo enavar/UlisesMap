@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowCommentsAdapter;
-import org.escoladeltreball.ulisesmap.model.ComVal;
+import org.escoladeltreball.ulisesmap.model.CommentValoration;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 public class ShowCommentsActivity extends BaseActivity {
 	
-	private ArrayList<ComVal> comments;
+	private ArrayList<CommentValoration> comments;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

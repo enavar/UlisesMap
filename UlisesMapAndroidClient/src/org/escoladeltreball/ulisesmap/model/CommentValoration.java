@@ -1,12 +1,12 @@
 package org.escoladeltreball.ulisesmap.model;
 
-public class ComVal {
+public class CommentValoration {
 	
 	private Valoration val;
 	private Comment com;
 	private User user;
 	
-	public ComVal(User user) {
+	public CommentValoration(User user) {
 		this.user = user;
 	}
 	

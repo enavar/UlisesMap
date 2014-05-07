@@ -3,7 +3,7 @@ package org.escoladeltreball.ulisesmap.adapters;
 import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.model.ComVal;
+import org.escoladeltreball.ulisesmap.model.CommentValoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class ShowCommentsAdapter extends BaseAdapter {
 	
-	private ArrayList<ComVal> comments;
+	private ArrayList<CommentValoration> comments;
 	private LayoutInflater layoutInflater;
 	
 	public static class ViewHolder {
@@ -21,7 +21,7 @@ public class ShowCommentsAdapter extends BaseAdapter {
 		protected RatingBar valoration;
 	}
 
-	public ShowCommentsAdapter(ArrayList<ComVal> comments,LayoutInflater layoutInflater) {
+	public ShowCommentsAdapter(ArrayList<CommentValoration> comments,LayoutInflater layoutInflater) {
 		super();
 		this.comments = comments;
 		this.layoutInflater = layoutInflater;
@@ -44,7 +44,7 @@ public class ShowCommentsAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ComVal comval = (ComVal) getItem(position);
+		CommentValoration comval = (CommentValoration) getItem(position);
 		ViewHolder holder = null;
 		if (convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.showcomments_list_item, null);
