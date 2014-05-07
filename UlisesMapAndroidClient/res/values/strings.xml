@@ -17,5 +17,6 @@
 	<string name="error_connection">"Error connection"</string>
 	<string name="title_activity_register">RegisterActivity</string>
 	<string name="title_activity_show_routes">ShowRoutesActivity</string>
+	<string name="mainTitle">Ulises Map</string>
 
 </resources>
