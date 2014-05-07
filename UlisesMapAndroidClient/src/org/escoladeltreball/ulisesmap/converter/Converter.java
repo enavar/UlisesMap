@@ -56,13 +56,11 @@ public class Converter {
 				double lon = objPoint.getDouble(Point.FIELD_LON);
 				String street = objPoint.getString(Point.FIELD_STREET);
 				String description = objPoint.getString(Point.FIELD_DESCRIPTION);
-				String url = objPoint.getString(Point.FIELD_URL);
+				String url = (!objPoint.isNull(Point.FIELD_URL)) ? objPoint.getString(Point.FIELD_URL) : "";
 				String image = objPoint.getString(Point.FIELD_IMAGE);
 				GeoPoint geoPoint = new GeoPoint(lat, lon);
 				Point point = new Point(name, geoPoint, street, description, image, url);
-				boolean add = points.add(point);
-				System.out.println("" + add + " " + name);
-				System.out.println(objPoint);
+				points.add(point);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
