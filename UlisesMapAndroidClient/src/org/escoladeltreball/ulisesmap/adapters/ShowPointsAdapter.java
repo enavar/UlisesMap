@@ -51,7 +51,12 @@ public class ShowPointsAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Point point = (Point) getItem(position);
+		// A ViewHolder keeps references to children views to avoid unneccessary calls            
+		// to findViewById() on each row. 
 		ViewHolder holder = null;
+		// When convertView is not null, we can reuse it directly, there is no need            
+		// to reinflate it. We only inflate a new View when the convertView supplied            
+		// by ListView is null.  
 		if (convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.showpoints_list_item,
 					null);
@@ -74,6 +79,8 @@ public class ShowPointsAdapter extends BaseAdapter {
 				}
 			});
 		} else
+			// Get the ViewHolder back to get fast access to the TextView                
+		    // and the ImageView.
 			holder = (ViewHolder) convertView.getTag();
 		//download image
 		new ImageDownloader(holder.image).execute(point.getImage());

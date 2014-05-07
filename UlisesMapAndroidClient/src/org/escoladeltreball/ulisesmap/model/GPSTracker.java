@@ -1,5 +1,10 @@
 package org.escoladeltreball.ulisesmap.model;
 
+import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.overlays.Marker;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,10 +15,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.widget.Toast;
 
 public class GPSTracker implements LocationListener {
 	
 	private final Context mContext;
+	private final MapView map;
+	Marker nodeMarker;
 	
 	// flag for GPS status
     public boolean isGPSEnabled = false;
@@ -40,9 +48,11 @@ public class GPSTracker implements LocationListener {
     
 	/* Constructor */
     
-    public GPSTracker(Context context) {
+    public GPSTracker(Context context, MapView map) {
         this.mContext = context;
+        this.map = map;
         initGPSTracker();
+        initMarker();
     }
     
 	/* Getters and Setters */
@@ -73,7 +83,11 @@ public class GPSTracker implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {		
-		
+		GeoPoint myLocation = new GeoPoint(location.getLatitude(),
+				location.getLongitude());
+		nodeMarker.setPosition(myLocation);
+		IMapController mapController = map.getController();
+		mapController.setCenter(myLocation);
 	}
 
 	@Override
@@ -161,6 +175,16 @@ public class GPSTracker implements LocationListener {
 		
 	}
 	
+	public void initMarker() {
+		GeoPoint myLocation = new GeoPoint(location.getLatitude(),
+				location.getLongitude());
+		nodeMarker = new Marker(map);
+		nodeMarker.setPosition(myLocation);
+		map.getOverlays().add(nodeMarker);
+		IMapController mapController = map.getController();
+		mapController.setCenter(myLocation);
+	}
+	
 	   /**
      * Function to show settings alert dialog On pressing Settings button will
      * lauch Settings Options
@@ -195,6 +219,16 @@ public class GPSTracker implements LocationListener {
 
         // Showing Alert Message
         alertDialog.show();
+    }
+    
+    /**
+     * Stop using GPS listener
+     * Calling this function will stop using GPS in your app
+     * */
+    public void stopUsingGPS(){
+        if(locationManager != null){
+            locationManager.removeUpdates(GPSTracker.this);
+        }      
     }
 
 }
