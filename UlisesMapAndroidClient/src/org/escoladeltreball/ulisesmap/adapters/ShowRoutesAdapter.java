@@ -48,6 +48,8 @@ public class ShowRoutesAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		System.out.println(position);
+		System.out.println(getItem(position).getClass());
 		Route route = (Route)getItem(position);
 		ViewHolder holder = null;
 		if (convertView == null) {
@@ -64,6 +66,7 @@ public class ShowRoutesAdapter extends BaseAdapter {
 		holder.name.setText(route.getName());
 		holder.valoration.setRating(route.getValorationAverage());
 		holder.description.setText(route.getDescription());
+		holder.chBox.setChecked(route.isSelected());
 		return convertView;
 	}
 

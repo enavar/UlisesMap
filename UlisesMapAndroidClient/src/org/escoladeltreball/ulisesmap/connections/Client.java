@@ -25,8 +25,8 @@ public class Client extends AsyncTask<JSONObject, Integer, String> {
 	public static final String SERVLET_VALORATION_INSERT = "ServletInserValoration";
 	public static final String SERVLET_CHECK_VALORATION = "ServletCheckValoration";
 	
-	public static final String TRUE_CHECK_USER = "Welcome!";
-	public static final String FALSE_CHECK_USER = "Try again";
+	public static final String TRUE_CHECK = "true";
+	public static final String FALSE_CHECK = "false";
 	
 	private static final String URL = "http://ulises-ulisesmap.rhcloud.com/";
 	
@@ -41,7 +41,6 @@ public class Client extends AsyncTask<JSONObject, Integer, String> {
 	}
 	
 	protected String doInBackground(JSONObject... jsonObjects) {
-		System.out.println("hola: " + jsonObjects.toString());
 		try {
 			URL url = new URL(myURL);
 			URLConnection connection = url.openConnection();

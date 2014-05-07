@@ -19,7 +19,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener {
 	
@@ -49,10 +48,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 				String pwd = editPwd.getText().toString();
 				if (existLogin(user, pwd)) {
 					intentMenuActivity();
-				} else {
-					Toast.makeText(this, Client.FALSE_CHECK_USER, Toast.LENGTH_SHORT).show();
-				}
-				
+				}				
 			} else {
 			 intentMenuActivity();
 			}
@@ -103,6 +99,6 @@ public class LoginActivity extends Activity implements OnClickListener {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}		
-		return response.equals(Client.TRUE_CHECK_USER);
+		return response.equals(Client.TRUE_CHECK);
 	}
 }
