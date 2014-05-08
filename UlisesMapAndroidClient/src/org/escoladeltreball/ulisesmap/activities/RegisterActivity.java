@@ -4,12 +4,15 @@ import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.Client;
+import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,26 +52,37 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		String repeatPass = editRepeatPass.getText().toString();
 		if (!repeatPass.equals(pass)) {
 			editPass.setText("");
+			editRepeatPass.setText("");
 			Toast.makeText(this, R.string.wrongPass, Toast.LENGTH_SHORT).show();
 			return;
 		}
-		send(name,mail,pass);
+		if (User.existLogin(name, pass)) {
+			editName.setText("");
+			editPass.setText("");
+			editRepeatPass.setText("");
+			Toast.makeText(this, R.string.userExist, Toast.LENGTH_SHORT).show();
+			return;
+		}
+		if (send(name,mail,pass)) {
+			Intent intent = new Intent(this, MenuActivity.class);
+			startActivity(intent);
+		} else {
+			Toast.makeText(this, R.string.errorSendingData, Toast.LENGTH_SHORT).show();
+			return;
+		}
 	}
 	
 	public boolean send(String name, String mail, String pass) {
 		String response = null;
 		try {
-			Client client = new Client(Client.SERVLET_CHECK_USER);
-			JSONObject [] user = {new JSONObject()};
-			user[0].put(User.FIELD_NAME, name);
-			user[1].put(User.FIELD_MAIL, mail);
-			user[2].put(User.FIELD_PSW, pass);
+			Client client = new Client(Client.SERVLET_INSERT_USER);
+			String user = Converter.convertUserToJSONObject(name, pass, mail);
+			Log.d("user", user);
 			response = client.execute(user).get();
+			Log.d("response", response);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
 			e.printStackTrace();
 		}		
 		return response.equals(Client.TRUE_CHECK);
