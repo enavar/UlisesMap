@@ -4,9 +4,7 @@
 	<string name="app_name">UlisesMap</string>
 	<string name="action_settings">Settings</string>
 	<string name="title_activity_login">Login Sign Up</string>
-	<string name="edit_login">user</string>
-	<string name="edit_password">password</string>
-	<string name="edit_repeat_password">repeat password</string>
+
 	<string name="check_anonymous">Anonymous</string>
 	<string name="button_enter">Enter</string>
 	<string name="button_register">Register Now</string>
@@ -18,5 +16,11 @@
 	<string name="title_activity_register">RegisterActivity</string>
 	<string name="title_activity_show_routes">ShowRoutesActivity</string>
 	<string name="mainTitle">Ulises Map</string>
-
+	<!-- RegisterActivity -->
+	<string name="edit_login">user</string>
+	<string name="edit_email">email</string>
+	<string name="edit_password">password</string>	
+	<string name="edit_repeat_password">repeat password</string>
+	<string name="noName">You must introduce a name, mail and password</string>
+	<string name="wrongPass">Try again</string>
 </resources>

@@ -3,7 +3,8 @@ package org.escoladeltreball.ulisesmap.model;
 public class User {
 	
 	public static final String FIELD_NAME = "user";
-	public static final String FIELD_PSW = "password";
+	public static final String FIELD_MAIL = "mail";
+	public static final String FIELD_PSW = "password";	
 	
 	private String name;
 	private String password;

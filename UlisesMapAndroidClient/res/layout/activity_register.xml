@@ -15,6 +15,13 @@
     	android:layout_height="wrap_content"
     	android:inputType="textPersonName"
     	android:hint="@string/edit_login" />
+    
+    <EditText
+    	android:id="@+id/mailRegister"
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:inputType="textPersonName"
+    	android:hint="@string/edit_email" />
 
     <EditText
     	android:id="@+id/pwdRegister1"
