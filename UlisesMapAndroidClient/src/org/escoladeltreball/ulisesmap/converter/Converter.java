@@ -2,6 +2,7 @@ package org.escoladeltreball.ulisesmap.converter;
 
 import java.util.ArrayList;
 
+import org.escoladeltreball.ulisesmap.model.City;
 import org.escoladeltreball.ulisesmap.model.Route;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.Comment;
@@ -23,6 +24,30 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return jsonObjectUser;
+	}
+	
+	public static JSONObject convertCommentToJSONObject(String definition, String nameUser, String nameRoute) {
+		JSONObject jsonObjectComment = new JSONObject();
+		try {			
+			jsonObjectComment.put(Comment.FIELD_DEFITION, definition);
+			jsonObjectComment.put(Comment.FIELD_USER, nameUser);
+			jsonObjectComment.put(Comment.FIELD_ROUTE, nameRoute);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObjectComment;
+	}
+	
+	public static JSONObject convertValorationToJSONObject(int valoration, String nameUser, String nameRoute) {
+		JSONObject jsonObjectValoration = new JSONObject();
+		try {
+			jsonObjectValoration.put(Valoration.FIELD_VALORATION, valoration);
+			jsonObjectValoration.put(Valoration.FIELD_USER, nameUser);
+			jsonObjectValoration.put(Valoration.FIELD_ROUTE, nameRoute);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObjectValoration;
 	}
 	
 	public static ArrayList<Route> convertStringToRoutes(String arrayRoutes) {
@@ -108,7 +133,7 @@ public class Converter {
 
 	}
 	
-	public static ArrayList<Valoration> convertStringToValoration(String arrayValorations) {
+	public static ArrayList<Valoration> convertStringToValorations(String arrayValorations) {
 		ArrayList<Valoration> valorations = new ArrayList<Valoration>();
 		try {
 			JSONArray jsonArray = new JSONArray(arrayValorations);
@@ -126,5 +151,24 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return valorations;
+	}
+	
+	public static ArrayList<City> convertStrintToCities(String arrayCities) {
+		ArrayList<City> cities = new ArrayList<City>();
+		try {
+			JSONArray jSONArrayPoints = new JSONArray(arrayCities);
+			int size = jSONArrayPoints.length();
+			for (int i = 0; i < size; i++) {
+				JSONObject objCity = jSONArrayPoints.getJSONObject(i);
+				String ref = objCity.getString(City.FIELD_PRIMARY_KEY);
+				String name = objCity.getString(City.FIELD_NAME);
+				String country = objCity.getString(City.FIELD_COUNTRY);
+				City city = new City(ref, name, country);
+				cities.add(city);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return cities;
 	}
 }
