@@ -26,6 +26,18 @@ public class Converter {
 		return jsonObjectUser.toString();
 	}
 	
+	public static String convertUserToJSONObject(String name, String password, String email) {
+		JSONObject jsonObjectUser = new JSONObject();
+		try {			
+			jsonObjectUser.put(User.FIELD_NAME, name);
+			jsonObjectUser.put(User.FIELD_PSW, password);
+			jsonObjectUser.put(User.FIELD_MAIL, email);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObjectUser.toString();
+	}
+	
 	public static String convertCommentToJSONObject(String definition, String nameUser, String nameRoute) {
 		JSONObject jsonObjectComment = new JSONObject();
 		try {			
