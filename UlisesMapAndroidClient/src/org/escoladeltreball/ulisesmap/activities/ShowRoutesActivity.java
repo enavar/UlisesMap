@@ -35,7 +35,7 @@ public class ShowRoutesActivity extends BaseActivity {
 	}
 	
 	private ArrayList<Route> getRoutes() {
-		Client client = new Client(Client.SERVLET_ROUTES);
+		Client client = new Client(Client.SERVLET_ROUTES, true);
 		try {
 			String arrayRoutes = client.execute(pk_city).get();
 			routes = Converter.convertStringToRoutes(arrayRoutes);

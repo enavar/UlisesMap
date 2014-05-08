@@ -56,22 +56,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	}
 	
 	public boolean send(String name, String mail, String pass) {
-		String response = null;
-		try {
-			Client client = new Client(Client.SERVLET_CHECK_USER);
-			JSONObject [] user = {new JSONObject()};
-			user[0].put(User.FIELD_NAME, name);
-			user[1].put(User.FIELD_MAIL, mail);
-			user[2].put(User.FIELD_PSW, pass);
-			response = client.execute(user).get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}		
-		return response.equals(Client.TRUE_CHECK);
+		return false;
 	}
 
 }

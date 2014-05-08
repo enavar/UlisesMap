@@ -70,7 +70,7 @@ public class LoginActivity extends Activity implements OnClickListener, OnChecke
 	private boolean existLogin(String nameUser, String password) {
 		String response = null;
 		try {
-			Client client = new Client(Client.SERVLET_CHECK_USER);
+			Client client = new Client(Client.SERVLET_CHECK_USER, true);
 			String user = Converter.convertUserToJSONObject(nameUser, password);
 			response = client.execute(user).get();
 		} catch (InterruptedException e) {
