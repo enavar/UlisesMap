@@ -14,6 +14,7 @@ public class Route {
 	private HashSet<Comment> comments;
 	private HashSet<Valoration> valorations;
 	private float valorationAverage;
+	private boolean selected;
 		
 	public Route(String name, String description, float valorationAverage, HashSet<Point> points, HashSet<Comment> comments,
 			HashSet<Valoration> valorations) {
@@ -23,12 +24,14 @@ public class Route {
 		this.points = points;
 		this.comments = comments;
 		this.valorations = valorations;
+		this.selected = false;
 	}
 	
 	public Route(String name, String description, float valorationAverage) {
 		this.name = name;
 		this.description = description;
 		this.valorationAverage = valorationAverage;
+		this.selected = false;
 	}
 
 	public HashSet<Point> getPoints() {
@@ -73,5 +76,13 @@ public class Route {
 
 	public float getValorationAverage() {
 		return valorationAverage;
+	}
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
+	public boolean isSelected() {
+		return selected;
 	}
 }

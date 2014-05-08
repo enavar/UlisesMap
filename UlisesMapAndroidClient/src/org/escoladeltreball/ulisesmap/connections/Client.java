@@ -8,11 +8,10 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.http.client.ClientProtocolException;
-import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
-public class Client extends AsyncTask<JSONObject, Integer, String> {
+public class Client extends AsyncTask<String, Integer, String> {
 	
 	public static final String SERVLET_INSERT_USER = "ServletUserInsert";
 	public static final String SERVLET_CHECK_USER = "ServletCheckUser";
@@ -24,6 +23,7 @@ public class Client extends AsyncTask<JSONObject, Integer, String> {
 	public static final String SERVLET_CHECK_COMMENT = "ServletCheckComment";
 	public static final String SERVLET_VALORATION_INSERT = "ServletInserValoration";
 	public static final String SERVLET_CHECK_VALORATION = "ServletCheckValoration";
+	public static final String SERVLET_COUNTRIES = "ServletCities";
 	public static final String SERVLET_CITIES = "ServletCities";
 	
 	public static final String TRUE_CHECK = "true";
@@ -38,16 +38,16 @@ public class Client extends AsyncTask<JSONObject, Integer, String> {
 	public Client(String nameServlet) {
 		super();
 		this.myURL = URL + nameServlet;
-		this.sendMessage = !(nameServlet.equals(SERVLET_CITIES)); 
+		this.sendMessage = !(nameServlet.equals(SERVLET_COUNTRIES)); 
 	}
 	
-	protected String doInBackground(JSONObject... jsonObjects) {
+	protected String doInBackground(String... String) {
 		try {
 			URL url = new URL(myURL);
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-			String message = (sendMessage) ? jsonObjects[0].toString() : "";
+			String message = (sendMessage) ? String[0].toString() : "";
 			out.write(message);
 			out.close();
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));

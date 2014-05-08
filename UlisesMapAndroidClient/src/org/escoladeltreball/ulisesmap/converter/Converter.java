@@ -15,7 +15,7 @@ import org.osmdroid.util.GeoPoint;
 
 public class Converter {
 	
-	public static JSONObject convertUserToJSONObject(String name, String password) {
+	public static String convertUserToJSONObject(String name, String password) {
 		JSONObject jsonObjectUser = new JSONObject();
 		try {			
 			jsonObjectUser.put(User.FIELD_NAME, name);
@@ -23,10 +23,10 @@ public class Converter {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return jsonObjectUser;
+		return jsonObjectUser.toString();
 	}
 	
-	public static JSONObject convertCommentToJSONObject(String definition, String nameUser, String nameRoute) {
+	public static String convertCommentToJSONObject(String definition, String nameUser, String nameRoute) {
 		JSONObject jsonObjectComment = new JSONObject();
 		try {			
 			jsonObjectComment.put(Comment.FIELD_DEFITION, definition);
@@ -35,10 +35,10 @@ public class Converter {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return jsonObjectComment;
+		return jsonObjectComment.toString();
 	}
 	
-	public static JSONObject convertValorationToJSONObject(int valoration, String nameUser, String nameRoute) {
+	public static String convertValorationToJSONObject(int valoration, String nameUser, String nameRoute) {
 		JSONObject jsonObjectValoration = new JSONObject();
 		try {
 			jsonObjectValoration.put(Valoration.FIELD_VALORATION, valoration);
@@ -47,7 +47,7 @@ public class Converter {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return jsonObjectValoration;
+		return jsonObjectValoration.toString();
 	}
 	
 	public static ArrayList<Route> convertStringToRoutes(String arrayRoutes) {
@@ -162,13 +162,30 @@ public class Converter {
 				JSONObject objCity = jSONArrayPoints.getJSONObject(i);
 				String ref = objCity.getString(City.FIELD_PRIMARY_KEY);
 				String name = objCity.getString(City.FIELD_NAME);
-				String country = objCity.getString(City.FIELD_COUNTRY);
-				City city = new City(ref, name, country);
+				City city = new City(ref, name);
 				cities.add(city);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return cities;
+	}
+	
+	public static String[] convertStringToCountry(String arrayCountry) {
+		String [] countries = null;		
+		try {
+			JSONArray jSONArrayPoints = new JSONArray(arrayCountry);
+			int size = jSONArrayPoints.length();
+			countries = new String[size];
+			for (int i = 0; i < size; i++) {
+				JSONObject objCity = jSONArrayPoints.getJSONObject(i);
+				String country = objCity.getString(City.FIELD_COUNTRY);
+				countries[i] = country;
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return countries;
+			
 	}
 }

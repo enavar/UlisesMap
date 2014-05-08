@@ -38,7 +38,7 @@ public class ShowRoutesAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		return routes.indexOf(position);
+		return routes.get(position);
 	}
 
 	@Override
