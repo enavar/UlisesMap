@@ -24,6 +24,7 @@ public class Client extends AsyncTask<JSONObject, Integer, String> {
 	public static final String SERVLET_CHECK_COMMENT = "ServletCheckComment";
 	public static final String SERVLET_VALORATION_INSERT = "ServletInserValoration";
 	public static final String SERVLET_CHECK_VALORATION = "ServletCheckValoration";
+	public static final String SERVLET_CITIES = "ServletCities";
 	
 	public static final String TRUE_CHECK = "true";
 	public static final String FALSE_CHECK = "false";
@@ -37,7 +38,7 @@ public class Client extends AsyncTask<JSONObject, Integer, String> {
 	public Client(String nameServlet) {
 		super();
 		this.myURL = URL + nameServlet;
-		this.sendMessage = !(nameServlet.equals(SERVLET_POINT) || nameServlet.equals(SERVLET_ROUTES)); 
+		this.sendMessage = !(nameServlet.equals(SERVLET_CITIES)); 
 	}
 	
 	protected String doInBackground(JSONObject... jsonObjects) {
