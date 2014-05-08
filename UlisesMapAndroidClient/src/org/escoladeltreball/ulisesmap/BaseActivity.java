@@ -13,42 +13,46 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class BaseActivity extends Activity {
-	
+
 	SharedPreferences prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
-		//get settings stored on device
-		Settings.routeType = prefs.getInt("routeType", R.id.walk);
-		Settings.gps = prefs.getBoolean("gps", false);
 	}
-	
+
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//store setting on device
+		// store setting on device
 		Editor editor = prefs.edit();
 		editor.putInt("routeType", Settings.routeType);
 		editor.putBoolean("gps", Settings.gps);
 		editor.commit();
 	}
 
-	// Initiating Menu XML file (menu.xml)
 	@Override
-	    public boolean onCreateOptionsMenu(Menu menu)
-	    {
-	        MenuInflater menuInflater = getMenuInflater();
-	        menuInflater.inflate(R.menu.menu, menu);
-	        menu.findItem(Settings.routeType).setChecked(true);
-	        if (Settings.gps) {
-	        	menu.findItem(R.id.myGPS).setChecked(true);
-	        } else {
-	        	menu.findItem(R.id.myGPS).setChecked(false);
-	        }
-	        return true;
-	    }
+	public boolean onCreateOptionsMenu(Menu menu) {
+		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
+		// for delete shared preferences
+		// prefs.edit().clear().commit();
+		// get settings stored on device
+		Settings.routeType = prefs.getInt("routeType", R.id.walk);
+		Settings.gps = prefs.getBoolean("gps", true);
+		// Initiating Menu XML file (menu.xml)
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.menu.menu, menu);
+		initMenu(menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		initMenu(menu);
+		return true;
+	}
 
 	/**
 	 * Event Handling for Individual menu item selected Identify single menu
@@ -74,13 +78,9 @@ public class BaseActivity extends Activity {
 			if (item.isChecked()) {
 				item.setChecked(false);
 				Settings.gps = false;
-				Toast.makeText(this, "false", Toast.LENGTH_SHORT)
-				.show();
 			} else {
 				item.setChecked(true);
 				Settings.gps = true;
-				Toast.makeText(this, "true", Toast.LENGTH_SHORT)
-				.show();
 			}
 			return true;
 
@@ -92,9 +92,18 @@ public class BaseActivity extends Activity {
 	public void changeRouteStatus(MenuItem item) {
 		if (item.isChecked()) {
 			item.setChecked(false);
-			Settings.routeType = item.getItemId();
 		} else {
 			item.setChecked(true);
+			Settings.routeType = item.getItemId();
+		}
+	}
+
+	public void initMenu(Menu menu) {
+		changeRouteStatus(menu.findItem(Settings.routeType));
+		if (Settings.gps) {
+			menu.findItem(R.id.myGPS).setChecked(true);
+		} else {
+			menu.findItem(R.id.myGPS).setChecked(false);
 		}
 	}
 }

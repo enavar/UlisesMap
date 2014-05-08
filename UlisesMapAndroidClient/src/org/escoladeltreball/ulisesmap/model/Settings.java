@@ -7,7 +7,7 @@ public class Settings {
 
 	//Type of route, by default is walk
 	public static int routeType = R.id.walk;
-	public static boolean gps = true;
+	public static boolean gps = false;
 
 }
 
