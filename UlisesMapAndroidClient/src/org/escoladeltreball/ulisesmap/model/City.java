@@ -15,6 +15,11 @@ public class City {
 		this.name = name;
 		this.country = country;
 	}
+	
+	public City(String ref, String name) {
+		this.ref = ref;
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;
