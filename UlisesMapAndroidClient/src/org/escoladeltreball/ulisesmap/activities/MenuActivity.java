@@ -30,6 +30,7 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 	private String [] namesCities;
 	private ArrayList<City> cities;
 	private String pkCity = null;
+	private String nameCity = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 					new Intent(this, ShowPointsActivity.class) : 
 					new Intent(this, ShowRoutesActivity.class);
 			intent.putExtra(City.FIELD_PRIMARY_KEY, pkCity);
+			intent.putExtra(City.FIELD_NAME, nameCity);
 			startActivity(intent);
 		}
 	}
@@ -78,10 +80,8 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 			String response = client.execute(nameCountry).get();
 			cities = Converter.convertStrintToCities(response);
 			namesCities = new String [cities.size()];
-			for (int i = 0; i < cities.size(); i++) {
-				System.out.println(cities.get(i).getName());
+			for (int i = 0; i < cities.size(); i++)
 				namesCities[i] = cities.get(i).getName();
-			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -98,11 +98,13 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 			spCities.setAdapter(adapterCities);
 			spCities.setOnItemSelectedListener(this);
 			pkCity = cities.get(0).getRef();
+			nameCity = cities.get(0).getName();
 		} else {
-			if (pkCity != null) 
+			if (pkCity != null) {
 				pkCity = cities.get(position).getRef();
-		}
-		
+				nameCity = cities.get(position).getName();
+			}
+		}		
 	}
 
 	@Override

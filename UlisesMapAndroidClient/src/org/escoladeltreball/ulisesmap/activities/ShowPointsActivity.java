@@ -19,15 +19,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.TextView;
 
-public class ShowPointsActivity extends BaseActivity implements
-		OnItemSelectedListener {
+public class ShowPointsActivity extends BaseActivity implements OnClickListener {
 
 	private ArrayList<Point> points;
 	private ArrayList<GeoPoint> selectedPoints;
@@ -40,60 +36,19 @@ public class ShowPointsActivity extends BaseActivity implements
 		setContentView(R.layout.activity_showpoints);
 		Bundle bundle = getIntent().getExtras();
 		pk_city = bundle.getString(City.FIELD_PRIMARY_KEY);
+		String nameCity = bundle.getString(City.FIELD_NAME);
 		map = (Button) findViewById(R.id.toMap);
-		Spinner spinner = (Spinner) findViewById(R.id.zone);
-		// Create an ArrayAdapter using the string array and a default spinner
-		// layout
-		ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter
-				.createFromResource(this, R.array.zone,
-						android.R.layout.simple_spinner_item);
-		// Specify the layout to use when the list of choices appears
-		arrayAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		spinner.setAdapter(arrayAdapter);
-
-		// use for testing
+		TextView title = (TextView) findViewById(R.id.Textzone);
+		title.setText(nameCity);
 		getPoints();
-
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		ShowPointsAdapter adapter = new ShowPointsAdapter(points,
 				layoutInflater);
 		list.setAdapter(adapter);
-
 		list.setTextFilterEnabled(true);
-
-		// assign listeners
-		spinner.setOnItemSelectedListener(this);
-		map.setOnClickListener(toMapListener);
-	}
-
-	/* Listeners and implemented methods */
-
-	OnClickListener toMapListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			getSelectedPoints();
-			Intent intent = new Intent(map.getContext(), MapActivity.class);
-			intent.putExtra("selectedPoints", selectedPoints);
-			startActivity(intent);
-
-		}
-	};
-
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position,
-			long id) {
-
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> parent) {
-		// TODO Auto-generated method stub
-
+		map.setOnClickListener(this);
 	}
 
 	/* Methods */
@@ -143,6 +98,14 @@ public class ShowPointsActivity extends BaseActivity implements
 		points.add(cathedral);
 		points.add(arc);
 		points.add(sf);
+	}
+
+	@Override
+	public void onClick(View v) {
+		getSelectedPoints();
+		Intent intent = new Intent(map.getContext(), MapActivity.class);
+		intent.putExtra("selectedPoints", selectedPoints);
+		startActivity(intent);		
 	}
 
 }
