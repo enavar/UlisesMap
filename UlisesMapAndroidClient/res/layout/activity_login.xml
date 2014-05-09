@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
@@ -16,34 +16,53 @@
 		android:inputType="text"
 		android:hint="@string/edit_login"
 		/>
-	
+	<Button
+	    android:id="@+id/buttonRegister"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/editPsw"
+	    android:layout_below="@+id/editPsw"
+	    android:layout_marginTop="116dp"
+	    android:text="@string/button_register" />
+
+	<Button
+	    android:id="@+id/buttonEnter"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/buttonRegister"
+	    android:layout_alignLeft="@+id/buttonRegister"
+	    android:layout_marginBottom="44dp"
+	    android:text="@string/button_enter" />
+
 	<EditText
-		android:id="@+id/editPsw"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:inputType="textPassword"
-		android:hint="@string/edit_password"
-		/>
-	
+	    android:id="@+id/editPsw"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/edit_login"
+	    android:layout_below="@+id/edit_login"
+	    android:ems="10"
+	    android:hint="@string/edit_password"
+	    android:inputType="textPassword" >
+
+	    <requestFocus />
+	</EditText>
+
 	<CheckBox
-		android:id="@+id/checkAnonymous"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/check_anonymous"	
-		/>
-	
-	<Button
-		android:id="@+id/buttonEnter"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/button_enter"
-		/>
-	
-	<Button
-		android:id="@+id/buttonRegister"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/button_register"
-		/>
+	    android:id="@+id/checkAnonymous"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/editPsw"
+	    android:layout_below="@+id/editPsw"
+	    android:text="@string/check_anonymous" />
+
+	<CheckBox
+	    android:id="@+id/checkRemember"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/checkAnonymous"
+	    android:layout_alignBottom="@+id/checkAnonymous"
+	    android:layout_alignRight="@+id/checkAnonymous"
+	    android:layout_marginRight="20dp"
+	    android:text="Remember me" />
  
-</LinearLayout>
+</RelativeLayout>

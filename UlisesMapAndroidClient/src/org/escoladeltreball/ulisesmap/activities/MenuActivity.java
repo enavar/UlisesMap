@@ -4,12 +4,12 @@ package org.escoladeltreball.ulisesmap.activities;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class MenuActivity extends Activity implements OnClickListener, OnItemSelectedListener {
+public class MenuActivity extends BaseActivity implements OnClickListener, OnItemSelectedListener {
 	
 	private Button btnPoints;
 	private Button btnRoutes;

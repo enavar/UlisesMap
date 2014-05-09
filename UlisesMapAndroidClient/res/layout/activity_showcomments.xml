@@ -26,7 +26,7 @@
         android:layout_above="@+id/textView1"
         android:layout_alignParentRight="true"
         android:text="Add"
-        android:onClick="addComment" />
+        android:onClick="addCommentValoration" />
 
     <ListView
         android:id="@+id/listView1"
@@ -45,6 +45,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textView1"
         android:text="Add"
-        android:onClick="addValoration" />
+        android:onClick="addCommentValoration" />
 
 </RelativeLayout>
