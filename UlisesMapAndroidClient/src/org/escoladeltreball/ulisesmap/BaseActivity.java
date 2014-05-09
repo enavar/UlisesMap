@@ -14,11 +14,12 @@ import android.widget.Toast;
 
 public class BaseActivity extends Activity {
 
-	SharedPreferences prefs;
+	protected SharedPreferences prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
 	}
 
 
@@ -34,7 +35,7 @@ public class BaseActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
+		
 		// for delete shared preferences
 		// prefs.edit().clear().commit();
 		// get settings stored on device

@@ -1,10 +1,12 @@
 package org.escoladeltreball.ulisesmap.activities;
 
+import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.R;
+import org.escoladeltreball.ulisesmap.model.Settings;
 import org.escoladeltreball.ulisesmap.model.User;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,11 +16,12 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
-public class LoginActivity extends Activity implements OnClickListener, OnCheckedChangeListener {
+public class LoginActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
 	
 	private Button btn_register;
 	private Button btn_enter;
 	private CheckBox check_anonymous;
+	private CheckBox check_remember;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class LoginActivity extends Activity implements OnClickListener, OnChecke
 		btn_register = (Button) findViewById(R.id.buttonRegister);
 		btn_enter = (Button) findViewById(R.id.buttonEnter);
 		check_anonymous = (CheckBox) findViewById(R.id.checkAnonymous);
+		check_remember = (CheckBox) findViewById(R.id.checkRemember);
 		btn_register.setOnClickListener(this);
 		btn_enter.setOnClickListener(this);
 		check_anonymous.setOnCheckedChangeListener(this);
@@ -44,6 +48,13 @@ public class LoginActivity extends Activity implements OnClickListener, OnChecke
 			String user = editUser.getText().toString();
 			String pwd = editPwd.getText().toString();
 			if (User.existLogin(user, pwd)) {
+				if(check_remember.isChecked()) {
+					Editor editor = prefs.edit();
+					editor.putString("userName", user);
+					editor.putString("password", pwd);
+					editor.commit();
+				} 
+				Settings.userName = user;
 				intentMenuActivity();
 			}
 		}
