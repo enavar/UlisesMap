@@ -6,8 +6,6 @@ import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.User;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -75,7 +73,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	public boolean send(String name, String mail, String pass) {
 		String response = null;
 		try {
-			Client client = new Client(Client.SERVLET_INSERT_USER);
+			Client client = new Client(Client.SERVLET_INSERT_USER, true);
 			String user = Converter.convertUserToJSONObject(name, pass, mail);
 			Log.d("user", user);
 			response = client.execute(user).get();

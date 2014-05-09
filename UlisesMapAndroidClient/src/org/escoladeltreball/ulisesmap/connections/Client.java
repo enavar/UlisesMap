@@ -13,7 +13,7 @@ import android.os.AsyncTask;
 
 public class Client extends AsyncTask<String, Integer, String> {
 	
-	public static final String SERVLET_INSERT_USER = "ServletUserInsert";
+	public static final String SERVLET_INSERT_USER = "ServletInsertUser";
 	public static final String SERVLET_CHECK_USER = "ServletCheckUser";
 	public static final String SERVLET_ROUTES = "ServletRoutes";
 	public static final String SERVLET_POINTS_OF_ROUTE = "ServletRelationRP";
@@ -35,10 +35,10 @@ public class Client extends AsyncTask<String, Integer, String> {
 	private String response;
 	private boolean sendMessage;
 	
-	public Client(String nameServlet) {
+	public Client(String nameServlet, boolean sendMessage) {
 		super();
 		this.myURL = URL + nameServlet;
-		this.sendMessage = !(nameServlet.equals(SERVLET_COUNTRIES)); 
+		this.sendMessage = sendMessage;
 	}
 	
 	protected String doInBackground(String... String) {
@@ -47,7 +47,7 @@ public class Client extends AsyncTask<String, Integer, String> {
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
 			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
-			String message = (sendMessage) ? String[0].toString() : "";
+			String message = (sendMessage) ? String[0].toString() : FALSE_CHECK;
 			out.write(message);
 			out.close();
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));

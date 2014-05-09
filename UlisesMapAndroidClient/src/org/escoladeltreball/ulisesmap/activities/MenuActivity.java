@@ -40,7 +40,7 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 		spCountries = (Spinner) findViewById(R.id.menuCountry);
 		spCities = (Spinner) findViewById(R.id.menuCity);
 		cities = new ArrayList<City>();
-		countries = getCountries();
+		getCountries();
 		ArrayAdapter adapterCountries = new ArrayAdapter(this, android.R.layout.simple_spinner_item, countries);
 		spCountries.setAdapter(adapterCountries);
 		spCountries.setOnItemSelectedListener(this);
@@ -59,27 +59,9 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 		}
 	}
 
-	@Override
-	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		if (view.equals(spCountries)) {
-			getCities(countries[position]);
-			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, namesCities);
-			spCities.setAdapter(adapterCities);
-			spCities.setOnItemSelectedListener(this);
-			pkCity = cities.get(0).getRef();
-		} else {
-			pkCity = cities.get(position).getRef();
-		}
-	}
-
-	@Override
-	public void onNothingSelected(AdapterView<?> parent) {
-		
-	}
 	
-	private String[] getCountries() {
-		Client client = new Client(Client.SERVLET_COUNTRIES);
-		String[] countries = null;
+	private void getCountries() {
+		Client client = new Client(Client.SERVLET_COUNTRIES, false);
 		try {
 			String response = client.execute().get();
 			countries = Converter.convertStringToCountry(response);
@@ -87,14 +69,15 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
-		}
-		return countries;		
+		}		
 	}
 	
 	private void getCities(String nameCountry) {
-		Client client = new Client(Client.SERVLET_CITIES);
+		Client client = new Client(Client.SERVLET_CITIES, true);
 		try {
 			String response = client.execute(nameCountry).get();
+			System.out.println(nameCountry);
+			System.out.println(response);
 			cities = Converter.convertStrintToCities(response);
 			namesCities = new String [cities.size()];
 			for (int i = 0; i < cities.size(); i++) {
@@ -107,4 +90,23 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 		}	
 	}
 
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		if (parent.equals(spCountries)) {
+			getCities(countries[position]);
+			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, cities);
+			spCities.setAdapter(adapterCities);
+			spCities.setOnItemSelectedListener(this);
+			pkCity = cities.get(0).getRef();
+		} else {
+			if (pkCity != null) 
+				pkCity = cities.get(position).getRef();
+		}
+		
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {		
+	}
 }

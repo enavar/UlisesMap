@@ -111,7 +111,7 @@ public class ShowPointsActivity extends BaseActivity implements
 	}
 
 	private void getPoints() {
-		Client client = new Client(Client.SERVLET_POINT);
+		Client client = new Client(Client.SERVLET_POINT, true);
 		try {
 			String response = client.execute(pk_city).get();
 			points = Converter.convertStringToPoints(response);

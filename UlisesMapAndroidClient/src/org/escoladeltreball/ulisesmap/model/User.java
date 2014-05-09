@@ -1,5 +1,10 @@
 package org.escoladeltreball.ulisesmap.model;
 
+import java.util.concurrent.ExecutionException;
+
+import org.escoladeltreball.ulisesmap.connections.Client;
+import org.escoladeltreball.ulisesmap.converter.Converter;
+
 public class User {
 	
 	public static final String FIELD_NAME = "user";
@@ -28,6 +33,20 @@ public class User {
 
 	public String getName() {
 		return name;
-	}	
+	}
+	
+	public static boolean existLogin(String nameUser, String password) {
+		String response = null;
+		try {
+			Client client = new Client(Client.SERVLET_CHECK_USER, true);
+			String user = Converter.convertUserToJSONObject(nameUser, password);
+			response = client.execute(user).get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}		
+		return response.equals(Client.TRUE_CHECK);
+	}
 	
 }

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Point;
 
+<<<<<<< HEAD
+=======
+//import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
+
+>>>>>>> branch 'master' of https://github.com/enavar/UlisesMap.git
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +88,7 @@ public class ShowPointsAdapter extends BaseAdapter {
 		    // and the ImageView.
 			holder = (ViewHolder) convertView.getTag();
 		//download image
-		new ImageDownloader(holder.image).execute(point.getImage());
+		//new ImageDownloader(holder.image).execute(point.getImage());
 		//UrlImageViewHelper.setUrlDrawable(holder.image, point.getImage());
 		//get the current Point object
 		Point p = points.get(position);
