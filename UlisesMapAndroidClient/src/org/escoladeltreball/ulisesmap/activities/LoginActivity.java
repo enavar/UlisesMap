@@ -1,13 +1,6 @@
 package org.escoladeltreball.ulisesmap.activities;
 
-
-
-
-import java.util.concurrent.ExecutionException;
-
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.connections.Client;
-import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.User;
 
 import android.app.Activity;
@@ -63,20 +56,6 @@ public class LoginActivity extends Activity implements OnClickListener, OnChecke
 	private void intentMenuActivity() {
 		Intent intent = new Intent(this, MenuActivity.class);
 		startActivity(intent);
-	}
-	
-	private boolean existLogin(String nameUser, String password) {
-		String response = null;
-		try {
-			Client client = new Client(Client.SERVLET_CHECK_USER, true);
-			String user = Converter.convertUserToJSONObject(nameUser, password);
-			response = client.execute(user).get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}		
-		return response.equals(Client.TRUE_CHECK);
 	}
 
 	@Override
