@@ -14,7 +14,6 @@ public class Point implements Serializable {
 	public static final String FIELD_DESCRIPTION = "description";
 	public static final String FIELD_IMAGE = "image";
 	public static final String FIELD_URL = "url";
-	private static final String URL_SERVER = "http://ulises-ulisesmap.rhcloud.com/images/";
 	private String name;
 	private GeoPoint gp;
 	private String street;	
@@ -28,7 +27,7 @@ public class Point implements Serializable {
 	public Point(String name, GeoPoint gp, String street, String description, String image, String url) {
 		this.name = name;
 		this.gp = gp;
-		this.image = URL_SERVER + image;
+		this.image = image;
 		this.description = description;
 		this.street = street;
 		this.url = url;
