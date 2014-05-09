@@ -76,11 +76,10 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 		Client client = new Client(Client.SERVLET_CITIES, true);
 		try {
 			String response = client.execute(nameCountry).get();
-			System.out.println(nameCountry);
-			System.out.println(response);
 			cities = Converter.convertStrintToCities(response);
 			namesCities = new String [cities.size()];
 			for (int i = 0; i < cities.size(); i++) {
+				System.out.println(cities.get(i).getName());
 				namesCities[i] = cities.get(i).getName();
 			}
 		} catch (InterruptedException e) {
@@ -95,7 +94,7 @@ public class MenuActivity extends Activity implements OnClickListener, OnItemSel
 			long id) {
 		if (parent.equals(spCountries)) {
 			getCities(countries[position]);
-			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, cities);
+			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, namesCities);
 			spCities.setAdapter(adapterCities);
 			spCities.setOnItemSelectedListener(this);
 			pkCity = cities.get(0).getRef();
