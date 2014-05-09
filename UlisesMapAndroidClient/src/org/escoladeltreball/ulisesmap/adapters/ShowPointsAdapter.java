@@ -4,12 +4,6 @@ import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Point;
-
-<<<<<<< HEAD
-=======
-//import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
-
->>>>>>> branch 'master' of https://github.com/enavar/UlisesMap.git
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

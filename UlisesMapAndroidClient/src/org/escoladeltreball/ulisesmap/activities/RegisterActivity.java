@@ -1,13 +1,12 @@
 package org.escoladeltreball.ulisesmap.activities;
 
 
+import java.util.concurrent.ExecutionException;
+
 import org.escoladeltreball.ulisesmap.R;
-<<<<<<< HEAD
 import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.User;
-=======
->>>>>>> branch 'master' of https://github.com/enavar/UlisesMap.git
 
 import android.app.Activity;
 import android.content.Intent;
