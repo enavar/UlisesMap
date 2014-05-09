@@ -86,6 +86,8 @@ public class Converter {
 		try {
 			JSONArray jSONArrayPoints = new JSONArray(arrayPoints);
 			int size = jSONArrayPoints.length();
+			System.out.println(jSONArrayPoints.toString());
+			System.out.println(size);
 			for (int i = 0; i < size; i++) {
 				JSONObject objPoint = jSONArrayPoints.getJSONObject(i);
 				String name = objPoint.getString(Point.FIELD_NAME);
@@ -98,6 +100,11 @@ public class Converter {
 				GeoPoint geoPoint = new GeoPoint(lat, lon);
 				Point point = new Point(name, geoPoint, street, description, image, url);
 				points.add(point);
+				System.out.println(name);
+				System.out.println(lat);
+				System.out.println(lon);
+				System.out.println(street);
+				System.out.println(description);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
