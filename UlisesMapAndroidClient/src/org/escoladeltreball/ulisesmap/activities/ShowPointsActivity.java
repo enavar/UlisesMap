@@ -38,7 +38,8 @@ public class ShowPointsActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showpoints);
-		pk_city = (String) savedInstanceState.get(City.FIELD_PRIMARY_KEY);
+		Bundle bundle = getIntent().getExtras();
+		pk_city = bundle.getString(City.FIELD_PRIMARY_KEY);
 		map = (Button) findViewById(R.id.toMap);
 		Spinner spinner = (Spinner) findViewById(R.id.zone);
 		// Create an ArrayAdapter using the string array and a default spinner
