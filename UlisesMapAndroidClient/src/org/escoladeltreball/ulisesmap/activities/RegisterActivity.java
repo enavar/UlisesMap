@@ -1,12 +1,7 @@
 package org.escoladeltreball.ulisesmap.activities;
 
-import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.connections.Client;
-import org.escoladeltreball.ulisesmap.model.User;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.Bundle;
