@@ -44,7 +44,7 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		ShowPointsAdapter adapter = new ShowPointsAdapter(points,
+		ShowPointsAdapter adapter = new ShowPointsAdapter(getResources(),points,
 				layoutInflater);
 		list.setAdapter(adapter);
 		list.setTextFilterEnabled(true);

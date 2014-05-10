@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Point;
+
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ public class ShowPointsAdapter extends BaseAdapter {
 
 	ArrayList<Point> points;
 	private LayoutInflater layoutInflater;
+	Resources res;
 
 	public static class ViewHolder {
 		protected ImageView image;
@@ -23,11 +26,12 @@ public class ShowPointsAdapter extends BaseAdapter {
 		protected CheckBox chBox;
 	}
 
-	public ShowPointsAdapter(ArrayList<Point> points,
+	public ShowPointsAdapter(Resources res, ArrayList<Point> points,
 
 	LayoutInflater layoutInflater) {
 
 		super();
+		this.res = res;
 		this.points = points;
 		this.layoutInflater = layoutInflater;
 	}
@@ -82,7 +86,8 @@ public class ShowPointsAdapter extends BaseAdapter {
 		    // and the ImageView.
 			holder = (ViewHolder) convertView.getTag();
 		//download image
-		//new ImageDownloader(holder.image).execute(point.getImage());
+		ImageDownloader task = new ImageDownloader(res, holder.image);
+		task.loadBitmap(point.getImage(), holder.image);
 		//UrlImageViewHelper.setUrlDrawable(holder.image, point.getImage());
 		//get the current Point object
 		Point p = points.get(position);
