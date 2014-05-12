@@ -7,6 +7,7 @@ import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowCommentsAdapter;
 import org.escoladeltreball.ulisesmap.connections.Client;
+import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.CommentValoration;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.json.JSONException;
@@ -24,6 +25,8 @@ public class ShowCommentsActivity extends BaseActivity {
 	
 	private ArrayList<CommentValoration> comments;
 	private JSONObject insertComment;
+	private String userName;
+	private String routeName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +35,16 @@ public class ShowCommentsActivity extends BaseActivity {
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		ShowCommentsAdapter adapter = new ShowCommentsAdapter(comments, layoutInflater);
+		userName = Settings.userName;
+		routeName = Settings.routeName;
+		getCommentValoration();
 		list.setAdapter(adapter);
         list.setTextFilterEnabled(true);
 	}
 	
 	public void addCommentValoration(View view) throws JSONException, InterruptedException, ExecutionException {
 		// capture user and route from Settings
-		String userName = Settings.userName;
 		insertComment.put("fk_user", userName);
-		String routeName = Settings.routeName;
 		insertComment.put("fk_route", routeName);
 		// prepare client output
 		Client client = null;
@@ -60,6 +64,18 @@ public class ShowCommentsActivity extends BaseActivity {
 		String out = insertComment.toString();
 		client.execute(out).get();
 		
+	}
+	
+	private void getCommentValoration() {
+		Client client = new Client(Client.SERVLET_COMMENT_AND_VALORATION, true);
+		try {
+			String response = client.execute(routeName).get();
+			comments = Converter.convertStringToCommentsValorations(response);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

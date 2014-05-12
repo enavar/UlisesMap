@@ -33,7 +33,7 @@ public class ShowRoutesActivity extends BaseActivity {
 		getRoutes();
 		ShowRoutesAdapter adapter = new ShowRoutesAdapter(routes, layoutInflater);
 		list.setAdapter(adapter);
-        list.setTextFilterEnabled(true);
+        	list.setTextFilterEnabled(true);
 	}
 	
 	private ArrayList<Route> getRoutes() {

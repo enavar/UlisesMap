@@ -2,31 +2,34 @@ package org.escoladeltreball.ulisesmap.model;
 
 public class CommentValoration {
 	
-	private Valoration val;
-	private Comment com;
-	private User user;
+	private int val;
+	private String com;
+	private String user;
 	
-	public CommentValoration(User user) {
+	public int getVal() {
+		return val;
+	}
+	public void setVal(int val) {
+		this.val = val;
+	}
+	public String getCom() {
+		return com;
+	}
+	public void setCom(String com) {
+		this.com = com;
+	}
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
 		this.user = user;
 	}
 	
-	
-	public int getValInt() {
-		return val.getValoration();
-	}
-	public void setValInt(int value) {
-		val.setValoration(value);
-	}
-	public String getCom() {
-		return com.getDefinition();
-	}
-	public void setCom(String comment) {
-		com.setDefinition(comment);
-	}
-	public String getUserName() {
-		return user.getName();
-	}
-	
+	public CommentValoration(int val, String com, String user) {
+		this.val = val;
+		this.com = com;
+		this.user = user;
+	}	
 	
 	
 

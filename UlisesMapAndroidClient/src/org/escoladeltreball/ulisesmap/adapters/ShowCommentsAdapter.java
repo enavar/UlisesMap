@@ -56,8 +56,8 @@ public class ShowCommentsAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.userName.setText(comval.getUserName());
-		holder.valoration.setRating(comval.getValInt());
+		holder.userName.setText(comval.getUser());
+		holder.valoration.setRating(comval.getVal());
 		holder.description.setText(comval.getCom());
 		return convertView;
 	}
