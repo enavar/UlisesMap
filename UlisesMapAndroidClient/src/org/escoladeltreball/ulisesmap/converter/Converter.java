@@ -3,6 +3,7 @@ package org.escoladeltreball.ulisesmap.converter;
 import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.model.City;
+import org.escoladeltreball.ulisesmap.model.CommentValoration;
 import org.escoladeltreball.ulisesmap.model.Route;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.Comment;
@@ -206,5 +207,28 @@ public class Converter {
 		}
 		return countries;
 			
+	}
+	
+	public static ArrayList<CommentValoration> convertStringToCommentsValorations(String arrayComments) {
+		ArrayList<CommentValoration> comments = new ArrayList<CommentValoration>();
+		try {
+			JSONArray jSONArrayPoints = new JSONArray(arrayComments);
+			int size = jSONArrayPoints.length();
+			for (int i = 0; i < size; i++) {
+				JSONObject objComment = jSONArrayPoints.getJSONObject(i);
+				String user = objComment.getString("user");
+				String comment = objComment.getString("comment");
+				if (comment == null) {
+					comment = "no comment has been added";
+				}
+				int valoration = objComment.getInt("valoration");
+				CommentValoration commentvaloration = new CommentValoration(valoration,comment,user);
+				comments.add(commentvaloration);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return comments;
+
 	}
 }
