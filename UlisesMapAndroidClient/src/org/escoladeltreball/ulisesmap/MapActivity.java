@@ -20,6 +20,7 @@ import org.osmdroid.views.MapView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -29,9 +30,13 @@ public class MapActivity extends BaseActivity {
 	// for MapView
 	RoadManager roadManager;
 	Road road;
+	Road roadGps;
 	MapView map;
 	Polyline roadOverlay;
+	Polyline roadOverlayGps;
 	GPSTracker tracker;
+
+	ArrayList<GeoPoint> pointsToDraw;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class MapActivity extends BaseActivity {
 		setContentView(R.layout.activity_map);
 
 		// get an array with points from ShowPointsActivity
+		@SuppressWarnings("unchecked")
 		ArrayList<GeoPoint> selectedPoints = (ArrayList<GeoPoint>) getIntent()
 				.getSerializableExtra("selectedPoints");
 
@@ -49,37 +55,88 @@ public class MapActivity extends BaseActivity {
 		map.setBuiltInZoomControls(true);
 		map.setMultiTouchControls(true);
 
-		// set zoom and centered a map
-		IMapController mapController = map.getController();
-		mapController.setZoom(16);
-		mapController.setCenter(selectedPoints.get(0));
-
-		// show Poins of interest on the map
-		makePointsMarkers(selectedPoints);
-
-		// Show user current position and draw a route to a start point
-		if (Settings.gps) {
-			tracker = new GPSTracker(this, map);
-			GeoPoint myLocation = null;
-			if (tracker.isCanGetLocation() == false) {
-				tracker.showSettingsAlert();
-			} else {
-				myLocation = new GeoPoint(tracker.getLatitude(), tracker.getLongitude());
-				showRoutefromMyCurrentLocation(myLocation,selectedPoints.get(0));				
-			}
-		}
-
 		// draw the road
 		try {
 			getRoadAsync(selectedPoints);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// instantiate other items on the map
+		initMapItems();
+		updateUIWithRoad(roadOverlay, road, Color.BLUE);
 
+	}
+
+	protected void initMapItems() {
+		// show Poins of interest on the map
+		makePointsMarkers(pointsToDraw);
+		// Show user current position and draw a route to a start point
+		if (Settings.gps) {
+			initGPS();
+		}
+		// Show instructions for each step of the road
+		if (Settings.navigations) {
+			makeNavigationMarkers(road);
+			if (Settings.gps) {
+				makeNavigationMarkers(roadGps);
+			}
+		}
+	}
+
+	/**
+	 * Event Handling for Individual menu item selected Identify single menu
+	 * item by it's id
+	 * */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+
+		case R.id.navigations:
+			if (item.isChecked()) {
+				map.getOverlays().clear();
+				map.invalidate();
+				initMapItems();
+				updateUIWithRoad(roadOverlay, road, Color.BLUE);
+			} else {
+				makeNavigationMarkers(road);
+				if (Settings.gps) {
+					makeNavigationMarkers(roadGps);
+				}
+			}
+			return true;
+		case R.id.car:
+			return changeRouteType(item);
+		case R.id.bicycle:
+			return changeRouteType(item);
+		case R.id.walk:
+			return changeRouteType(item);
+		case R.id.myGPS:
+			if (item.isChecked()) {
+				item.setChecked(false);
+				Settings.gps = false;
+			} else {
+				item.setChecked(true);
+				Settings.gps = true;
+				initGPS();
+			}
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	public boolean changeRouteType(MenuItem item) {
+		changeRouteStatus(item);
+		Settings.routeType = item.getItemId();
+		map.getOverlays().clear();
+		map.invalidate();
+		initMapItems();
+		updateUIWithRoad(roadOverlay, road, Color.BLUE);
+		return true;
 	}
 
 	/**
@@ -121,16 +178,24 @@ public class MapActivity extends BaseActivity {
 	 * 
 	 * @param road
 	 */
-	void updateUIWithRoad(Road road, int color) {
+	void updateUIWithRoad(Polyline polyline, Road road, int color) {
 
 		if (road.mStatus != Road.STATUS_OK)
-			Toast.makeText(map.getContext(),
-					"We have a problem to get the route", Toast.LENGTH_SHORT)
-					.show();
-		roadOverlay = RoadManager.buildRoadOverlay(road, map.getContext());
-		roadOverlay.setColor(color);
-		map.getOverlays().add(roadOverlay);
-		map.invalidate();
+			Toast.makeText(
+					map.getContext(),
+					"We have a problem to get the route from your current location",
+					Toast.LENGTH_SHORT).show();
+		else {
+			polyline = RoadManager.buildRoadOverlay(road, map.getContext());
+			polyline.setColor(color);
+			map.getOverlays().add(polyline);
+
+			// set zoom and centered a map
+			IMapController mapController = map.getController();
+			mapController.setZoom(16);
+			mapController.setCenter(pointsToDraw.get(0));
+			map.invalidate();
+		}
 
 	}
 
@@ -144,7 +209,7 @@ public class MapActivity extends BaseActivity {
 	 */
 	public void getRoadAsync(ArrayList<GeoPoint> selectedPoints)
 			throws InterruptedException, ExecutionException {
-		ArrayList<GeoPoint> pointsToDraw = new ArrayList<GeoPoint>();
+		pointsToDraw = new ArrayList<GeoPoint>();
 		// check if we have just two points
 		if (selectedPoints.size() < 3) {
 			pointsToDraw.add(selectedPoints.get(0));
@@ -164,13 +229,10 @@ public class MapActivity extends BaseActivity {
 			}
 			pointsToDraw.add(selectedPoints.get(0));
 		}
-		new UpdateRoadTask().execute(pointsToDraw);
 		road = new UpdateRoadTask().execute(pointsToDraw).get();
-		updateUIWithRoad(road, Color.BLUE);
-		makeNavigationMarkers();
 	}
 
-	public void makeNavigationMarkers() {
+	public void makeNavigationMarkers(Road road) {
 		// set Markers
 		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_node);
 		for (int i = 0; i < road.mNodes.size(); i++) {
@@ -249,14 +311,26 @@ public class MapActivity extends BaseActivity {
 		return nearestPoint;
 	}
 
+	public void initGPS() {
+		tracker = new GPSTracker(this, map);
+		GeoPoint myLocation = null;
+		if (tracker.isNetworkEnabled() == false) {
+			tracker.showSettingsAlert();
+		} else {
+			myLocation = new GeoPoint(tracker.getLatitude(),
+					tracker.getLongitude());
+			showRoutefromMyCurrentLocation(myLocation, pointsToDraw.get(0));
+		}
+	}
+
 	public void showRoutefromMyCurrentLocation(GeoPoint a, GeoPoint b) {
 		UpdateRoadTask asynctask = new UpdateRoadTask();
-		Road road = null;
+		roadGps = null;
 		ArrayList<GeoPoint> ar = new ArrayList<GeoPoint>();
 		ar.add(a);
 		ar.add(b);
 		try {
-			road = asynctask.execute(ar).get();
+			roadGps = asynctask.execute(ar).get();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -264,7 +338,7 @@ public class MapActivity extends BaseActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		updateUIWithRoad(road, Color.GREEN);
+		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
 	}
 

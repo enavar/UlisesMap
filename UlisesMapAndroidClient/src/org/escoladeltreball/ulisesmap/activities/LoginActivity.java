@@ -22,6 +22,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 	private Button btn_enter;
 	private CheckBox check_anonymous;
 	private CheckBox check_remember;
+	private EditText editUser;
+	private EditText editPwd;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 		btn_enter = (Button) findViewById(R.id.buttonEnter);
 		check_anonymous = (CheckBox) findViewById(R.id.checkAnonymous);
 		check_remember = (CheckBox) findViewById(R.id.checkRemember);
+		editUser = (EditText) findViewById(R.id.edit_login);
+		editPwd = (EditText) findViewById(R.id.editPsw);
 		btn_register.setOnClickListener(this);
 		btn_enter.setOnClickListener(this);
 		check_anonymous.setOnCheckedChangeListener(this);
+		if (prefs.contains("userName")) {
+	         editUser.setText(prefs.getString("userName", ""));
+	         editPwd.setText(prefs.getString("password", ""));
+	      }
 	}
 
 	@Override
@@ -43,8 +51,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 		} else if(check_anonymous.isChecked()) {
 			intentMenuActivity();
 		} else {
-			EditText editUser = (EditText) findViewById(R.id.edit_login);
-			EditText editPwd = (EditText) findViewById(R.id.editPsw);
 			String user = editUser.getText().toString();
 			String pwd = editPwd.getText().toString();
 			if (User.existLogin(user, pwd)) {

@@ -1,33 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Single menu item
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!--
+         Single menu item
          Set id, icon and Title for each menu item
     -->
- 
-    <item android:id="@+id/menu_search"
-          android:title="Search" />
- 
-    <item android:id="@+id/menu_route"
-          android:title="Route">
-      <menu >
-        <group android:checkableBehavior="single">          
-          <item android:id="@+id/car"
-				android:title="drive route" />
-          <item android:id="@+id/bicycle"
-				android:title="bicycle route" />
-          <item android:id="@+id/walk"
-				android:title="walking route" />
-        </group>
-      </menu>
+
+    <item
+        android:id="@+id/menu_navigations"
+        android:title="Navigations">
+		<menu>
+            <group android:checkableBehavior="all" >
+                <item
+                    android:id="@+id/navigations"
+                    android:title="Show markers with navigations"/>
+            </group>
+        </menu>
+     </item>
+    <item
+        android:id="@+id/menu_route"
+        android:title="Route">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@+id/car"
+                    android:title="drive route"/>
+                <item
+                    android:id="@+id/bicycle"
+                    android:title="bicycle route"/>
+                <item
+                    android:id="@+id/walk"
+                    android:title="walking route"/>
+            </group>
+        </menu>
     </item>
- 
-    <item android:id="@+id/menu_gps"
-          android:title="GPS">
-      <menu >
-        <group android:checkableBehavior="all">          
-          <item android:id="@+id/myGPS"
-				android:title="Show my current location" />
-        </group>
-      </menu> 
+    <item
+        android:id="@+id/menu_gps"
+        android:title="GPS">
+        <menu>
+            <group android:checkableBehavior="all" >
+                <item
+                    android:id="@+id/myGPS"
+                    android:title="Show my current location"/>
+            </group>
+        </menu>
     </item>
+
 </menu>

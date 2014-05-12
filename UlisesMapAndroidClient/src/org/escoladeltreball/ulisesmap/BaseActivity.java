@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class BaseActivity extends Activity {
 
@@ -30,6 +29,7 @@ public class BaseActivity extends Activity {
 		Editor editor = prefs.edit();
 		editor.putInt("routeType", Settings.routeType);
 		editor.putBoolean("gps", Settings.gps);
+		editor.putBoolean("gps", Settings.navigations);
 		editor.commit();
 	}
 
@@ -40,7 +40,8 @@ public class BaseActivity extends Activity {
 		// prefs.edit().clear().commit();
 		// get settings stored on device
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
-		Settings.gps = prefs.getBoolean("gps", true);
+		Settings.gps = prefs.getBoolean("gps", false);
+		Settings.navigations = prefs.getBoolean("navigations", false);
 		// Initiating Menu XML file (menu.xml)
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu, menu);
@@ -63,18 +64,25 @@ public class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-
-		case R.id.menu_search:
-			Toast.makeText(this, "Search is Selected", Toast.LENGTH_SHORT)
-					.show();
+		
+		case R.id.menu_navigations:
+			if (item.isChecked()) {
+				item.setChecked(false);
+				Settings.navigations = false;
+			} else {
+				item.setChecked(true);
+				Settings.navigations = true;
+			}
 			return true;
-
 		case R.id.car:
 			changeRouteStatus(item);
+			return true;
 		case R.id.bicycle:
 			changeRouteStatus(item);
+			return true;
 		case R.id.walk:
 			changeRouteStatus(item);
+			return true;
 		case R.id.myGPS:
 			if (item.isChecked()) {
 				item.setChecked(false);
@@ -96,15 +104,15 @@ public class BaseActivity extends Activity {
 		} else {
 			item.setChecked(true);
 			Settings.routeType = item.getItemId();
-		}
+		}		
 	}
 
 	public void initMenu(Menu menu) {
 		changeRouteStatus(menu.findItem(Settings.routeType));
-		if (Settings.gps) {
-			menu.findItem(R.id.myGPS).setChecked(true);
-		} else {
-			menu.findItem(R.id.myGPS).setChecked(false);
-		}
+		if (Settings.gps) menu.findItem(R.id.myGPS).setChecked(true);
+		else menu.findItem(R.id.myGPS).setChecked(false);
+		if (Settings.navigations) menu.findItem(R.id.navigations).setChecked(true);
+		else menu.findItem(R.id.navigations).setChecked(false);
+		
 	}
 }
