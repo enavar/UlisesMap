@@ -68,7 +68,7 @@ insert into points values (
 	41.387677000,
 	2.181664900,
 	'Museu de la Xocolata is a private museum in Barcelona, Catalonia, Spain, owned by the Gremi de Pastisseria de Barcelona (the city pastry-makers guild).',
-	'Museu_de_la_Xocolata_de_Barcelona.JPG',
+	'Museu_de_la_Xocolata_de_Barcelona.jpg',
 	'http://www.museuxocolata.cat/',
 	'BCNES');
 insert into points values (
@@ -86,7 +86,7 @@ insert into points values (
 	2.163795000,
 	'Carrer d’Aragó, 255',
 	'The Fundació Antoni Tàpies is a cultural center and museum, located in Carrer d’Aragó, in Barcelona, Catalonia (Spain), dedicated mainly to the life and works of the painter Antoni Tàpies. The Fundació was created in 1984 by the artist Antoni Tàpies to promote the study and knowledge of modern and contemporary art. It combines the organisation of temporary exhibitions, symposia, lectures and film seasons with a range of publications to go with the activities and periodic shows of Antoni Tàpies’ work. The Fundació owns one of the most complete collections of Tàpies’ work, mostly made up of donations by Antoni and Teresa Tàpies.',
-	'fundacioTapies.JPG',
+	'fundacioTapies.jpg',
 	'http://www.fundaciotapies.org/',
 	'BCNES');
 insert into points values (
@@ -247,17 +247,17 @@ insert into points values (
 	'Puerta del sol',
 	40.4168762,
 	-3.703304600000024,
-	null,
+	' ',
 	'The Puerta del Sol is a place of Madrid (Spain). Here from 1950 is called Kilometre Zero of the Spanish radial road. The oldest building in the Puerta del Sol is the post office and it highlights the clock tower was built and donated in the XIX century by José Rodríguez de Losada, whose chimes of the 12 hours of December 31 mark the traditional eating of the twelve Grapes and the vast majority of Spaniards.',	
 	'sol.jpg',
-	' ',
+	null,
 	'MADES');
 	
 insert into points values (
 	'London tower',
 	51.52147919999999,
 	-0.13869429999999738,
-	null,
+	' ',
 	'Her Majesty Royal Palace and Fortress, more commonly known as the Tower of London, is a historic castle on the north bank of the River Thames in central London. It lies within the London Borough of Tower Hamlets, separated from the eastern edge of the square mile of the City of London by the open space known as Tower Hill.',	
 	'london_tower.jpg',
 	' ',
@@ -270,7 +270,7 @@ insert into points values (
 	'Exhibition Road',
 	'The museum is home to life and earth science specimens comprising some 70 million items within five main collections: botany, entomology, mineralogy, palaeontology and zoology. The museum is a world-renowned centre of research specialising in taxonomy, identification and conservation. Given the age of the institution, many of the collections have great historical as well as scientific value, such as specimens collected by Charles Darwin.',	
 	'natural_museum.jpg',
-	' ',
+	null,
 	'LONUK');
 	
 insert into points values (
@@ -280,7 +280,7 @@ insert into points values (
 	'Passeig dels Castanyers, 1',
 	'The British Museum is a museum in London dedicated to human history and culture. Its permanent collection, numbering some 8 million works,is among the largest and most comprehensive in existence and originates from all continents, illustrating and documenting the story of human culture from its beginnings to the present.The British Museum was established in 1753, largely based on the collections of the physician and scientist Sir Hans Sloane. ',	
 	'british_museum.jpg',
-	' ',
+	null,
 	'LONUK');
 
 	
