@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -20,7 +20,7 @@ public class ShowRoutesAdapter extends BaseAdapter {
 	
 	public static class ViewHolder {
 		protected TextView name, description;
-		protected CheckBox chBox;
+		protected RadioButton chBox;
 		protected RatingBar valoration;
 	}
 
@@ -55,7 +55,7 @@ public class ShowRoutesAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.showroutes_list_item, null);
 			holder = new ViewHolder();
-			holder.chBox = (CheckBox) convertView.findViewById(R.id.selectRoute);
+			holder.chBox = (RadioButton) convertView.findViewById(R.id.selectRoute);
 			holder.valoration = (RatingBar) convertView.findViewById(R.id.ratingValue);
 			holder.description =(TextView) convertView.findViewById(R.id.viewDescriptionRoute);
 			holder.name = (TextView) convertView.findViewById(R.id.viewNameRoute);

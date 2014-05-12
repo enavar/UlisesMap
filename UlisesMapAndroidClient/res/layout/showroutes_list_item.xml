@@ -6,36 +6,48 @@
     android:orientation="vertical"
     tools:context=".ShowRoutesActivity" >
     
-	<CheckBox
-        android:id="@+id/selectRoute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"/>
-	
+    <LinearLayout
+        android:id="@+id/titleRoute"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+    <RadioButton
+	    android:id="@+id/selectRoute"
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:layout_weight=".1"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true" />
+
+	<RatingBar
+	    android:id="@+id/ratingValue"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_gravity="center"
+	    style="?android:attr/ratingBarStyleSmall"
+	    android:numStars="5"
+	    android:stepSize="1.0"
+	    android:isIndicator="true" />
+
 	<TextView
-		android:id="@+id/viewNameRoute"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-		android:layout_centerHorizontal="true"
-		/>
-	
-	<RatingBar 
-		android:id="@+id/ratingValue"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:numStars="5"
-		android:layout_alignBottom="@id/viewNameRoute"
-		/>
-	
-	<TextView 
-		android:id="@+id/viewDescriptionRoute"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignBottom="@id/ratingValue"
-		/>
-	
-	
+	    android:id="@+id/viewNameRoute"
+	    android:layout_width="0dp"
+	    android:layout_height="wrap_content"
+	    android:layout_weight=".4"
+	    android:layout_gravity="right"
+	    android:layout_alignParentRight="true"
+	    android:layout_alignParentTop="true" />
+        
+        
+    </LinearLayout>
+
+	<TextView
+	    android:id="@+id/viewDescriptionRoute"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/titleRoute"
+	    android:layout_toRightOf="@+id/selectRoute" />
 
 </RelativeLayout>

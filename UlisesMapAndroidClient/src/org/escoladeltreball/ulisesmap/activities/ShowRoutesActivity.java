@@ -25,7 +25,8 @@ public class ShowRoutesActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showroutes);
-		pk_city = (String) savedInstanceState.get(City.FIELD_PRIMARY_KEY);
+		Bundle bundle = getIntent().getExtras();
+		pk_city = bundle.getString(City.FIELD_PRIMARY_KEY);
 		ListView list = (ListView) findViewById(R.id.listViewRoutes);
 		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		getRoutes();
