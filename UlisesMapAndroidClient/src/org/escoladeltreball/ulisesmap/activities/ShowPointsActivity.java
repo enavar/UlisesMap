@@ -78,28 +78,6 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		}
 	}
 
-	private void getTestPoints() {
-		points = new ArrayList<Point>();
-		GeoPoint gp1 = new GeoPoint(41.4144948, 2.152694);
-		GeoPoint gp2 = new GeoPoint(41.3847092, 2.175827);
-		GeoPoint gp3 = new GeoPoint(41.391646, 2.180271);
-		GeoPoint gp4 = new GeoPoint(41.4035707, 2.1744722);
-		String image = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Sagrada_Familia_01.jpg/330px-Sagrada_Familia_01.jpg";
-		Point pG = new Point("parkGuell", gp1, null, null,
-				"http://wiam-ulisesmap.rhcloud.com/images/catedral.jpg", "desc");
-		Point cathedral = new Point("Cathedral", gp2, null, null,
-				"http://wiam2-ulisesmap.rhcloud.com/images/catedral.jpg",
-				"desc");
-		Point arc = new Point("Arc de Triomf", gp3, null, null,
-				"http://wiam2-ulisesmap.rhcloud.com/images/arc.jpg", "desc");
-		Point sf = new Point("Sagrada Familia", gp4, null, null, image, "desc");
-
-		points.add(pG);
-		points.add(cathedral);
-		points.add(arc);
-		points.add(sf);
-	}
-
 	@Override
 	public void onClick(View v) {
 		getSelectedPoints();
