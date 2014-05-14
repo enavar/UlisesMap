@@ -11,6 +11,7 @@ import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,19 +47,35 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		spCountries.setAdapter(adapterCountries);
 		spCountries.setOnItemSelectedListener(this);
 		btnPoints.setOnClickListener(this);
-		btnRoutes.setOnClickListener(this);
+		btnRoutes.setOnClickListener(this);	
 	}
 
 	@Override
 	public void onClick(View v) {
 		if (pkCity != null) {
-			Intent intent = (v.equals(btnPoints)) ? 
-					new Intent(this, ShowPointsActivity.class) : 
-					new Intent(this, ShowRoutesActivity.class);
+			progress.show();
+			new IntentLauncher().execute(v);
+		}
+	}
+	
+	private class IntentLauncher extends AsyncTask<View, Void, String> {
+		
+		@Override
+		protected String doInBackground(View... v) {
+			View view = v[0];
+			Intent intent = (view.equals(btnPoints)) ? 
+					new Intent(view.getContext(), ShowPointsActivity.class) : 
+					new Intent(view.getContext(), ShowRoutesActivity.class);
 			intent.putExtra(City.FIELD_PRIMARY_KEY, pkCity);
 			intent.putExtra(City.FIELD_NAME, nameCity);
 			startActivity(intent);
+			return null;
 		}
+		
+		 @Override
+	        protected void onPostExecute(String result) {
+			 progress.dismiss();
+	        }		
 	}
 
 	

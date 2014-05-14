@@ -7,6 +7,7 @@ import org.escoladeltreball.ulisesmap.model.User;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +25,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 	private CheckBox checkAnonymous;
 	private CheckBox checkRemember;
 	private EditText editUser;
-	private EditText editPwd;
+	private EditText editPwd;	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 		if (prefs.contains("userName")) {
 	         editUser.setText(prefs.getString("userName", ""));
 	         editPwd.setText(prefs.getString("password", ""));
-	    }
+	    }  
 	}
 
 	@Override
@@ -52,7 +53,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 		if (view.equals(btnRegister)) {
 			intentRegisterActivity();
 		} else if(checkAnonymous.isChecked()) {
-			intentMenuActivity();
+			progress.show();
+			new IntentLauncher().execute();			
 		} else {
 			String user = editUser.getText().toString();
 			String pwd = editPwd.getText().toString();
@@ -64,11 +66,26 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 					editor.commit();
 				} 
 				Settings.userName = user;
-				intentMenuActivity();
+				progress.show();
+				new IntentLauncher().execute();	
 			} else {
 				Toast.makeText(this, R.string.error_not_checked_user, Toast.LENGTH_SHORT).show();
 			}
 		}
+	}
+	
+	private class IntentLauncher extends AsyncTask<String, Void, String> {
+		
+		@Override
+		protected String doInBackground(String... s) {		
+			intentMenuActivity();
+			return null;
+		}
+		
+		 @Override
+	        protected void onPostExecute(String result) {
+			 progress.dismiss();
+	        }		
 	}
 	
 	private void intentRegisterActivity() {

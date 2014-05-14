@@ -3,6 +3,7 @@ package org.escoladeltreball.ulisesmap;
 import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -14,11 +15,16 @@ import android.view.MenuItem;
 public class BaseActivity extends Activity {
 
 	protected SharedPreferences prefs;
+	public ProgressDialog progress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
+		//create progress dialog
+		progress = new ProgressDialog(this);
+		progress.setMessage("Loading data...");
+		progress.setIndeterminate(false);	
 	}
 
 

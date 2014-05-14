@@ -15,6 +15,7 @@ import org.escoladeltreball.ulisesmap.model.Route;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,7 +27,16 @@ import android.widget.ListView;
 public class ShowRoutesActivity extends BaseActivity {
 	
 	private ArrayList<Route> routes;
-	private String pk_city;	
+	private String pk_city;
+	
+	private OnClickListener listener = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			progress.show();
+			new IntentLauncher().execute(v);
+		}
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +54,27 @@ public class ShowRoutesActivity extends BaseActivity {
         Button toMap = (Button) findViewById(R.id.toMapRoute);
         toMap.setOnClickListener(listener);
 	}
+	
+	/* Inner class */
+	
+	private class IntentLauncher extends AsyncTask<View, Void, String> {
+		
+		@Override
+		protected String doInBackground(View... v) {
+			Intent intent = new Intent(v[0].getContext(), MapActivity.class);
+			intent.putExtra("activity", 2);
+			intent.putExtra("selectedPoints", getPointsOfRoute());
+			startActivity(intent);
+			return null;
+		}
+		
+		 @Override
+	        protected void onPostExecute(String result) {
+			 progress.dismiss();
+	        }		
+	}
+	
+	/* Methods */
 	
 	private ArrayList<Route> getRoutes() {
 		Client client = new Client(Client.SERVLET_ROUTES, true);
@@ -73,17 +104,4 @@ public class ShowRoutesActivity extends BaseActivity {
 		}
 		return pointsOfRoute;
 	}
-	
-	OnClickListener listener = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			
-			Intent intent = new Intent(v.getContext(), MapActivity.class);
-			intent.putExtra("activity", 2);
-			intent.putExtra("selectedPoints", getPointsOfRoute());
-			startActivity(intent);
-		}
-	};
-
 }

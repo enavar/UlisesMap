@@ -21,7 +21,6 @@ import org.osmdroid.views.MapView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.graphics.Color;
@@ -75,10 +74,8 @@ public class MapActivity extends BaseActivity {
 				geoPointsToDraw = getGeoPoints(selectedPoints);
 				road = new	 UpdateRoadTask().execute(geoPointsToDraw).get();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -155,10 +152,8 @@ public class MapActivity extends BaseActivity {
 		try {
 			road = new UpdateRoadTask().execute(geoPointsToDraw).get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		initMapItems();
@@ -219,7 +214,7 @@ public class MapActivity extends BaseActivity {
 
 			// set zoom and centered a map
 			IMapController mapController = map.getController();
-			mapController.setZoom(16);
+			mapController.setZoom(18);
 			mapController.setCenter(geoPointsToDraw.get(0));
 			map.invalidate();
 		}
@@ -359,10 +354,8 @@ public class MapActivity extends BaseActivity {
 		try {
 			roadGps = asynctask.execute(ar).get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
