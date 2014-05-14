@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
+import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.Marker;
@@ -20,6 +21,7 @@ import org.osmdroid.views.MapView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.graphics.Color;
@@ -36,17 +38,13 @@ public class MapActivity extends BaseActivity {
 	Polyline roadOverlayGps;
 	GPSTracker tracker;
 
-	ArrayList<GeoPoint> pointsToDraw;
+	ArrayList<GeoPoint> geoPointsToDraw;
+	ArrayList<Point> selectedPoints;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-
-		// get an array with points from ShowPointsActivity
-		@SuppressWarnings("unchecked")
-		ArrayList<GeoPoint> selectedPoints = (ArrayList<GeoPoint>) getIntent()
-				.getSerializableExtra("selectedPoints");
 
 		// get instance of a map
 		map = (MapView) findViewById(R.id.mapView);
@@ -55,13 +53,34 @@ public class MapActivity extends BaseActivity {
 		map.setBuiltInZoomControls(true);
 		map.setMultiTouchControls(true);
 
-		// draw the road
-		try {
-			getRoadAsync(selectedPoints);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
+		int activity = getIntent().getIntExtra("activity", 1);
+
+		if (activity == 1) {
+
+			// get an array with points from ShowPointsActivity
+			selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra("selectedPoints");
+
+			// draw the road
+			try {
+				ArrayList<GeoPoint> selectedGeoPoints = getGeoPoints(selectedPoints);
+				getRoadAsync(selectedGeoPoints);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+		} else {
+			selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra("selectedPoints");
+			try {
+				geoPointsToDraw = getGeoPoints(selectedPoints);
+				road = new	 UpdateRoadTask().execute(geoPointsToDraw).get();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		// instantiate other items on the map
 		initMapItems();
@@ -71,7 +90,7 @@ public class MapActivity extends BaseActivity {
 
 	protected void initMapItems() {
 		// show Poins of interest on the map
-		makePointsMarkers(pointsToDraw);
+		makePointsMarkers(selectedPoints);
 		// Show user current position and draw a route to a start point
 		if (Settings.gps) {
 			initGPS();
@@ -131,9 +150,17 @@ public class MapActivity extends BaseActivity {
 
 	public boolean changeRouteType(MenuItem item) {
 		changeRouteStatus(item);
-		Settings.routeType = item.getItemId();
 		map.getOverlays().clear();
-		map.invalidate();
+		map.invalidate();		
+		try {
+			road = new UpdateRoadTask().execute(geoPointsToDraw).get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
 		return true;
@@ -193,7 +220,7 @@ public class MapActivity extends BaseActivity {
 			// set zoom and centered a map
 			IMapController mapController = map.getController();
 			mapController.setZoom(16);
-			mapController.setCenter(pointsToDraw.get(0));
+			mapController.setCenter(geoPointsToDraw.get(0));
 			map.invalidate();
 		}
 
@@ -207,29 +234,29 @@ public class MapActivity extends BaseActivity {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	public void getRoadAsync(ArrayList<GeoPoint> selectedPoints)
+	public void getRoadAsync(ArrayList<GeoPoint> selectedGeoPoints)
 			throws InterruptedException, ExecutionException {
-		pointsToDraw = new ArrayList<GeoPoint>();
+		geoPointsToDraw = new ArrayList<GeoPoint>();
 		// check if we have just two points
-		if (selectedPoints.size() < 3) {
-			pointsToDraw.add(selectedPoints.get(0));
-			pointsToDraw.add(selectedPoints.get(1));
+		if (selectedGeoPoints.size() < 3) {
+			geoPointsToDraw.add(selectedGeoPoints.get(0));
+			geoPointsToDraw.add(selectedGeoPoints.get(1));
 			// orden an array to build the shortest way
 			// there is a issue when all the points are choosen. The route
 			// doesn't visualize correctly
 		} else {
-			GeoPoint startPoint = getStartPoint(selectedPoints);
-			pointsToDraw.add(startPoint);
-			selectedPoints.remove(startPoint);
-			for (int i = 0; i < selectedPoints.size(); i++) {
-				GeoPoint nextPoint = getNearestPoint(startPoint, selectedPoints);
-				pointsToDraw.add(nextPoint);
+			GeoPoint startPoint = getStartPoint(selectedGeoPoints);
+			geoPointsToDraw.add(startPoint);
+			selectedGeoPoints.remove(startPoint);
+			for (int i = 0; i < selectedGeoPoints.size(); i++) {
+				GeoPoint nextPoint = getNearestPoint(startPoint, selectedGeoPoints);
+				geoPointsToDraw.add(nextPoint);
 				startPoint = nextPoint;
-				selectedPoints.remove(nextPoint);
+				selectedGeoPoints.remove(nextPoint);
 			}
-			pointsToDraw.add(selectedPoints.get(0));
+			geoPointsToDraw.add(selectedGeoPoints.get(0));
 		}
-		road = new UpdateRoadTask().execute(pointsToDraw).get();
+		road = new UpdateRoadTask().execute(geoPointsToDraw).get();
 	}
 
 	public void makeNavigationMarkers(Road road) {
@@ -257,11 +284,11 @@ public class MapActivity extends BaseActivity {
 		}
 	}
 
-	public void makePointsMarkers(ArrayList<GeoPoint> selectedPoints) {
+	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
 		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_a);
 		for (int i = 0; i < selectedPoints.size(); i++) {
 			Marker nodeMarker = new Marker(map);
-			nodeMarker.setPosition(selectedPoints.get(i));
+			nodeMarker.setPosition(selectedPoints.get(i).getGp());
 			nodeMarker.setIcon(nodeIcon);
 			nodeMarker.setTitle("Point " + (i + 1));
 			map.getOverlays().add(nodeMarker);
@@ -319,7 +346,7 @@ public class MapActivity extends BaseActivity {
 		} else {
 			myLocation = new GeoPoint(tracker.getLatitude(),
 					tracker.getLongitude());
-			showRoutefromMyCurrentLocation(myLocation, pointsToDraw.get(0));
+			showRoutefromMyCurrentLocation(myLocation, geoPointsToDraw.get(0));
 		}
 	}
 
@@ -340,6 +367,14 @@ public class MapActivity extends BaseActivity {
 		}
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
+	}
+	
+	public ArrayList<GeoPoint> getGeoPoints(ArrayList<Point> points) {
+		ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
+		for (int i = 0; i < points.size(); i++) {
+			geoPoints.add(points.get(i).getGp());
+		}
+		return geoPoints;
 	}
 
 }

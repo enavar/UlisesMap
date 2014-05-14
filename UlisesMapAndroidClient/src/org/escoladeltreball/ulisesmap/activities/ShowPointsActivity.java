@@ -11,7 +11,6 @@ import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
 import org.escoladeltreball.ulisesmap.model.Point;
-import org.osmdroid.util.GeoPoint;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +25,7 @@ import android.widget.TextView;
 public class ShowPointsActivity extends BaseActivity implements OnClickListener {
 
 	private ArrayList<Point> points;
-	private ArrayList<GeoPoint> selectedPoints;
+	private ArrayList<Point> selectedPoints;
 	private Button map;
 	private String pk_city;
 
@@ -57,11 +56,11 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 	 * Create an array with selected points
 	 */
 	private void getSelectedPoints() {
-		selectedPoints = new ArrayList<GeoPoint>();
+		selectedPoints = new ArrayList<Point>();
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
 			if (p.isSelected()) {
-				selectedPoints.add(p.getGp());
+				selectedPoints.add(p);
 			}
 		}
 	}
