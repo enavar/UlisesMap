@@ -165,7 +165,6 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return comments;
-
 	}
 	
 	public static ArrayList<Valoration> convertStringToValorations(String arrayValorations) {
@@ -221,7 +220,6 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return countries;
-			
 	}
 	
 	public static ArrayList<CommentValoration> convertStringToCommentsValorations(String arrayComments) {
@@ -244,6 +242,5 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return comments;
-
 	}
 }

@@ -113,11 +113,11 @@ public class ShowCommentsActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 		// enable or disable add comments/valorations
-		if (responseValoration.equals("true")) {
+		if (responseValoration.equals(Client.TRUE_CHECK)) {
 			rb.setFocusable(false);
 			disableValoration = true;
 		}
-		if (responseComment.equals("true")) {
+		if (responseComment.equals(Client.TRUE_CHECK)) {
 			et.setFocusable(false);
 			disableComment = true;
 		}
