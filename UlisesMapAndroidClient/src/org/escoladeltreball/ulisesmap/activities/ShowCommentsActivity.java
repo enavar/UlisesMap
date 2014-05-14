@@ -91,13 +91,7 @@ public class ShowCommentsActivity extends BaseActivity {
 	 * check if local user has a route comment or valoration in database
 	 */
 	private void checkInsert() {
-		JSONObject check= new JSONObject();
-		try {
-			check.put("routeName", routeName);
-			check.put("userName", userName);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		String check = Converter.convertCheckValoratingToJSONObject(userName, routeName);
 		// send to the server
 		Client checkValoration = new Client(Client.SERVLET_CHECK_VALORATION,true);
 		String responseValoration = "";
