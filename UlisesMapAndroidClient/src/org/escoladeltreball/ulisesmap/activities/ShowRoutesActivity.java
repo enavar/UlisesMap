@@ -33,16 +33,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 	private String pkCity;
 	private Button info;
 	private Button map;
-	private String routeName = "FC Barcelona route";
-	
-	private OnClickListener listener = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			progress.show();
-			new IntentLauncher().execute(v);
-		}
-	};
+	private String routeName = "museum route";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +54,6 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		ShowRoutesAdapter adapter = new ShowRoutesAdapter(routes, layoutInflater);
 		list.setAdapter(adapter);
         list.setTextFilterEnabled(true);
-        Button toMap = (Button) findViewById(R.id.toMapRoute);
-        toMap.setOnClickListener(listener);
 	}
 	
 	/* Inner class */
@@ -121,20 +110,18 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		startActivity(intent);		
 	}
 	
-	/**
-	 * Starts a new activity to show gps map route
-	 */
-	private void intentMapActivity() {
-		Intent intent = new Intent(this, MapActivity.class);
-		startActivity(intent);		
-	}
-	
 	private void clickRoute(View v) {
 		if (v.equals(info)) {
 			Settings.routeName = routeName;
 			intentShowCommentsActivity();
 		} else {
-			intentMapActivity();
+			progress.show();
+			//Starts a new activity to show gps map route
+			Intent intent = new Intent(v.getContext(), MapActivity.class);
+			intent.putExtra("activity", 2);
+			intent.putExtra("selectedPoints", getPointsOfRoute());
+			startActivity(intent);
+			//new IntentLauncher().execute(v);
 		}
 	}
 	
@@ -142,8 +129,8 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		Client client = new Client(Client.SERVLET_POINTS_OF_ROUTE, true);
 		ArrayList<Point> pointsOfRoute = null;
 		try {
-			Log.d("route : ", routes.get(0).getName());
-			String arrayPoints = client.execute(routes.get(0).getName()).get();
+			Log.d("route : ", routeName);
+			String arrayPoints = client.execute(routeName).get();
 			Log.d("route points: ", arrayPoints);
 			pointsOfRoute = Converter.convertStringToPointsOfRoutes(arrayPoints);
 		} catch (InterruptedException e) {

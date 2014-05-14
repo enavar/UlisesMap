@@ -36,6 +36,7 @@ public class MapActivity extends BaseActivity {
 	Polyline roadOverlay;
 	Polyline roadOverlayGps;
 	GPSTracker tracker;
+	private static final int ACTIVITY_POINTS = 1;
 
 	ArrayList<GeoPoint> geoPointsToDraw;
 	ArrayList<Point> selectedPoints;
@@ -52,33 +53,30 @@ public class MapActivity extends BaseActivity {
 		map.setBuiltInZoomControls(true);
 		map.setMultiTouchControls(true);
 
-		int activity = getIntent().getIntExtra("activity", 1);
+		int activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
+		// get an array with points from ShowPointsActivity
+		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
+				"selectedPoints");
 
-		if (activity == 1) {
-
-			// get an array with points from ShowPointsActivity
-			selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra("selectedPoints");
-
+		//Points Activity
+		if (activity == ACTIVITY_POINTS) {
 			// draw the road
-			try {
-				ArrayList<GeoPoint> selectedGeoPoints = getGeoPoints(selectedPoints);
-				getRoadAsync(selectedGeoPoints);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
+			ArrayList<GeoPoint> selectedGeoPoints = getGeoPoints(selectedPoints);
+			getRoadAsync(selectedGeoPoints);
+		//Route Activity
 		} else {
-			selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra("selectedPoints");
-			try {
-				geoPointsToDraw = getGeoPoints(selectedPoints);
-				road = new	 UpdateRoadTask().execute(geoPointsToDraw).get();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
+			geoPointsToDraw = getGeoPoints(selectedPoints);
 		}
+		try {
+			road = new UpdateRoadTask().execute(geoPointsToDraw).get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// instantiate other items on the map
 		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
@@ -112,11 +110,15 @@ public class MapActivity extends BaseActivity {
 
 		case R.id.navigations:
 			if (item.isChecked()) {
+				item.setChecked(false);
+				Settings.navigations = false;
 				map.getOverlays().clear();
 				map.invalidate();
 				initMapItems();
 				updateUIWithRoad(roadOverlay, road, Color.BLUE);
 			} else {
+				item.setChecked(true);
+				Settings.navigations = true;
 				makeNavigationMarkers(road);
 				if (Settings.gps) {
 					makeNavigationMarkers(roadGps);
@@ -148,7 +150,7 @@ public class MapActivity extends BaseActivity {
 	public boolean changeRouteType(MenuItem item) {
 		changeRouteStatus(item);
 		map.getOverlays().clear();
-		map.invalidate();		
+		map.invalidate();
 		try {
 			road = new UpdateRoadTask().execute(geoPointsToDraw).get();
 		} catch (InterruptedException e) {
@@ -169,24 +171,23 @@ public class MapActivity extends BaseActivity {
 			@SuppressWarnings("unchecked")
 			ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
 
+			// Sending request for get specific roadManager
+			roadManager = new MapQuestRoadManager(
+					"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
+
 			if (Settings.routeType == R.id.car) {
 				// for quickest drive time route.
-				roadManager = new OSRMRoadManager();
 			} else if (Settings.routeType == R.id.walk) {
-				// Sending request for get specific roadManager
-				roadManager = new MapQuestRoadManager(
-						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
 				// for get walking route
 				roadManager.addRequestOption("routeType=pedestrian");
 			} else if (Settings.routeType == R.id.bicycle) {
-				// Sending request for get specific roadManager
-				roadManager = new MapQuestRoadManager(
-						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
 				// for get bicycle route
 				roadManager.addRequestOption("routeType=bicycle");
+			} else if (Settings.routeType == R.id.bicycle) {
+				// for get walking and transport route
+				roadManager.addRequestOption("routeType=multimodal");
 			} else {
-				roadManager = new MapQuestRoadManager(
-						"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
+				// used if we get null
 				roadManager.addRequestOption("routeType=pedestrian");
 			}
 
@@ -214,7 +215,7 @@ public class MapActivity extends BaseActivity {
 
 			// set zoom and centered a map
 			IMapController mapController = map.getController();
-			mapController.setZoom(18);
+			mapController.setZoom(14);
 			mapController.setCenter(geoPointsToDraw.get(0));
 			map.invalidate();
 		}
@@ -229,8 +230,7 @@ public class MapActivity extends BaseActivity {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	public void getRoadAsync(ArrayList<GeoPoint> selectedGeoPoints)
-			throws InterruptedException, ExecutionException {
+	public void getRoadAsync(ArrayList<GeoPoint> selectedGeoPoints) {
 		geoPointsToDraw = new ArrayList<GeoPoint>();
 		// check if we have just two points
 		if (selectedGeoPoints.size() < 3) {
@@ -244,14 +244,14 @@ public class MapActivity extends BaseActivity {
 			geoPointsToDraw.add(startPoint);
 			selectedGeoPoints.remove(startPoint);
 			for (int i = 0; i < selectedGeoPoints.size(); i++) {
-				GeoPoint nextPoint = getNearestPoint(startPoint, selectedGeoPoints);
+				GeoPoint nextPoint = getNearestPoint(startPoint,
+						selectedGeoPoints);
 				geoPointsToDraw.add(nextPoint);
 				startPoint = nextPoint;
 				selectedGeoPoints.remove(nextPoint);
 			}
 			geoPointsToDraw.add(selectedGeoPoints.get(0));
 		}
-		road = new UpdateRoadTask().execute(geoPointsToDraw).get();
 	}
 
 	public void makeNavigationMarkers(Road road) {
@@ -361,7 +361,7 @@ public class MapActivity extends BaseActivity {
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
 	}
-	
+
 	public ArrayList<GeoPoint> getGeoPoints(ArrayList<Point> points) {
 		ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
 		for (int i = 0; i < points.size(); i++) {
