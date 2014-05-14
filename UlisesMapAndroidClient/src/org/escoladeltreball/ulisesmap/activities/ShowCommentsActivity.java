@@ -25,8 +25,6 @@ import android.widget.Toast;
 public class ShowCommentsActivity extends BaseActivity {
 	
 	private ArrayList<CommentValoration> comments;
-	private JSONObject insertComment = new JSONObject();
-	private JSONObject insertValoration = new JSONObject();
 	private String userName;
 	private String routeName; 
 	private boolean disableComment = false;
@@ -55,23 +53,23 @@ public class ShowCommentsActivity extends BaseActivity {
 	public void addCommentValoration(View view) throws JSONException, InterruptedException, ExecutionException {
 		Client clientComment = new Client(Client.SERVLET_COMMENT_INSERT, true);
 		Client clientValoration = new Client(Client.SERVLET_VALORATION_INSERT, true);
-		String response = "";
+		String response = "" + R.string.sorry;
 		if (!disableComment && !disableValoration) {
 			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
-			response = clientComment.execute(out).get();
+			clientComment.execute(out).get();
 			out = Converter.convertValorationToJSONObject(rb.getRating(), userName, routeName);
-			response = response + clientValoration.execute(out).get();
-			disableComment = true;
-			disableValoration = true;
+			clientValoration.execute(out).get();
+			response = "" + R.string.ok_comment_valoration;
 		} else if (!disableComment) {
 			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
-			response = clientComment.execute(out).get();
-			disableComment = true;
+			clientComment.execute(out).get();
+			response = "" + R.string.ok_comment;
 		} else if (!disableValoration) {
 			out = Converter.convertValorationToJSONObject((int)rb.getRating(), userName, routeName);
-			response = clientValoration.execute(out).get();
-			disableValoration = true;
-		}
+			clientValoration.execute(out).get();
+			response = "" + R.string.ok_valoration;
+		} 
+		
 		Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
 	}
 	
