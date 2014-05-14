@@ -9,6 +9,7 @@ public class Settings {
 	public static int routeType = R.id.walk;
 	public static boolean gps = false;
 	public static boolean navigations = false;
+	public static boolean hideLogo = false;
 	public static String userName = "";
 	public static String routeName = "";
 

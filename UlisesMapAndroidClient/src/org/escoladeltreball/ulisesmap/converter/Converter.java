@@ -51,10 +51,22 @@ public class Converter {
 		return jsonObjectComment.toString();
 	}
 	
+	
 	public static String convertValorationToJSONObject(double valoration, String nameUser, String nameRoute) {
 		JSONObject jsonObjectValoration = new JSONObject();
 		try {
 			jsonObjectValoration.put(Valoration.FIELD_VALORATION, valoration);
+			jsonObjectValoration.put(Valoration.FIELD_USER, nameUser);
+			jsonObjectValoration.put(Valoration.FIELD_ROUTE, nameRoute);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObjectValoration.toString();
+	}
+	
+	public static String convertCheckValoratingToJSONObject(String nameUser, String nameRoute) {
+		JSONObject jsonObjectValoration = new JSONObject();
+		try {
 			jsonObjectValoration.put(Valoration.FIELD_USER, nameUser);
 			jsonObjectValoration.put(Valoration.FIELD_ROUTE, nameRoute);
 		} catch (JSONException e) {
