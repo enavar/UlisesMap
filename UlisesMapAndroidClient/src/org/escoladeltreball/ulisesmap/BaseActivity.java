@@ -36,6 +36,7 @@ public class BaseActivity extends Activity {
 		editor.putInt("routeType", Settings.routeType);
 		editor.putBoolean("gps", Settings.gps);
 		editor.putBoolean("gps", Settings.navigations);
+		editor.putBoolean("hideLogo", Settings.hideLogo);
 		editor.commit();
 	}
 
@@ -48,6 +49,7 @@ public class BaseActivity extends Activity {
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
 		Settings.gps = prefs.getBoolean("gps", false);
 		Settings.navigations = prefs.getBoolean("navigations", false);
+		Settings.navigations = prefs.getBoolean("hideLogo", false);
 		// Initiating Menu XML file (menu.xml)
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu, menu);
@@ -101,6 +103,15 @@ public class BaseActivity extends Activity {
 		case R.id.menu_exit:
 			moveTaskToBack(true);
 			return true;
+		case R.id.hideLogo:
+			if (item.isChecked()) {
+				item.setChecked(false);
+				Settings.hideLogo = false;
+			} else {
+				item.setChecked(true);
+				Settings.hideLogo = true;
+			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -120,6 +131,8 @@ public class BaseActivity extends Activity {
 		if (Settings.gps) menu.findItem(R.id.myGPS).setChecked(true);
 		else menu.findItem(R.id.myGPS).setChecked(false);
 		if (Settings.navigations) menu.findItem(R.id.navigations).setChecked(true);
+		else menu.findItem(R.id.navigations).setChecked(false);
+		if (Settings.hideLogo) menu.findItem(R.id.menu_logo).setChecked(true);
 		else menu.findItem(R.id.navigations).setChecked(false);
 		
 	}

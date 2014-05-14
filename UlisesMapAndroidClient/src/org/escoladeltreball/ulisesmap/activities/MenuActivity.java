@@ -9,6 +9,7 @@ import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
+import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,6 +21,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MenuActivity extends BaseActivity implements OnClickListener, OnItemSelectedListener {
 	
@@ -48,6 +50,8 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		spCountries.setOnItemSelectedListener(this);
 		btnPoints.setOnClickListener(this);
 		btnRoutes.setOnClickListener(this);	
+		Toast.makeText(this, "name: " + Settings.userName, Toast.LENGTH_SHORT).show();
+
 	}
 
 	@Override

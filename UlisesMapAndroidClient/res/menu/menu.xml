@@ -49,5 +49,16 @@
         android:id="@+id/menu_exit"
         android:title="Exit">
     </item>
+    <item
+        android:id="@+id/menu_logo"
+        android:title="Logo">
+        <menu>
+            <group android:checkableBehavior="all" >
+                <item
+                    android:id="@+id/hideLogo"
+                    android:title="Skip Logo activity"/>
+            </group>
+        </menu>
+    </item>
 
 </menu>
