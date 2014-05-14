@@ -91,6 +91,9 @@ public class BaseActivity extends Activity {
 		case R.id.walk:
 			changeRouteStatus(item);
 			return true;
+		case R.id.walk_transport:
+			changeRouteStatus(item);
+			return true;
 		case R.id.myGPS:
 			if (item.isChecked()) {
 				item.setChecked(false);

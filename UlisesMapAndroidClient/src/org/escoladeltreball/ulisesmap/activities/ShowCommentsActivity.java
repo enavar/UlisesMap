@@ -105,12 +105,8 @@ public class ShowCommentsActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 		// enable or disable add comments/valorations
-		if (responseValoration.equals("true")) {
-			disableValoration = true;
-		}
-		if (responseComment.equals("true")) {
-			disableComment = true;
-		}
+		disableValoration = responseValoration.equals(Client.TRUE_CHECK);
+		disableComment = responseComment.equals(Client.TRUE_CHECK);
 	}
 
 }
