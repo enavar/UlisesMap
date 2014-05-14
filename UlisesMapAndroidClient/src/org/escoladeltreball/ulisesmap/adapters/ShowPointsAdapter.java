@@ -22,7 +22,7 @@ public class ShowPointsAdapter extends BaseAdapter {
 
 	public static class ViewHolder {
 		protected ImageView image;
-		protected TextView name, coord, description;
+		protected TextView name, street, description;
 		protected CheckBox chBox;
 	}
 
@@ -66,7 +66,7 @@ public class ShowPointsAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.image = (ImageView) convertView.findViewById(R.id.image);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
-			holder.coord = (TextView) convertView.findViewById(R.id.coord);
+			holder.street = (TextView) convertView.findViewById(R.id.street);
 			holder.description = (TextView) convertView
 					.findViewById(R.id.description);			
 			holder.chBox = (CheckBox) convertView
@@ -88,15 +88,12 @@ public class ShowPointsAdapter extends BaseAdapter {
 		//download image
 		ImageDownloader task = new ImageDownloader(res, holder.image);
 		task.loadBitmap(point.getImage(), holder.image);
-		//UrlImageViewHelper.setUrlDrawable(holder.image, point.getImage());
-		//get the current Point object
-		Point p = points.get(position);
 		//assign values to Point object
 		holder.name.setText(point.getName());
-		holder.coord.setText(point.getGp().toString());
+		holder.street.setText(point.getStreet());
 		holder.description.setText(point.getDescription());
-		holder.chBox.setChecked(p.isSelected());
-		holder.chBox.setTag(p);
+		holder.chBox.setChecked(point.isSelected());
+		holder.chBox.setTag(point);
 		return convertView;
 	}
 

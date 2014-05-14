@@ -10,7 +10,7 @@
         android:id="@+id/selectPoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/coord"
+        android:layout_alignBottom="@+id/street"
         android:layout_alignParentLeft="true" />
 
     <TextView
@@ -32,7 +32,7 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/coord"
+        android:id="@+id/street"
         android:layout_width="fill_parent"
         android:layout_height="25sp"
         android:layout_above="@+id/description"
