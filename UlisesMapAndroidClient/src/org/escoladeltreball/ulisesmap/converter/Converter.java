@@ -51,7 +51,7 @@ public class Converter {
 		return jsonObjectComment.toString();
 	}
 	
-	public static String convertValorationToJSONObject(int valoration, String nameUser, String nameRoute) {
+	public static String convertValorationToJSONObject(double valoration, String nameUser, String nameRoute) {
 		JSONObject jsonObjectValoration = new JSONObject();
 		try {
 			jsonObjectValoration.put(Valoration.FIELD_VALORATION, valoration);

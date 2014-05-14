@@ -57,18 +57,18 @@ public class ShowCommentsActivity extends BaseActivity {
 		Client clientValoration = new Client(Client.SERVLET_VALORATION_INSERT, true);
 		String response = "";
 		if (!disableComment && !disableValoration) {
-			setInsertComment();
+			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
 			response = clientComment.execute(out).get();
-			setInsertValoration();
+			out = Converter.convertValorationToJSONObject(rb.getRating(), userName, routeName);
 			response = response + clientValoration.execute(out).get();
 			disableComment = true;
 			disableValoration = true;
 		} else if (!disableComment) {
-			setInsertComment();
+			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
 			response = clientComment.execute(out).get();
 			disableComment = true;
 		} else if (!disableValoration) {
-			setInsertValoration();
+			out = Converter.convertValorationToJSONObject((int)rb.getRating(), userName, routeName);
 			response = clientValoration.execute(out).get();
 			disableValoration = true;
 		}
@@ -114,27 +114,11 @@ public class ShowCommentsActivity extends BaseActivity {
 		}
 		// enable or disable add comments/valorations
 		if (responseValoration.equals("true")) {
-			rb.setFocusable(false);
 			disableValoration = true;
 		}
 		if (responseComment.equals("true")) {
-			et.setFocusable(false);
 			disableComment = true;
 		}
-	}
-	
-	private void setInsertComment() throws JSONException {
-		insertComment.put("fk_user", userName);
-		insertComment.put("fk_route", routeName);
-		insertComment.put("def",et.getText().toString());
-		out = insertComment.toString();
-	}
-	
-	private void setInsertValoration() throws JSONException {
-		insertValoration.put("fk_user", userName);
-		insertValoration.put("fk_route", routeName);
-		insertValoration.put("def", rb.getNumStars());
-		out = insertValoration.toString();
 	}
 
 }

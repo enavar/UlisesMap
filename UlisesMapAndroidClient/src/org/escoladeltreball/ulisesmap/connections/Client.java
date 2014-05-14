@@ -21,7 +21,7 @@ public class Client extends AsyncTask<String, Integer, String> {
 	public static final String SERVLET_COMMENT_AND_VALORATION = "ServletCommentValoration";
 	public static final String SERVLET_COMMENT_INSERT = "ServletInsertComment";
 	public static final String SERVLET_CHECK_COMMENT = "ServletCheckComment";
-	public static final String SERVLET_VALORATION_INSERT = "ServletInserValoration";
+	public static final String SERVLET_VALORATION_INSERT = "ServletInsertValoration";
 	public static final String SERVLET_CHECK_VALORATION = "ServletCheckValoration";
 	public static final String SERVLET_COUNTRIES = "ServletCities";
 	public static final String SERVLET_CITIES = "ServletCities";
