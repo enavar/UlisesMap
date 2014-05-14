@@ -36,4 +36,9 @@
 	<string name="new_comment">Add a new comment text</string>
 	<string name="error_connection">Error connection</string>
 	<string name="error_not_checked_user">Datas incorrects</string>
+	<string name="sorry">Sorry, only one coment and valoration for user</string>
+	<string name="ok_comment">Your comment has been added</string>
+	<string name="ok_valoration">Your valoration has been added</string>
+	<string name="ok_comment_valoration">Your comment and valoration has been added</string>
+	
 </resources>
