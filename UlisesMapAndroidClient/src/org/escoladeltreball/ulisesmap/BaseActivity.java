@@ -92,7 +92,9 @@ public class BaseActivity extends Activity {
 				Settings.gps = true;
 			}
 			return true;
-
+		case R.id.menu_exit:
+			moveTaskToBack(true);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
