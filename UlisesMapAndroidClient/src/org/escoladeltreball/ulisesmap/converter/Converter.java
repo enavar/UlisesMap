@@ -51,10 +51,32 @@ public class Converter {
 		return jsonObjectComment.toString();
 	}
 	
+	public static String convertCommentToJSONObject(String nameUser, String nameRoute) {
+		JSONObject jsonObjectComment = new JSONObject();
+		try {
+			jsonObjectComment.put(Comment.FIELD_USER, nameUser);
+			jsonObjectComment.put(Comment.FIELD_ROUTE, nameRoute);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObjectComment.toString();
+	}
+	
 	public static String convertValorationToJSONObject(int valoration, String nameUser, String nameRoute) {
 		JSONObject jsonObjectValoration = new JSONObject();
 		try {
 			jsonObjectValoration.put(Valoration.FIELD_VALORATION, valoration);
+			jsonObjectValoration.put(Valoration.FIELD_USER, nameUser);
+			jsonObjectValoration.put(Valoration.FIELD_ROUTE, nameRoute);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return jsonObjectValoration.toString();
+	}
+	
+	public static String convertValorationToJSONObject(String nameUser, String nameRoute) {
+		JSONObject jsonObjectValoration = new JSONObject();
+		try {
 			jsonObjectValoration.put(Valoration.FIELD_USER, nameUser);
 			jsonObjectValoration.put(Valoration.FIELD_ROUTE, nameRoute);
 		} catch (JSONException e) {
