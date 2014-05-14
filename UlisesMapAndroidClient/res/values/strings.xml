@@ -27,7 +27,6 @@
 	<string name="userExist">User already exist</string>
 	<string name="errorSendingData">Error inserting user in database</string>
 	
-<<<<<<< HEAD
 	<!-- ShowRoutes -->
 	<string name="button_info_route">info</string>
 	<string name="noSelectedRoute">Please select a route!</string>
@@ -35,8 +34,6 @@
 	<!-- ShowComments -->
 	<string name="add_comment">Add</string>
 	<string name="new_comment">Add a new comment text</string>
-=======
 	<string name="error_connection">Error connection</string>
 	<string name="error_not_checked_user">Datas incorrects</string>
->>>>>>> branch 'master' of https://github.com/enavar/UlisesMap.git
 </resources>

@@ -16,10 +16,7 @@ import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.content.Context;
 import android.content.Intent;
-<<<<<<< HEAD
-=======
 import android.os.AsyncTask;
->>>>>>> branch 'master' of https://github.com/enavar/UlisesMap.git
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +49,6 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showroutes);
 		Bundle bundle = getIntent().getExtras();
-<<<<<<< HEAD
 		pkCity = bundle.getString(City.FIELD_PRIMARY_KEY);
 		String nameCity = bundle.getString(City.FIELD_NAME);
 		TextView city = (TextView) findViewById(R.id.city);
@@ -61,10 +57,6 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		map = (Button) findViewById(R.id.toMapRoute);
 		info.setOnClickListener(this);
 		map.setOnClickListener(this);
-=======
-		pk_city = bundle.getString(City.FIELD_PRIMARY_KEY);
-		String nameCity = bundle.getString(City.FIELD_NAME);
->>>>>>> branch 'master' of https://github.com/enavar/UlisesMap.git
 		ListView list = (ListView) findViewById(R.id.listViewRoutes);
 		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		getRoutes();
