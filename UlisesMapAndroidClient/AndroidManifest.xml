@@ -33,6 +33,10 @@
 			android:label="@string/title_activity_login" >
 		</activity>
 		<activity
+			android:name="org.escoladeltreball.ulisesmap.activities.ShowCommentsActivity"
+			android:label="@string/title_activity_comments" >
+		</activity>
+		<activity
 			android:name="org.escoladeltreball.ulisesmap.activities.MenuActivity"
 			android:label="@string/title_activity_menu" >
 		</activity>

@@ -8,29 +8,38 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ShowRoutesActivity" >
-    
-	<Spinner
-    	android:id="@+id/cityRoute"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_alignParentLeft="true"
-    	android:layout_alignParentTop="true"
-    	android:layout_toLeftOf="@+id/toMapRoute" />
 	
 	<ListView
-        android:id="@+id/listViewRoutes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cityRoute" />
-	
+	    android:id="@+id/listViewRoutes"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/toMapRoute" />
+
+	<TextView
+	    android:id="@+id/city"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/toMapRoute"
+	    android:layout_alignLeft="@+id/listViewRoutes"
+	    android:layout_alignParentTop="true"
+	    android:layout_toLeftOf="@+id/button_info_route"
+	    android:gravity="center" />
+
 	<Button
-        android:id="@+id/toMapRoute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/cityRoute"
-        android:layout_alignBottom="@id/cityRoute"
-        android:layout_alignRight="@id/listViewRoutes"
-        android:text="@string/button_map" />	  
-	  
+	    android:id="@+id/toMapRoute"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_alignRight="@+id/listViewRoutes"
+	    android:text="@string/button_map" />
+
+	<Button
+	    android:id="@+id/button_info_route"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/toMapRoute"
+	    android:layout_alignBottom="@+id/toMapRoute"
+	    android:layout_toLeftOf="@+id/toMapRoute"
+	    android:text="@string/button_info_route" />
     
 </RelativeLayout>

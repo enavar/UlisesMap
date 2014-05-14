@@ -1,53 +1,44 @@
-<RelativeLayout 
-	xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ShowRoutesActivity" >
-    
-    <LinearLayout
-        android:id="@+id/titleRoute"
+
+    <RadioButton
+        android:id="@+id/selectRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/viewDescriptionRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ratingValue"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/viewNameRoute"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        
-    <RadioButton
-	    android:id="@+id/selectRoute"
-	    android:layout_width="0dp"
-	    android:layout_height="wrap_content"
-	    android:layout_weight=".1"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentTop="true" />
+        android:layout_alignBottom="@+id/selectRoute"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/ratingValue"
+        android:layout_toRightOf="@+id/selectRoute"
+        android:gravity="center" />
 
-	<RatingBar
-	    android:id="@+id/ratingValue"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentTop="true"
-	    android:layout_gravity="center"
-	    style="?android:attr/ratingBarStyleSmall"
-	    android:numStars="5"
-	    android:stepSize="1.0"
-	    android:isIndicator="true" />
-
-	<TextView
-	    android:id="@+id/viewNameRoute"
-	    android:layout_width="0dp"
-	    android:layout_height="wrap_content"
-	    android:layout_weight=".4"
-	    android:layout_gravity="right"
-	    android:layout_alignParentRight="true"
-	    android:layout_alignParentTop="true" />
-        
-        
-    </LinearLayout>
-
-	<TextView
-	    android:id="@+id/viewDescriptionRoute"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/titleRoute"
-	    android:layout_toRightOf="@+id/selectRoute" />
+    <RatingBar
+        android:id="@+id/ratingValue"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/viewNameRoute"
+        android:layout_alignParentRight="true"
+        android:isIndicator="true"
+        android:numStars="5" />
 
 </RelativeLayout>

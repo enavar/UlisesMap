@@ -4,6 +4,7 @@
 	<string name="app_name">UlisesMap</string>
 	<string name="action_settings">Settings</string>
 	<string name="title_activity_login">Login Sign Up</string>
+	<string name="title_activity_comments">Comments and Valorations</string>
 
 	<string name="check_anonymous">Anonymous</string>
 	<string name="button_enter">Enter</string>
@@ -16,6 +17,7 @@
 	<string name="title_activity_register">RegisterActivity</string>
 	<string name="title_activity_show_routes">ShowRoutesActivity</string>
 	<string name="mainTitle">Ulises Map</string>
+	
 	<!-- RegisterActivity -->
 	<string name="edit_login">user</string>
 	<string name="edit_email">email</string>
@@ -25,4 +27,12 @@
 	<string name="wrongPass">Try again</string>
 	<string name="userExist">User already exist</string>
 	<string name="errorSendingData">Error inserting user in database</string>
+	
+	<!-- ShowRoutes -->
+	<string name="button_info_route">info</string>
+	<string name="noSelectedRoute">Please select a route!</string>
+	
+	<!-- ShowComments -->
+	<string name="add_comment">Add</string>
+	<string name="new_comment">Add a new comment text</string>
 </resources>

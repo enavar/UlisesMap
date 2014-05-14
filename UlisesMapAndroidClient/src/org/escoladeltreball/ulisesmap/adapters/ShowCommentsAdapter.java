@@ -34,7 +34,7 @@ public class ShowCommentsAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		return comments.indexOf(position);
+		return comments.get(position);
 	}
 
 	@Override
@@ -59,6 +59,7 @@ public class ShowCommentsAdapter extends BaseAdapter {
 		holder.userName.setText(comval.getUser());
 		holder.valoration.setRating(comval.getVal());
 		holder.description.setText(comval.getCom());
+		
 		return convertView;
 	}
 

@@ -31,6 +31,9 @@ public class CommentValoration {
 		this.user = user;
 	}	
 	
+	public CommentValoration() {
+		
+	}
 	
 
 }

@@ -17,53 +17,62 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class ShowCommentsActivity extends BaseActivity {
 	
 	private ArrayList<CommentValoration> comments;
-	private JSONObject insertComment;
+	private JSONObject insertComment = new JSONObject();
+	private JSONObject insertValoration = new JSONObject();
 	private String userName;
-	private String routeName;
+	private String routeName; 
+	private boolean disableComment = false;
+	private boolean disableValoration = false;
+	private EditText et;
+	private RatingBar rb;
+	private String out;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showcomments);
-		ListView list = (ListView) findViewById(R.id.listView1);
-		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		ShowCommentsAdapter adapter = new ShowCommentsAdapter(comments, layoutInflater);
 		userName = Settings.userName;
 		routeName = Settings.routeName;
+		et = (EditText) findViewById(R.id.textView1);
+		rb = (RatingBar) findViewById(R.id.ratingBar1);
+		checkInsert();
+		ListView list = (ListView) findViewById(R.id.listView1);
+		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		getCommentValoration();
+		ShowCommentsAdapter adapter = new ShowCommentsAdapter(comments, layoutInflater);
 		list.setAdapter(adapter);
         list.setTextFilterEnabled(true);
 	}
 	
 	public void addCommentValoration(View view) throws JSONException, InterruptedException, ExecutionException {
-		// capture user and route from Settings
-		insertComment.put("fk_user", userName);
-		insertComment.put("fk_route", routeName);
-		// prepare client output
-		Client client = null;
-		if (view.equals(R.id.addComment)) {
-			TextView tv = (TextView) findViewById(R.id.textView1);
-			String commentText = tv.getText().toString();
-			insertComment.put("def", commentText);
-			client = new Client(Client.SERVLET_COMMENT_INSERT, true);
-			
-		} else {
-			RatingBar rb = (RatingBar) findViewById(R.id.ratingBar1);
-			int valoration = rb.getNumStars();
-			insertComment.put("def", valoration);
-			client = new Client(Client.SERVLET_VALORATION_INSERT, true);
+		Client clientComment = new Client(Client.SERVLET_COMMENT_INSERT, true);
+		Client clientValoration = new Client(Client.SERVLET_VALORATION_INSERT, true);
+		String response = "";
+		if (!disableComment && !disableValoration) {
+			setInsertComment();
+			response = clientComment.execute(out).get();
+			setInsertValoration();
+			response = response + clientValoration.execute(out).get();
+			disableComment = true;
+			disableValoration = true;
+		} else if (!disableComment) {
+			setInsertComment();
+			response = clientComment.execute(out).get();
+			disableComment = true;
+		} else if (!disableValoration) {
+			setInsertValoration();
+			response = clientValoration.execute(out).get();
+			disableValoration = true;
 		}
-		// output to server
-		String out = insertComment.toString();
-		client.execute(out).get();
-		
+		Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void getCommentValoration() {
@@ -76,6 +85,56 @@ public class ShowCommentsActivity extends BaseActivity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * check if local user has a route comment or valoration in database
+	 */
+	private void checkInsert() {
+		JSONObject check= new JSONObject();
+		try {
+			check.put("routeName", routeName);
+			check.put("userName", userName);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		// send to the server
+		Client checkValoration = new Client(Client.SERVLET_CHECK_VALORATION,true);
+		String responseValoration = "";
+		Client checkComment = new Client(Client.SERVLET_CHECK_COMMENT,true);
+		String responseComment = "";
+		String out = check.toString();
+		try {
+			responseComment = checkComment.execute(out).get();
+			responseValoration = checkValoration.execute(out).get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		// enable or disable add comments/valorations
+		if (responseValoration.equals("true")) {
+			rb.setFocusable(false);
+			disableValoration = true;
+		}
+		if (responseComment.equals("true")) {
+			et.setFocusable(false);
+			disableComment = true;
+		}
+	}
+	
+	private void setInsertComment() throws JSONException {
+		insertComment.put("fk_user", userName);
+		insertComment.put("fk_route", routeName);
+		insertComment.put("def",et.getText().toString());
+		out = insertComment.toString();
+	}
+	
+	private void setInsertValoration() throws JSONException {
+		insertValoration.put("fk_user", userName);
+		insertValoration.put("fk_route", routeName);
+		insertValoration.put("def", rb.getNumStars());
+		out = insertValoration.toString();
 	}
 
 }
