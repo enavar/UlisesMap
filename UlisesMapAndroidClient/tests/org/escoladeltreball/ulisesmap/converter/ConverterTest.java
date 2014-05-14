@@ -1,4 +1,4 @@
-package org.escoladeltreball.ulisesmap.converter;
+/**package org.escoladeltreball.ulisesmap.converter;
 
 import java.util.ArrayList;
 
@@ -58,4 +58,4 @@ public class ConverterTest extends TestCase {
 		assertEquals(routes, routes02);
 	}
 
-}
+}**/

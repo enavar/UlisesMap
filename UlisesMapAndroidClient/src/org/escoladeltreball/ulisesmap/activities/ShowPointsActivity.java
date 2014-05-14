@@ -11,10 +11,10 @@ import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
 import org.escoladeltreball.ulisesmap.model.Point;
-import org.osmdroid.util.GeoPoint;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +26,7 @@ import android.widget.TextView;
 public class ShowPointsActivity extends BaseActivity implements OnClickListener {
 
 	private ArrayList<Point> points;
-	private ArrayList<GeoPoint> selectedPoints;
+	private ArrayList<Point> selectedPoints;
 	private Button map;
 	private String pk_city;
 
@@ -50,6 +50,33 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		list.setTextFilterEnabled(true);
 		map.setOnClickListener(this);
 	}
+	
+	/* Inner class */
+	
+	private class IntentLauncher extends AsyncTask<String, Void, String> {
+		
+		@Override
+		protected String doInBackground(String... s) {
+			getSelectedPoints();
+			Intent intent = new Intent(map.getContext(), MapActivity.class);
+			intent.putExtra("selectedPoints", selectedPoints);
+			startActivity(intent);
+			return null;
+		}
+		
+		 @Override
+	        protected void onPostExecute(String result) {
+			 progress.dismiss();
+	        }		
+	}
+	
+	/* Interface method */
+
+	@Override
+	public void onClick(View v) {
+		progress.show();
+		new IntentLauncher().execute();	
+	}
 
 	/* Methods */
 
@@ -57,11 +84,11 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 	 * Create an array with selected points
 	 */
 	private void getSelectedPoints() {
-		selectedPoints = new ArrayList<GeoPoint>();
+		selectedPoints = new ArrayList<Point>();
 		for (int i = 0; i < points.size(); i++) {
 			Point p = points.get(i);
 			if (p.isSelected()) {
-				selectedPoints.add(p.getGp());
+				selectedPoints.add(p);
 			}
 		}
 	}
@@ -77,35 +104,4 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 			e.printStackTrace();
 		}
 	}
-
-	private void getTestPoints() {
-		points = new ArrayList<Point>();
-		GeoPoint gp1 = new GeoPoint(41.4144948, 2.152694);
-		GeoPoint gp2 = new GeoPoint(41.3847092, 2.175827);
-		GeoPoint gp3 = new GeoPoint(41.391646, 2.180271);
-		GeoPoint gp4 = new GeoPoint(41.4035707, 2.1744722);
-		String image = "http://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Sagrada_Familia_01.jpg/330px-Sagrada_Familia_01.jpg";
-		Point pG = new Point("parkGuell", gp1, null, null,
-				"http://wiam-ulisesmap.rhcloud.com/images/catedral.jpg", "desc");
-		Point cathedral = new Point("Cathedral", gp2, null, null,
-				"http://wiam2-ulisesmap.rhcloud.com/images/catedral.jpg",
-				"desc");
-		Point arc = new Point("Arc de Triomf", gp3, null, null,
-				"http://wiam2-ulisesmap.rhcloud.com/images/arc.jpg", "desc");
-		Point sf = new Point("Sagrada Familia", gp4, null, null, image, "desc");
-
-		points.add(pG);
-		points.add(cathedral);
-		points.add(arc);
-		points.add(sf);
-	}
-
-	@Override
-	public void onClick(View v) {
-		getSelectedPoints();
-		Intent intent = new Intent(map.getContext(), MapActivity.class);
-		intent.putExtra("selectedPoints", selectedPoints);
-		startActivity(intent);		
-	}
-
 }

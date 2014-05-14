@@ -46,11 +46,11 @@ public class Client extends AsyncTask<String, Integer, String> {
 			URL url = new URL(myURL);
 			URLConnection connection = url.openConnection();
 			connection.setDoOutput(true);
-			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+			OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream(), "UTF8");
 			String message = (sendMessage) ? String[0].toString() : FALSE_CHECK;
 			out.write(message);
 			out.close();
-			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF8"));
 			response = in.readLine();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();

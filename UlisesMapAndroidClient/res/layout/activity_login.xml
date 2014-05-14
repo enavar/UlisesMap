@@ -16,7 +16,6 @@
 		android:inputType="text"
 		android:hint="@string/edit_login"
 		/>
-
 	<Button
 	    android:id="@+id/buttonRegister"
 	    android:layout_width="match_parent"

@@ -25,8 +25,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		this.res = res;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		this.bmImageReferences = new WeakReference<ImageView>(imageView);
-		mPlaceHolderBitmap = BitmapFactory.decodeResource(res,
-				R.drawable.ic_launcher);
+		mPlaceHolderBitmap = BitmapFactory.decodeResource(res, R.drawable.upload);
 	}
 	
 	/* Overrided methods*/
