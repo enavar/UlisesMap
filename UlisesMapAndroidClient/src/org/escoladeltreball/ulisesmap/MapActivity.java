@@ -34,8 +34,8 @@ public class MapActivity extends BaseActivity {
 	Polyline roadOverlay;
 	Polyline roadOverlayGps;
 	GPSTracker tracker;
+	RoadBuilder roadBuilder;
 	private static final int ACTIVITY_POINTS = 1;
-	int activity;
 
 	ArrayList<GeoPoint> geoPointsToDraw;
 	ArrayList<Point> selectedPoints;
@@ -52,18 +52,19 @@ public class MapActivity extends BaseActivity {
 		map.setBuiltInZoomControls(true);
 		map.setMultiTouchControls(true);
 
-		activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
+		int activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
 		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
 		geoPointsToDraw = getGeoPoints(selectedPoints);
 		// Points Activity
 		if (activity == ACTIVITY_POINTS) {
-			road = new RoadBuilder(geoPointsToDraw, false).getRoad();
+			roadBuilder = new RoadBuilder(geoPointsToDraw, false);
+			roadBuilder.orderGeoPoints();
 		} else {
-			road = new RoadBuilder(geoPointsToDraw, true).getRoad();
+			roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		}
-
+		road = roadBuilder.getRoad();
 		// instantiate other items on the map
 		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
@@ -138,11 +139,7 @@ public class MapActivity extends BaseActivity {
 		changeRouteStatus(item);
 		map.getOverlays().clear();
 		map.invalidate();
-		if (activity == ACTIVITY_POINTS) {
-			road = new RoadBuilder(geoPointsToDraw, false).getRoad();
-		} else {
-			road = new RoadBuilder(geoPointsToDraw, true).getRoad();
-		}
+		road = roadBuilder.getRoad();
 		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
 		return true;
@@ -227,11 +224,7 @@ public class MapActivity extends BaseActivity {
 		ArrayList<GeoPoint> ar = new ArrayList<GeoPoint>();
 		ar.add(a);
 		ar.add(b);
-		if (activity == ACTIVITY_POINTS) {
-			road = new RoadBuilder(geoPointsToDraw, false).getRoad();
-		} else {
-			road = new RoadBuilder(geoPointsToDraw, true).getRoad();
-		}
+		road = roadBuilder.getRoad();
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
 	}

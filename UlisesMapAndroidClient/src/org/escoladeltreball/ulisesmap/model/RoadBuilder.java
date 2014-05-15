@@ -95,7 +95,8 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 			}
 			geoPointsToDraw.addAll(waypoints);
 		}
-		return geoPointsToDraw;
+		waypoints = geoPointsToDraw;
+		return waypoints;
 	}
 	
 	/**
