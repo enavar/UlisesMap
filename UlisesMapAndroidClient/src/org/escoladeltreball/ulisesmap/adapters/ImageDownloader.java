@@ -49,6 +49,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
 		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
 
+			@SuppressLint("NewApi")
 			@Override
 			protected int sizeOf(String key, Bitmap bitmap) {
 				// The cache size will be measured in kilobytes rather than
