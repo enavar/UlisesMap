@@ -11,9 +11,9 @@ import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.CommentValoration;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +32,16 @@ public class ShowCommentsActivity extends BaseActivity {
 	private EditText et;
 	private RatingBar rb;
 	private String out;
+	private String no_insert_text = null;
+	private double no_insert_value = 0.0;
+	private boolean isAnonim = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showcomments);
 		userName = Settings.userName;
+		isAnonim = userName.equals(null);
 		routeName = Settings.routeName;
 		et = (EditText) findViewById(R.id.textView1);
 		rb = (RatingBar) findViewById(R.id.ratingBar1);
@@ -50,29 +54,48 @@ public class ShowCommentsActivity extends BaseActivity {
         list.setTextFilterEnabled(true);
 	}
 	
+	/**
+	 * Add a comment, valoration to the db
+	 * @param view the button for press
+	 * @throws JSONException
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public void addCommentValoration(View view) throws JSONException, InterruptedException, ExecutionException {
+		// if user is anonim starts the register activity
+		if (isAnonim) {
+			Intent intent = new Intent(this, RegisterActivity.class);
+			startActivity(intent);
+		}
+		// conection to servlet
 		Client clientComment = new Client(Client.SERVLET_COMMENT_INSERT, true);
 		Client clientValoration = new Client(Client.SERVLET_VALORATION_INSERT, true);
-		String response = "" + R.string.sorry;
-		if (!disableComment && !disableValoration) {
-			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
+		String response = getString(R.string.sorry);
+		String text = et.getText().toString();
+		double value = rb.getRating();
+		// conditional posibility for insert in db
+		if (!disableComment && !disableValoration && !text.equals(no_insert_text) && value != no_insert_value) {
+			out = Converter.convertCommentToJSONObject(text, userName, routeName);
 			clientComment.execute(out).get();
-			out = Converter.convertValorationToJSONObject(rb.getRating(), userName, routeName);
+			out = Converter.convertValorationToJSONObject(value, userName, routeName);
 			clientValoration.execute(out).get();
-			response = "" + R.string.ok_comment_valoration;
-		} else if (!disableComment) {
-			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
+			response = getString(R.string.ok_comment_valoration);
+		} else if (!disableComment && !text.equals(no_insert_text)) {
+			out = Converter.convertCommentToJSONObject(text, userName, routeName);
 			clientComment.execute(out).get();
-			response = "" + R.string.ok_comment;
-		} else if (!disableValoration) {
-			out = Converter.convertValorationToJSONObject((int)rb.getRating(), userName, routeName);
+			response = getString(R.string.ok_comment);
+		} else if (!disableValoration && value != no_insert_value) {
+			out = Converter.convertValorationToJSONObject(value, userName, routeName);
 			clientValoration.execute(out).get();
-			response = "" + R.string.ok_valoration;
+			response = getString(R.string.ok_valoration);
 		} 
 		
 		Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
 	}
 	
+	/**
+	 * Gets the comments and valorations from the db and prepare to display in activity
+	 */
 	private void getCommentValoration() {
 		Client client = new Client(Client.SERVLET_COMMENT_AND_VALORATION, true);
 		try {
@@ -105,6 +128,7 @@ public class ShowCommentsActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 		// enable or disable add comments/valorations
+		System.out.println("response " + responseValoration);
 		disableValoration = responseValoration.equals(Client.TRUE_CHECK);
 		disableComment = responseComment.equals(Client.TRUE_CHECK);
 	}

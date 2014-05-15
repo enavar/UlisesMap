@@ -47,6 +47,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		spCountries.setOnItemSelectedListener(this);
 		btnPoints.setOnClickListener(this);
 		btnRoutes.setOnClickListener(this);	
+
 	}
 
 	@Override

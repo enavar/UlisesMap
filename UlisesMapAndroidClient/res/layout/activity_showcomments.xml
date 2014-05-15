@@ -20,7 +20,7 @@
         android:layout_alignRight="@+id/addComment"
         android:layout_below="@+id/ratingBar1"
         android:layout_weight="0.12"
-        android:text="@string/new_comment" />
+        android:hint="@string/new_comment" />
 
     <Button
         android:id="@+id/addComment"
