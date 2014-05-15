@@ -1,17 +1,9 @@
 package org.escoladeltreball.ulisesmap.activities;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.R.drawable;
-import org.escoladeltreball.ulisesmap.R.id;
-import org.escoladeltreball.ulisesmap.R.layout;
 import org.escoladeltreball.ulisesmap.adapters.ImageDownloader;
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.Point;
@@ -30,12 +22,9 @@ import org.osmdroid.views.MapView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -48,7 +37,6 @@ import android.graphics.drawable.Drawable;
 public class MapActivity extends BaseActivity {
 
 	// for MapView
-	private RoadManager roadManager;
 	private Road road;
 	private Road roadGps;
 	private MapView map;
@@ -78,17 +66,17 @@ public class MapActivity extends BaseActivity {
 		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
+		Log.d("points: ", "" +selectedPoints.size());
 		geoPointsToDraw = getGeoPoints(selectedPoints);
+		Log.d("geoPointsToDraw: ", "" +geoPointsToDraw.size());
 
 		// Points Activity
-		if (activity == ACTIVITY_POINTS) {
+		if (activity == ACTIVITY_POINTS && geoPointsToDraw.size() > 2) {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, false);
-			if (geoPointsToDraw.size() > 2) {
-				roadBuilder.orderGeoPoints();
-			}
 		} else {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		}
+		Log.d("geoPointsToDraw 2: ", "" +geoPointsToDraw.size());
 		road = roadBuilder.getRoad();
 		// instantiate other items on the map
 		initMapItems();
@@ -223,7 +211,6 @@ public class MapActivity extends BaseActivity {
 	}
 
 	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
-		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_a);
 		for (int i = 0; i < selectedPoints.size(); i++) {
 			Point point = selectedPoints.get(i);
 			Marker nodeMarker = new Marker(map);
@@ -238,7 +225,7 @@ public class MapActivity extends BaseActivity {
 				Drawable image = new BitmapDrawable(getResources(), bitmap);
 				nodeMarker.setIcon(smallImg);
 				nodeMarker.setImage(image);
-				nodeMarker.setSubDescription(point.getDescription());
+				nodeMarker.setSubDescription(point.getUrl());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {

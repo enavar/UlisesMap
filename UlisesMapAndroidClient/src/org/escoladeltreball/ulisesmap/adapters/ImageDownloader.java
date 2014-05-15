@@ -54,7 +54,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 				// The cache size will be measured in kilobytes rather than
 				// number of items.
 				if (Integer.valueOf(android.os.Build.VERSION.SDK_INT) >= 12)
-		            return bitmap.getByteCount();
+		            return bitmap.getByteCount() / 1024;
 		        else
 		            return (bitmap.getRowBytes() * bitmap.getHeight()) / 1024;
 			}

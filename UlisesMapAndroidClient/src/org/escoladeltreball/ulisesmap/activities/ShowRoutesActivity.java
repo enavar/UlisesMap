@@ -56,14 +56,11 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 	
 	/* Inner class */
 	
-	private class IntentLauncher extends AsyncTask<View, Void, String> {
+	private class IntentLauncher extends AsyncTask<Intent, Void, String> {
 		
 		@Override
-		protected String doInBackground(View... v) {
-			Intent intent = new Intent(v[0].getContext(), MapActivity.class);
-			intent.putExtra("activity", 2);
-			intent.putExtra("selectedPoints", getPointsOfRoute());
-			startActivity(intent);
+		protected String doInBackground(Intent... i) {
+			startActivity(i[0]);
 			return null;
 		}
 		
@@ -104,8 +101,8 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 	 * Starts a new activity for show comments and valorations
 	 */
 	private void intentShowCommentsActivity() {
-		Intent intent = new Intent(this, ShowCommentsActivity.class);
-		startActivity(intent);		
+		Intent intent = new Intent(this, ShowCommentsActivity.class);		
+		new IntentLauncher().execute(intent);
 	}
 	
 	private void clickRoute(View v) {
@@ -118,8 +115,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 			Intent intent = new Intent(v.getContext(), MapActivity.class);
 			intent.putExtra("activity", 2);
 			intent.putExtra("selectedPoints", getPointsOfRoute());
-			startActivity(intent);
-			//new IntentLauncher().execute(v);
+			new IntentLauncher().execute(intent);
 		}
 	}
 	
