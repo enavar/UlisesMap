@@ -5,12 +5,11 @@ import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.Point;
+import org.escoladeltreball.ulisesmap.model.RoadBuilder;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polyline;
-import org.osmdroid.bonuspack.routing.MapQuestRoadManager;
-import org.osmdroid.bonuspack.routing.OSRMRoadManager;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.bonuspack.routing.RoadNode;
@@ -19,7 +18,6 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -37,6 +35,7 @@ public class MapActivity extends BaseActivity {
 	Polyline roadOverlayGps;
 	GPSTracker tracker;
 	private static final int ACTIVITY_POINTS = 1;
+	int activity;
 
 	ArrayList<GeoPoint> geoPointsToDraw;
 	ArrayList<Point> selectedPoints;
@@ -53,28 +52,16 @@ public class MapActivity extends BaseActivity {
 		map.setBuiltInZoomControls(true);
 		map.setMultiTouchControls(true);
 
-		int activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
+		activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
 		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
-
-		//Points Activity
+		geoPointsToDraw = getGeoPoints(selectedPoints);
+		// Points Activity
 		if (activity == ACTIVITY_POINTS) {
-			// draw the road
-			ArrayList<GeoPoint> selectedGeoPoints = getGeoPoints(selectedPoints);
-			getRoadAsync(selectedGeoPoints);
-		//Route Activity
+			road = new RoadBuilder(geoPointsToDraw, false).getRoad();
 		} else {
-			geoPointsToDraw = getGeoPoints(selectedPoints);
-		}
-		try {
-			road = new UpdateRoadTask().execute(geoPointsToDraw).get();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			road = new RoadBuilder(geoPointsToDraw, true).getRoad();
 		}
 
 		// instantiate other items on the map
@@ -151,49 +138,14 @@ public class MapActivity extends BaseActivity {
 		changeRouteStatus(item);
 		map.getOverlays().clear();
 		map.invalidate();
-		try {
-			road = new UpdateRoadTask().execute(geoPointsToDraw).get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
+		if (activity == ACTIVITY_POINTS) {
+			road = new RoadBuilder(geoPointsToDraw, false).getRoad();
+		} else {
+			road = new RoadBuilder(geoPointsToDraw, true).getRoad();
 		}
 		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
 		return true;
-	}
-
-	/**
-	 * Async task to get the road in a separate thread.
-	 */
-	private class UpdateRoadTask extends AsyncTask<Object, Void, Road> {
-		protected Road doInBackground(Object... params) {
-			@SuppressWarnings("unchecked")
-			ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
-
-			// Sending request for get specific roadManager
-			roadManager = new MapQuestRoadManager(
-					"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
-
-			if (Settings.routeType == R.id.car) {
-				// for quickest drive time route.
-			} else if (Settings.routeType == R.id.walk) {
-				// for get walking route
-				roadManager.addRequestOption("routeType=pedestrian");
-			} else if (Settings.routeType == R.id.bicycle) {
-				// for get bicycle route
-				roadManager.addRequestOption("routeType=bicycle");
-			} else if (Settings.routeType == R.id.bicycle) {
-				// for get walking and transport route
-				roadManager.addRequestOption("routeType=multimodal");
-			} else {
-				// used if we get null
-				roadManager.addRequestOption("routeType=pedestrian");
-			}
-
-			return roadManager.getRoad(waypoints);
-		}
-
 	}
 
 	/**
@@ -220,38 +172,6 @@ public class MapActivity extends BaseActivity {
 			map.invalidate();
 		}
 
-	}
-
-	/**
-	 * Build the shortest route and start the Async task to get a road *
-	 * 
-	 * @param selectedPoints
-	 *            an array with a geopoints
-	 * @throws ExecutionException
-	 * @throws InterruptedException
-	 */
-	public void getRoadAsync(ArrayList<GeoPoint> selectedGeoPoints) {
-		geoPointsToDraw = new ArrayList<GeoPoint>();
-		// check if we have just two points
-		if (selectedGeoPoints.size() < 3) {
-			geoPointsToDraw.add(selectedGeoPoints.get(0));
-			geoPointsToDraw.add(selectedGeoPoints.get(1));
-			// orden an array to build the shortest way
-			// there is a issue when all the points are choosen. The route
-			// doesn't visualize correctly
-		} else {
-			GeoPoint startPoint = getStartPoint(selectedGeoPoints);
-			geoPointsToDraw.add(startPoint);
-			selectedGeoPoints.remove(startPoint);
-			for (int i = 0; i < selectedGeoPoints.size(); i++) {
-				GeoPoint nextPoint = getNearestPoint(startPoint,
-						selectedGeoPoints);
-				geoPointsToDraw.add(nextPoint);
-				startPoint = nextPoint;
-				selectedGeoPoints.remove(nextPoint);
-			}
-			geoPointsToDraw.add(selectedGeoPoints.get(0));
-		}
 	}
 
 	public void makeNavigationMarkers(Road road) {
@@ -285,52 +205,9 @@ public class MapActivity extends BaseActivity {
 			Marker nodeMarker = new Marker(map);
 			nodeMarker.setPosition(selectedPoints.get(i).getGp());
 			nodeMarker.setIcon(nodeIcon);
-			nodeMarker.setTitle("Point " + (i + 1));
+			nodeMarker.setTitle(selectedPoints.get(i).getName());
 			map.getOverlays().add(nodeMarker);
 		}
-	}
-
-	/**
-	 * Calculate a start point of the route. The start point as a point with a
-	 * lowest Latitude
-	 * 
-	 * @param points
-	 *            an array with selected points
-	 * @return a star point
-	 */
-	public GeoPoint getStartPoint(ArrayList<GeoPoint> points) {
-		GeoPoint point = points.get(0);
-		for (int i = 1; i < points.size(); i++) {
-			GeoPoint nextPoint = points.get(i);
-			if (point.getLatitude() > nextPoint.getLatitude()) {
-				point = nextPoint;
-			}
-		}
-		return point;
-	}
-
-	/**
-	 * Calculate a nearest point to start point
-	 * 
-	 * @param startPoint
-	 *            a point where the route is start
-	 * @param points
-	 *            an array with selected points
-	 * @return nearest point to start point
-	 */
-	public GeoPoint getNearestPoint(GeoPoint startPoint,
-			ArrayList<GeoPoint> points) {
-		GeoPoint nearestPoint = points.get(0);
-		int minDistance = startPoint.distanceTo(nearestPoint);
-		for (int i = 1; i < points.size(); i++) {
-			GeoPoint nextPoint = points.get(i);
-			int distance = startPoint.distanceTo(nextPoint);
-			if (minDistance > distance) {
-				nearestPoint = nextPoint;
-				minDistance = distance;
-			}
-		}
-		return nearestPoint;
 	}
 
 	public void initGPS() {
@@ -346,17 +223,14 @@ public class MapActivity extends BaseActivity {
 	}
 
 	public void showRoutefromMyCurrentLocation(GeoPoint a, GeoPoint b) {
-		UpdateRoadTask asynctask = new UpdateRoadTask();
 		roadGps = null;
 		ArrayList<GeoPoint> ar = new ArrayList<GeoPoint>();
 		ar.add(a);
 		ar.add(b);
-		try {
-			roadGps = asynctask.execute(ar).get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
+		if (activity == ACTIVITY_POINTS) {
+			road = new RoadBuilder(geoPointsToDraw, false).getRoad();
+		} else {
+			road = new RoadBuilder(geoPointsToDraw, true).getRoad();
 		}
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
