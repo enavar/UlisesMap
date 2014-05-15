@@ -2,9 +2,8 @@ package org.escoladeltreball.ulisesmap.adapters;
 
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
-
 import org.escoladeltreball.ulisesmap.R;
-
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -49,6 +48,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		final int cacheSize = maxMemory / 2;
 
 		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
+
 			@Override
 			protected int sizeOf(String key, Bitmap bitmap) {
 				// The cache size will be measured in kilobytes rather than
