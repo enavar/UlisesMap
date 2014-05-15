@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="TextViewNameRoutePoint">
+   		<item name="android:layout_width">fill_parent</item>
+    	<item name="android:textColor">@color/red</item>
+    	<item name="android:typeface">sans</item>
+    	<item name="android:textStyle">bold</item>
+    	<item name="android:padding">5dp</item>   
+    	<item name="android:textSize">15sp</item>
+    	<item name="android:gravity">center</item>
+	</style>
+	
+	<style name="TextViewDescription">
+	    <item name="android:padding">5dp</item>
+	    <item name="android:typeface">sans</item> 
+	    <item name="android:textStyle">italic</item>
+	    <item name="android:textSize">10sp</item>
+	</style>
+	
+	<style name="TextViewStreet">
+	    <item name="android:padding">5dp</item>
+	    <item name="android:typeface">sans</item>
+	    <item name="android:textStyle">italic</item>
+	    <item name="android:textSize">8sp</item>
+	    <item name="android:textColor">@color/blue</item>
+	</style>
+	
+	<style name="Imatge">
+	    <item name="android:layout_width">75sp</item>
+        <item name="android:layout_height">75sp</item>
+        <item name="android:gravity">center</item>
+	    
+	</style>
+</resources>
