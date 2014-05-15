@@ -13,6 +13,9 @@
 	<string name="button_point">Points of Interes</string>
 	<string name="mainTitle">Ulises Map</string>
 	
+	<!-- ListView -->
+	<string name="ok">Ok</string>
+	
 	<!-- RegisterActivity -->
 	<string name="edit_login">user</string>
 	<string name="edit_email">email</string>

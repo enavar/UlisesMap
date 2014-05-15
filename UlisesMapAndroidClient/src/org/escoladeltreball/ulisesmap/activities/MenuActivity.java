@@ -9,7 +9,6 @@ import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
-import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.content.Intent;
 import android.os.AsyncTask;
