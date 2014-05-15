@@ -1,6 +1,5 @@
 package org.escoladeltreball.ulisesmap.activities;
 
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -37,7 +36,6 @@ import android.graphics.drawable.Drawable;
 public class MapActivity extends BaseActivity {
 
 	// for MapView
-	private RoadManager roadManager;
 	private Road road;
 	private Road roadGps;
 	private MapView map;
@@ -68,13 +66,9 @@ public class MapActivity extends BaseActivity {
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
 		geoPointsToDraw = getGeoPoints(selectedPoints);
-
 		// Points Activity
-		if (activity == ACTIVITY_POINTS) {
+		if (activity == ACTIVITY_POINTS && geoPointsToDraw.size() > 2) {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, false);
-			if (geoPointsToDraw.size() > 2) {
-				roadBuilder.orderGeoPoints();
-			}
 		} else {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		}
@@ -212,7 +206,6 @@ public class MapActivity extends BaseActivity {
 	}
 
 	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
-		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_a);
 		for (int i = 0; i < selectedPoints.size(); i++) {
 			Point point = selectedPoints.get(i);
 			Marker nodeMarker = new Marker(map);
@@ -227,7 +220,7 @@ public class MapActivity extends BaseActivity {
 				Drawable image = new BitmapDrawable(getResources(), bitmap);
 				nodeMarker.setIcon(smallImg);
 				nodeMarker.setImage(image);
-				nodeMarker.setSubDescription(point.getDescription());
+				nodeMarker.setSubDescription(point.getUrl());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
