@@ -9,6 +9,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +32,7 @@ public class ShowPointsAdapter extends BaseAdapter {
 
 	public static class ViewHolder {
 		protected ImageView image;
-		protected TextView name, street;
+		protected TextView name, street, url;
 		protected CheckBox chBox;
 	}
 
@@ -74,7 +76,8 @@ public class ShowPointsAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.image = (ImageView) convertView.findViewById(R.id.image);
 			holder.name = (TextView) convertView.findViewById(R.id.name);
-			holder.street = (TextView) convertView.findViewById(R.id.street);			
+			holder.street = (TextView) convertView.findViewById(R.id.street);
+			holder.url = (TextView) convertView.findViewById(R.id.url);
 			holder.chBox = (CheckBox) convertView
 					.findViewById(R.id.selectPoint);
 			convertView.setTag(holder);
@@ -91,6 +94,8 @@ public class ShowPointsAdapter extends BaseAdapter {
 		//assign values to Point object
 		holder.name.setText(point.getName());
 		holder.street.setText(point.getStreet());
+		holder.url.setMovementMethod(LinkMovementMethod.getInstance());
+		holder.url.setText(Html.fromHtml(point.getUrl()));
 		holder.chBox.setChecked(point.isSelected());
 		holder.chBox.setTag(point);
 		return convertView;
@@ -127,6 +132,8 @@ public class ShowPointsAdapter extends BaseAdapter {
 			}
 		});
 	}
+	
+	
 	
 
 }
