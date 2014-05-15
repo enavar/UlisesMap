@@ -1,17 +1,10 @@
 package org.escoladeltreball.ulisesmap.activities;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.R.drawable;
-import org.escoladeltreball.ulisesmap.R.id;
-import org.escoladeltreball.ulisesmap.R.layout;
 import org.escoladeltreball.ulisesmap.adapters.ImageDownloader;
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.Point;
@@ -28,14 +21,10 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;

@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_height="25sp"
+        android:layout_height="50sp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/image"
@@ -28,12 +28,10 @@
         style="@style/Imatge" />
     
      <ProgressBar
-        android:id="@+id/placeHolder"                
-        android:layout_width="75sp"
-        android:layout_height="75sp"
+        android:id="@+id/placeHolder"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/selectPoint"
-        />
+        style="@style/progressBar" />
 
      <TextView
          android:id="@+id/street"
@@ -42,7 +40,6 @@
          android:layout_height="25sp"
          android:layout_alignBottom="@+id/image"
          android:layout_alignLeft="@+id/name"
-         android:layout_alignParentRight="true"
-         android:layout_marginBottom="24dp" />
+         android:layout_alignParentRight="true" />
 
 </RelativeLayout>
