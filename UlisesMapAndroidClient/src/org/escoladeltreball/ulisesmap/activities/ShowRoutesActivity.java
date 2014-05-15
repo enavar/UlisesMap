@@ -3,8 +3,6 @@ package org.escoladeltreball.ulisesmap.activities;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import org.escoladeltreball.ulisesmap.BaseActivity;
-import org.escoladeltreball.ulisesmap.MapActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowRoutesAdapter;
 import org.escoladeltreball.ulisesmap.connections.Client;

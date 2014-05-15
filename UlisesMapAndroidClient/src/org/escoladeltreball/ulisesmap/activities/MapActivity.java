@@ -1,4 +1,4 @@
-package org.escoladeltreball.ulisesmap;
+package org.escoladeltreball.ulisesmap.activities;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,7 +6,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
+import org.escoladeltreball.ulisesmap.R;
+import org.escoladeltreball.ulisesmap.R.drawable;
+import org.escoladeltreball.ulisesmap.R.id;
+import org.escoladeltreball.ulisesmap.R.layout;
 import org.escoladeltreball.ulisesmap.adapters.ImageDownloader;
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.Point;
@@ -18,7 +23,6 @@ import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.bonuspack.routing.Road;
 import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.bonuspack.routing.RoadNode;
-
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;

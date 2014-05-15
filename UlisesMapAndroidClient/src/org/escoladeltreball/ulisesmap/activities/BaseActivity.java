@@ -1,5 +1,8 @@
-package org.escoladeltreball.ulisesmap;
+package org.escoladeltreball.ulisesmap.activities;
 
+import org.escoladeltreball.ulisesmap.R;
+import org.escoladeltreball.ulisesmap.R.id;
+import org.escoladeltreball.ulisesmap.R.menu;
 import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.app.Activity;

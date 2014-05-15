@@ -1,6 +1,5 @@
 package org.escoladeltreball.ulisesmap.activities;
 
-import org.escoladeltreball.ulisesmap.BaseActivity;
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.escoladeltreball.ulisesmap.model.User;

@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_name">Ulises Map</string>
-	<string name="action_settings">Settings</string>
+    <string name="app_name">Ulises Map</string>
+    <string name="action_settings">Settings</string>
+    <string name="check_anonymous">Anonymous</string>
+    <string name="button_enter">Enter</string>
+    <string name="button_register">Register Now</string>
+    <string name="button_map">Map</string>
+    <string name="button_route">Routes</string>
+    <string name="button_point">Points of Interes</string>
 
-	<string name="check_anonymous">Anonymous</string>
-	<string name="button_enter">Enter</string>
-	<string name="button_register">Register Now</string>
-	<string name="button_map">Map</string>
-	<string name="title_activity_menu">Menu</string>
-	<string name="button_route">Routes</string>
-	<string name="button_point">Points of Interes</string>
-	<string name="mainTitle">Ulises Map</string>
-	
-	<!-- ListView -->
-	<string name="ok">OK</string>
-	
-	<!-- RegisterActivity -->
-	<string name="edit_login">user</string>
-	<string name="edit_email">email</string>
-	<string name="edit_password">password</string>	
-	<string name="edit_repeat_password">repeat password</string>
-	<string name="noName">You must introduce a name, mail and password</string>
-	<string name="wrongPass">Try again</string>
-	<string name="userExist">User already exist</string>
-	<string name="errorSendingData">Error inserting user in database</string>
-	
-	<!-- ShowRoutes -->
-	<string name="button_info_route">info</string>
-	<string name="noSelectedRoute">Please select a route!</string>
-	
-	<!-- ShowComments -->
-	<string name="add_comment">Add</string>
-	<string name="new_comment">Add a new comment text</string>
-	<string name="error_connection">Error connection</string>
-	<string name="error_not_checked_user">Datas incorrects</string>
-	<string name="sorry">Sorry, only one coment and valoration for user</string>
-	<string name="ok_comment">Your comment has been added</string>
-	<string name="ok_valoration">Your valoration has been added</string>
-	<string name="ok_comment_valoration">Your comment and valoration has been added</string>
-	
+    <!-- ListView -->
+    <string name="ok">OK</string>
+
+    <!-- RegisterActivity -->
+    <string name="edit_login">user</string>
+    <string name="edit_email">email</string>
+    <string name="edit_password">password</string>
+    <string name="edit_repeat_password">repeat password</string>
+    <string name="noName">You must introduce a name, mail and password</string>
+    <string name="wrongPass">Try again</string>
+    <string name="userExist">User already exist</string>
+    <string name="errorSendingData">Error inserting user in database</string>
+
+    <!-- ShowRoutes -->
+    <string name="button_info_route">info</string>
+    <string name="noSelectedRoute">Please select a route!</string>
+
+    <!-- ShowComments -->
+    <string name="add_comment">Add</string>
+    <string name="new_comment">Add a new comment text</string>
+    <string name="error_connection">Error connection</string>
+    <string name="error_not_checked_user">Datas incorrects</string>
+    <string name="sorry">Sorry, only one coment and valoration for user</string>
+    <string name="ok_comment">Your comment has been added</string>
+    <string name="ok_valoration">Your valoration has been added</string>
+    <string name="ok_comment_valoration">Your comment and valoration has been added</string>
+
 </resources>
