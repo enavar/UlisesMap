@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -109,10 +110,10 @@ public class ShowPointsAdapter extends BaseAdapter {
 	}
 
 	private void addDialog(View view, final Point point) {
-		view.setOnTouchListener(new OnTouchListener() {
+		view.setOnClickListener(new OnClickListener() {
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+			public void onClick(View view) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 				builder.setTitle(point.getName());
 				builder.setMessage(point.getDescription());
 				builder.setCancelable(true);
@@ -122,8 +123,7 @@ public class ShowPointsAdapter extends BaseAdapter {
 	                   }
 	               });
 				AlertDialog dialog = builder.create();
-				dialog.show();				
-				return false;
+				dialog.show();
 			}
 		});
 	}

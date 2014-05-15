@@ -14,7 +14,7 @@
 	<string name="mainTitle">Ulises Map</string>
 	
 	<!-- ListView -->
-	<string name="ok">Ok</string>
+	<string name="ok">OK</string>
 	
 	<!-- RegisterActivity -->
 	<string name="edit_login">user</string>
