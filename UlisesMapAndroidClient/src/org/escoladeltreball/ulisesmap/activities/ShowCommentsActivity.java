@@ -11,7 +11,6 @@ import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.CommentValoration;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -32,6 +31,8 @@ public class ShowCommentsActivity extends BaseActivity {
 	private EditText et;
 	private RatingBar rb;
 	private String out;
+	private String no_insert_text = "Add a new comment text";
+	private double no_insert_value = 0.0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,21 +54,23 @@ public class ShowCommentsActivity extends BaseActivity {
 	public void addCommentValoration(View view) throws JSONException, InterruptedException, ExecutionException {
 		Client clientComment = new Client(Client.SERVLET_COMMENT_INSERT, true);
 		Client clientValoration = new Client(Client.SERVLET_VALORATION_INSERT, true);
-		String response = "" + R.string.sorry;
-		if (!disableComment && !disableValoration) {
-			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
+		String response = getString(R.string.sorry);
+		String text = et.getText().toString();
+		double value = rb.getRating();
+		if (!disableComment && !disableValoration && !text.equals(no_insert_text) && value != no_insert_value) {
+			out = Converter.convertCommentToJSONObject(text, userName, routeName);
 			clientComment.execute(out).get();
-			out = Converter.convertValorationToJSONObject(rb.getRating(), userName, routeName);
+			out = Converter.convertValorationToJSONObject(value, userName, routeName);
 			clientValoration.execute(out).get();
-			response = "" + R.string.ok_comment_valoration;
-		} else if (!disableComment) {
-			out = Converter.convertCommentToJSONObject(et.getText().toString(), userName, routeName);
+			response = getString(R.string.ok_comment_valoration);
+		} else if (!disableComment && !text.equals(no_insert_text)) {
+			out = Converter.convertCommentToJSONObject(text, userName, routeName);
 			clientComment.execute(out).get();
-			response = "" + R.string.ok_comment;
-		} else if (!disableValoration) {
-			out = Converter.convertValorationToJSONObject((int)rb.getRating(), userName, routeName);
+			response = getString(R.string.ok_comment);
+		} else if (!disableValoration && value != no_insert_value) {
+			out = Converter.convertValorationToJSONObject(value, userName, routeName);
 			clientValoration.execute(out).get();
-			response = "" + R.string.ok_valoration;
+			response = getString(R.string.ok_valoration);
 		} 
 		
 		Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
@@ -105,6 +108,7 @@ public class ShowCommentsActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 		// enable or disable add comments/valorations
+		System.out.println("response " + responseValoration);
 		disableValoration = responseValoration.equals(Client.TRUE_CHECK);
 		disableComment = responseComment.equals(Client.TRUE_CHECK);
 	}
