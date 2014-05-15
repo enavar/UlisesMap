@@ -20,7 +20,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.graphics.Bitmap;
@@ -66,17 +65,13 @@ public class MapActivity extends BaseActivity {
 		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
-		Log.d("points: ", "" +selectedPoints.size());
 		geoPointsToDraw = getGeoPoints(selectedPoints);
-		Log.d("geoPointsToDraw: ", "" +geoPointsToDraw.size());
-
 		// Points Activity
 		if (activity == ACTIVITY_POINTS && geoPointsToDraw.size() > 2) {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, false);
 		} else {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		}
-		Log.d("geoPointsToDraw 2: ", "" +geoPointsToDraw.size());
 		road = roadBuilder.getRoad();
 		// instantiate other items on the map
 		initMapItems();
