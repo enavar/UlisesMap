@@ -18,12 +18,12 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 
 	RoadManager roadManager;
 	ArrayList<GeoPoint> waypoints;
-	final boolean ORDERED; 
+	final boolean ORDERED;
 
 	public RoadBuilder(ArrayList<GeoPoint> waypoints, boolean order) {
 		super();
 		this.waypoints = waypoints;
-		ORDERED = order;		
+		ORDERED = order;
 	}
 
 	protected Road doInBackground(Object... params) {
@@ -52,19 +52,20 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 
 		return roadManager.getRoad(waypoints);
 	}
-	
+
 	public Road getRoad() {
 		Road road = null;
 		try {
-			road = ORDERED ? this.execute(waypoints).get() : this.execute(orderGeoPoints()).get();
+			road = ORDERED ? this.execute(waypoints).get() : this.execute(
+					orderGeoPoints()).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		return road;		
+		return road;
 	}
-	
+
 	/**
 	 * Build the shortest route and start the Async task to get a road *
 	 * 
@@ -74,31 +75,27 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 	 * @throws InterruptedException
 	 */
 	public ArrayList<GeoPoint> orderGeoPoints() {
-		ArrayList<GeoPoint> geoPointsToDraw = new ArrayList<GeoPoint>();
-		// check if we have just two points
-		if (waypoints.size() < 3) {
-			geoPointsToDraw.add(waypoints.get(0));
-			geoPointsToDraw.add(waypoints.get(1));
-			// orden an array to build the shortest way
-			// there is a issue when all the points are choosen. The route
-			// doesn't visualize correctly
-		} else {
-			GeoPoint startPoint = getStartPoint(waypoints);
-			geoPointsToDraw.add(startPoint);
-			waypoints.remove(startPoint);
-			for (int i = 0; i < waypoints.size(); i++) {
-				GeoPoint nextPoint = getNearestPoint(startPoint,
-						waypoints);
-				geoPointsToDraw.add(nextPoint);
-				startPoint = nextPoint;
-				waypoints.remove(nextPoint);
-			}
-			geoPointsToDraw.addAll(waypoints);
+
+		// orden an array to build the shortest way
+		// there is a issue when all the points are choosen. The route
+		// doesn't visualize correctly
+
+		ArrayList<GeoPoint> geoPointsToOrder = waypoints;
+		waypoints = new ArrayList<GeoPoint>();
+
+		GeoPoint startPoint = getStartPoint(geoPointsToOrder);
+		waypoints.add(startPoint);
+		geoPointsToOrder.remove(startPoint);
+		for (int i = 0; i < geoPointsToOrder.size(); i++) {
+			GeoPoint nextPoint = getNearestPoint(startPoint, geoPointsToOrder);
+			waypoints.add(nextPoint);
+			startPoint = nextPoint;
+			geoPointsToOrder.remove(nextPoint);
 		}
-		waypoints = geoPointsToDraw;
+		waypoints.addAll(geoPointsToOrder);
 		return waypoints;
 	}
-	
+
 	/**
 	 * Calculate a start point of the route. The start point as a point with a
 	 * lowest Latitude

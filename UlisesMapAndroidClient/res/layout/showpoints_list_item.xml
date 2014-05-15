@@ -48,7 +48,6 @@
         android:layout_toRightOf="@+id/selectPoint"
         android:gravity="center"
         android:textSize="20sp"
-        android:src="@drawable/upload"
         android:visibility="invisible" />
     
      <ProgressBar

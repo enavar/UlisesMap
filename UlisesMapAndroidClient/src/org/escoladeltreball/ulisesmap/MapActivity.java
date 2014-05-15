@@ -1,8 +1,14 @@
 package org.escoladeltreball.ulisesmap;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import org.escoladeltreball.ulisesmap.adapters.ImageDownloader;
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.RoadBuilder;
@@ -19,26 +25,39 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class MapActivity extends BaseActivity {
 
 	// for MapView
-	RoadManager roadManager;
-	Road road;
-	Road roadGps;
-	MapView map;
-	Polyline roadOverlay;
-	Polyline roadOverlayGps;
-	GPSTracker tracker;
-	RoadBuilder roadBuilder;
+	private RoadManager roadManager;
+	private Road road;
+	private Road roadGps;
+	private MapView map;
+	private Polyline roadOverlay;
+	private Polyline roadOverlayGps;
+	private GPSTracker tracker;
+	private RoadBuilder roadBuilder;
 	private static final int ACTIVITY_POINTS = 1;
 
-	ArrayList<GeoPoint> geoPointsToDraw;
-	ArrayList<Point> selectedPoints;
+	private ArrayList<GeoPoint> geoPointsToDraw;
+	private ArrayList<Point> selectedPoints;
+	private final int IMAGE_SIZE = 50;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +76,13 @@ public class MapActivity extends BaseActivity {
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
 		geoPointsToDraw = getGeoPoints(selectedPoints);
+
 		// Points Activity
 		if (activity == ACTIVITY_POINTS) {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, false);
-			roadBuilder.orderGeoPoints();
+			if (geoPointsToDraw.size() > 2) {
+				roadBuilder.orderGeoPoints();
+			}
 		} else {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		}
@@ -97,6 +119,7 @@ public class MapActivity extends BaseActivity {
 		switch (item.getItemId()) {
 
 		case R.id.navigations:
+
 			if (item.isChecked()) {
 				item.setChecked(false);
 				Settings.navigations = false;
@@ -199,12 +222,48 @@ public class MapActivity extends BaseActivity {
 	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
 		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_a);
 		for (int i = 0; i < selectedPoints.size(); i++) {
+			Point point = selectedPoints.get(i);
 			Marker nodeMarker = new Marker(map);
-			nodeMarker.setPosition(selectedPoints.get(i).getGp());
-			nodeMarker.setIcon(nodeIcon);
-			nodeMarker.setTitle(selectedPoints.get(i).getName());
+			nodeMarker.setPosition(point.getGp());
+			ImageDownloader ig = new ImageDownloader();
+			try {
+				Bitmap bitmap = ig.execute(point.getImage()).get();
+				Bitmap cutted = cutImage(bitmap);
+				Drawable smallImg = new BitmapDrawable(getResources(),
+						Bitmap.createScaledBitmap(cutted, IMAGE_SIZE,
+								IMAGE_SIZE, false));
+				Drawable image = new BitmapDrawable(getResources(), bitmap);
+				nodeMarker.setIcon(smallImg);
+				nodeMarker.setImage(image);
+				nodeMarker.setSubDescription(point.getDescription());
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			// nodeMarker.setIcon(nodeIcon);
+			nodeMarker.setTitle(point.getName());
 			map.getOverlays().add(nodeMarker);
 		}
+	}
+
+	public Bitmap cutImage(Bitmap input) {
+		Bitmap output = Bitmap.createBitmap(input.getWidth(),
+				input.getHeight(), Config.ARGB_8888);
+		Canvas canvas = new Canvas(output);
+
+		final int color = 0xff424242;
+		final Paint paint = new Paint();
+		final Rect rect = new Rect(0, 0, input.getWidth(), input.getHeight());
+
+		paint.setAntiAlias(true);
+		canvas.drawARGB(0, 0, 0, 0);
+		paint.setColor(color);
+		canvas.drawCircle(input.getWidth() / 2, input.getHeight() / 2,
+				input.getWidth() / 2, paint);
+		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+		canvas.drawBitmap(input, rect, rect, paint);
+		return output;
 	}
 
 	public void initGPS() {
