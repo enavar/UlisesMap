@@ -1,7 +1,6 @@
 package org.escoladeltreball.ulisesmap;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.Point;

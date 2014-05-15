@@ -49,9 +49,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		spCountries.setAdapter(adapterCountries);
 		spCountries.setOnItemSelectedListener(this);
 		btnPoints.setOnClickListener(this);
-		btnRoutes.setOnClickListener(this);	
-		Toast.makeText(this, "name: " + Settings.userName, Toast.LENGTH_SHORT).show();
-
+		btnRoutes.setOnClickListener(this);
 	}
 
 	@Override
