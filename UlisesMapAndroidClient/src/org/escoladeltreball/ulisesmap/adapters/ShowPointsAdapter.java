@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ShowPointsAdapter extends BaseAdapter {
@@ -86,7 +87,8 @@ public class ShowPointsAdapter extends BaseAdapter {
 		    // and the ImageView.
 			holder = (ViewHolder) convertView.getTag();
 		//download image
-		ImageDownloader task = new ImageDownloader(res, holder.image);
+		ProgressBar progress = (ProgressBar) convertView.findViewById(R.id.placeHolder);
+		ImageDownloader task = new ImageDownloader(res, holder.image, progress);
 		task.loadBitmap(point.getImage(), holder.image);
 		//assign values to Point object
 		holder.name.setText(point.getName());

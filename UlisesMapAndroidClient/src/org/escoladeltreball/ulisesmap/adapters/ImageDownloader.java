@@ -8,11 +8,15 @@ import org.escoladeltreball.ulisesmap.R;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	
@@ -20,12 +24,14 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	private String url;
 	Bitmap mPlaceHolderBitmap;
 	Resources res;
+	ProgressBar placeHolder;
 
-	public ImageDownloader(Resources res, ImageView imageView) {
+	public ImageDownloader(Resources res, ImageView imageView, ProgressBar progress) {
 		this.res = res;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		this.bmImageReferences = new WeakReference<ImageView>(imageView);
 		mPlaceHolderBitmap = BitmapFactory.decodeResource(res, R.drawable.upload);
+		placeHolder = progress;
 	}
 	
 	/* Overrided methods*/
@@ -52,9 +58,11 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		}
 		if (bmImageReferences != null && result != null) {
 			final ImageView imageView = bmImageReferences.get();
-			final ImageDownloader task = getAssociatedtask(imageView);
+			final ImageDownloader task = getAssociatedTask(imageView);
 			if (this == task && imageView != null) {
-				imageView.setImageBitmap(result);
+				placeHolder.setVisibility(View.GONE);
+				imageView.setVisibility(View.VISIBLE);
+				imageView.setImageBitmap(result);				
 			}
 		}
 	}
@@ -69,7 +77,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	 * @return true if the same work is in progress and cancel unnecessary
 	 */
 	public static boolean cancelPotentialWork(String url, ImageView imageView) {
-		final ImageDownloader task = getAssociatedtask(imageView);
+		final ImageDownloader task = getAssociatedTask(imageView);
 
 		if (task != null) {
 			final String bitmapData = task.url;
@@ -93,7 +101,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	 * @param imageView assigned to asyncTask
 	 * @return a asyncTask
 	 */
-	private static ImageDownloader getAssociatedtask(ImageView imageView) {
+	private static ImageDownloader getAssociatedTask(ImageView imageView) {
 		if (imageView != null) {
 			final Drawable drawable = imageView.getDrawable();
 			if (drawable instanceof AsyncDrawable) {
@@ -112,9 +120,11 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	 */
 	public void loadBitmap(String url, ImageView imageView) {
 		if (cancelPotentialWork(url, imageView)) {
-			final ImageDownloader task = new ImageDownloader(res, imageView);
+			final ImageDownloader task = new ImageDownloader(res, imageView, placeHolder);
 			final AsyncDrawable asyncDrawable = new AsyncDrawable(res,
 					mPlaceHolderBitmap, task);
+			placeHolder.setVisibility(View.VISIBLE);
+			imageView.setVisibility(View.INVISIBLE);
 			imageView.setImageDrawable(asyncDrawable);
 			task.execute(url);
 		}
@@ -124,7 +134,6 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
 	static class AsyncDrawable extends BitmapDrawable {
 		private final WeakReference<ImageDownloader> taskReferences;
-
 		public AsyncDrawable(Resources res, Bitmap bitmap,
 				ImageDownloader imageDownloader) {
 			super(res, bitmap);
