@@ -43,6 +43,14 @@
         android:id="@+id/image"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/selectPoint"
-        style="@style/Imatge"/>
+        style="@style/Imatge" />
+    
+     <ProgressBar
+        android:id="@+id/placeHolder"                
+        android:layout_width="75sp"
+        android:layout_height="75sp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/selectPoint"
+        />
 
 </RelativeLayout>
