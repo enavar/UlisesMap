@@ -5,21 +5,13 @@
     android:orientation="vertical"
     tools:context=".ShowRoutesActivity" >
 
-    <RadioButton
-        android:id="@+id/selectRoute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
-
-    <CheckedTextView
+    <TextView
         android:id="@+id/viewDescriptionRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/ratingValue"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple" />
+        android:layout_below="@+id/ratingValue" />
 
     <CheckedTextView
         android:id="@+id/viewNameRoute"
@@ -29,8 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/ratingValue"
         android:layout_toRightOf="@+id/selectRoute"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:gravity="center" />
+        android:gravity="center"        
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"  />
 
     <RatingBar
         android:id="@+id/ratingValue"
