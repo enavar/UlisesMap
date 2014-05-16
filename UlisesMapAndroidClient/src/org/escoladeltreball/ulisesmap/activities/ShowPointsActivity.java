@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ShowPointsActivity extends BaseActivity implements OnClickListener {
 
@@ -55,25 +56,27 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		
 		@Override
 		protected String doInBackground(String... s) {
-			getSelectedPoints();
 			Intent intent = new Intent(map.getContext(), MapActivity.class);
 			intent.putExtra("selectedPoints", selectedPoints);
 			startActivity(intent);
 			return null;
 		}
-		
-		 @Override
-	        protected void onPostExecute(String result) {
-			 progress.dismiss();
-	        }		
+		@Override
+	    protected void onPostExecute(String result) {
+			progress.dismiss();
+		}		
 	}
 	
 	/* Interface method */
 
 	@Override
 	public void onClick(View v) {
-		progress.show();
-		new IntentLauncher().execute();	
+		getSelectedPoints();
+		if (points.size() >= 2) {
+			progress.show();
+			new IntentLauncher().execute();
+		} else
+			Toast.makeText(this, R.string.no_selected_point, Toast.LENGTH_LONG).show();
 	}
 
 	/* Methods */

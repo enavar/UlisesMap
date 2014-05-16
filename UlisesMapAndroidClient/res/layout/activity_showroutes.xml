@@ -13,7 +13,8 @@
 	    android:id="@+id/listViewRoutes"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/toMapRoute" />
+	    android:layout_below="@+id/toMapRoute"
+	    android:choiceMode="singleChoice" />
 
 	<TextView
 	    android:id="@+id/city"

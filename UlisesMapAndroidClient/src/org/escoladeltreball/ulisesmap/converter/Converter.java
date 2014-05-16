@@ -16,6 +16,8 @@ import org.osmdroid.util.GeoPoint;
 
 public class Converter {
 	
+	private static final String PATH_COUNTRY = "_";
+	
 	public static String convertUserToJSONObject(String name, String password) {
 		JSONObject jsonObjectUser = new JSONObject();
 		try {			
@@ -204,6 +206,7 @@ public class Converter {
 			for (int i = 0; i < size; i++) {
 				JSONObject objCity = jSONArrayPoints.getJSONObject(i);
 				String country = objCity.getString(City.FIELD_COUNTRY);
+				country = country.replace(PATH_COUNTRY, " ");
 				countries[i] = country;
 			}
 		} catch (JSONException e) {

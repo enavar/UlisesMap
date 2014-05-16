@@ -1,11 +1,9 @@
 package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.adapters.ImageDownloader;
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
+import org.escoladeltreball.ulisesmap.model.MarkerBuilder;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.RoadBuilder;
 import org.escoladeltreball.ulisesmap.model.Settings;
@@ -20,17 +18,13 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 public class MapActivity extends BaseActivity {
@@ -43,16 +37,28 @@ public class MapActivity extends BaseActivity {
 	private Polyline roadOverlayGps;
 	private GPSTracker tracker;
 	private RoadBuilder roadBuilder;
+	IMapController mapController;
 	private static final int ACTIVITY_POINTS = 1;
+
+	private Button prevStep;
+	private Button nextStep;
 
 	private ArrayList<GeoPoint> geoPointsToDraw;
 	private ArrayList<Point> selectedPoints;
-	private final int IMAGE_SIZE = 50;
+
+	private int mapElements;
+	private int navigationElements;
+	private int currentNavigation;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
+
+		prevStep = (Button) findViewById(R.id.prevStep);
+		nextStep = (Button) findViewById(R.id.nextStep);
+		prevStep.setOnClickListener(Navigationlistener);
+		nextStep.setOnClickListener(Navigationlistener);
 
 		// get instance of a map
 		map = (MapView) findViewById(R.id.mapView);
@@ -66,7 +72,6 @@ public class MapActivity extends BaseActivity {
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
 		geoPointsToDraw = getGeoPoints(selectedPoints);
-		// Points Activity
 		if (activity == ACTIVITY_POINTS && geoPointsToDraw.size() > 2) {
 			roadBuilder = new RoadBuilder(geoPointsToDraw, false);
 		} else {
@@ -74,21 +79,25 @@ public class MapActivity extends BaseActivity {
 		}
 		road = roadBuilder.getRoad();
 		// instantiate other items on the map
-		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
-
+		Log.d("all 1", "" + map.getOverlays().size());
+		initMapItems();
+		currentNavigation = mapElements;
 	}
 
 	protected void initMapItems() {
 		// show Poins of interest on the map
 		makePointsMarkers(selectedPoints);
+		mapElements = map.getOverlays().size();
 		// Show user current position and draw a route to a start point
 		if (Settings.gps) {
 			initGPS();
 		}
 		// Show instructions for each step of the road
 		if (Settings.navigations) {
+			currentNavigation = -1;
 			makeNavigationMarkers(road);
+			navigationElements = map.getOverlays().size() - mapElements;
 			if (Settings.gps) {
 				makeNavigationMarkers(roadGps);
 			}
@@ -116,7 +125,10 @@ public class MapActivity extends BaseActivity {
 			} else {
 				item.setChecked(true);
 				Settings.navigations = true;
+				prevStep.setVisibility(View.VISIBLE);
+				nextStep.setVisibility(View.VISIBLE);
 				makeNavigationMarkers(road);
+				navigationElements = map.getOverlays().size() - mapElements;
 				if (Settings.gps) {
 					makeNavigationMarkers(roadGps);
 				}
@@ -172,7 +184,7 @@ public class MapActivity extends BaseActivity {
 			map.getOverlays().add(polyline);
 
 			// set zoom and centered a map
-			IMapController mapController = map.getController();
+			mapController = map.getController();
 			mapController.setZoom(14);
 			mapController.setCenter(geoPointsToDraw.get(0));
 			map.invalidate();
@@ -208,47 +220,11 @@ public class MapActivity extends BaseActivity {
 	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
 		for (int i = 0; i < selectedPoints.size(); i++) {
 			Point point = selectedPoints.get(i);
-			Marker nodeMarker = new Marker(map);
-			nodeMarker.setPosition(point.getGp());
-			ImageDownloader ig = new ImageDownloader();
-			try {
-				Bitmap bitmap = ig.execute(point.getImage()).get();
-				Bitmap cutted = cutImage(bitmap);
-				Drawable smallImg = new BitmapDrawable(getResources(),
-						Bitmap.createScaledBitmap(cutted, IMAGE_SIZE,
-								IMAGE_SIZE, false));
-				Drawable image = new BitmapDrawable(getResources(), bitmap);
-				nodeMarker.setIcon(smallImg);
-				nodeMarker.setImage(image);
-				nodeMarker.setSubDescription(point.getUrl());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
-			// nodeMarker.setIcon(nodeIcon);
-			nodeMarker.setTitle(point.getName());
-			map.getOverlays().add(nodeMarker);
+			MarkerBuilder nodeMarker = new MarkerBuilder(map, getResources(),
+					point.getGp(), point.getImage(), point.getName(),
+					point.getDescription());
+			map.getOverlays().add(nodeMarker.build());
 		}
-	}
-
-	public Bitmap cutImage(Bitmap input) {
-		Bitmap output = Bitmap.createBitmap(input.getWidth(),
-				input.getHeight(), Config.ARGB_8888);
-		Canvas canvas = new Canvas(output);
-
-		final int color = 0xff424242;
-		final Paint paint = new Paint();
-		final Rect rect = new Rect(0, 0, input.getWidth(), input.getHeight());
-
-		paint.setAntiAlias(true);
-		canvas.drawARGB(0, 0, 0, 0);
-		paint.setColor(color);
-		canvas.drawCircle(input.getWidth() / 2, input.getHeight() / 2,
-				input.getWidth() / 2, paint);
-		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
-		canvas.drawBitmap(input, rect, rect, paint);
-		return output;
 	}
 
 	public void initGPS() {
@@ -280,5 +256,41 @@ public class MapActivity extends BaseActivity {
 		}
 		return geoPoints;
 	}
+	
+	public void showMarkerInfo() {
+		Marker m = (Marker) map.getOverlays().get(currentNavigation);
+		mapController.setCenter(m.getPosition());
+		m.showInfoWindow();
+	}
 
+	OnClickListener Navigationlistener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			if ((Button) v == prevStep) {
+				if (currentNavigation >= mapElements) {
+					currentNavigation--;
+					showMarkerInfo();
+					Log.d("map elements", "m " + mapElements);
+					Log.d("points 2", "c " + currentNavigation);
+				} else {
+					currentNavigation = mapElements;
+					showMarkerInfo();
+				}
+			} else {
+				Log.d("next", "c " + currentNavigation);
+				int maxNavigation = mapElements + navigationElements;
+				Log.d("next", "m " + navigationElements);
+				Log.d("next", "n " + currentNavigation);
+				if (currentNavigation < maxNavigation) {
+					Log.d("points", "" + currentNavigation);
+					showMarkerInfo();
+					currentNavigation++;
+				} else {
+					currentNavigation = mapElements + navigationElements -1;
+					showMarkerInfo();
+				}
+			}
+		}
+	};
 }

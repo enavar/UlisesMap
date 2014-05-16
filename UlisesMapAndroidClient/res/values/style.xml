@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <style name="TextViewNameRoutePoint">
-   		<item name="android:layout_width">fill_parent</item>
+    <!--  ShowPoints -->
+    <style name="textview_name_route_point">
     	<item name="android:textColor">@color/red</item>
     	<item name="android:typeface">sans</item>
     	<item name="android:textStyle">bold</item>
@@ -10,30 +9,39 @@
     	<item name="android:textSize">15sp</item>
 	</style>
 	
-	<style name="TextViewDescription">
-	    <item name="android:paddingLeft">5dp</item>
-	    <item name="android:typeface">sans</item> 
-	    <item name="android:textStyle">italic</item>
-	    <item name="android:textSize">10sp</item>
-	</style>
-	
-	<style name="TextViewStreet">
+	<style name="textview_street">
 	    <item name="android:paddingLeft">5dp</item>
 	    <item name="android:typeface">sans</item>
 	    <item name="android:textStyle">italic</item>
 	    <item name="android:textSize">12sp</item>
 	    <item name="android:textColor">@color/blue</item>
+	    <item name="android:layout_height">25sp</item>
 	</style>
 	
-	<style name="Imatge">
-	    <item name="android:layout_width">75sp</item>
-        <item name="android:layout_height">75sp</item>
-        <item name="android:gravity">center</item>
-	    
+	<style name="image">
+	    <item name="android:layout_width">100sp</item>
+        <item name="android:layout_height">100sp</item>
+        <item name="android:gravity">center</item>	    
+	</style>
+    
+	<style name="textview_url">
+	    <item name="android:typeface">sans</item>
+	    <item name="android:textSize">12sp</item>
+	   	<item name="android:paddingLeft">5dp</item> 
+	   	<item name="android:paddingBottom">5dp</item>
+	   	<item name="android:textColor">@color/yellow</item>
+	   	<item name="android:textColorLink">@color/yellow</item>
+	   	<item name="android:textStyle">normal</item>
 	</style>
 	
-	<style name="progressBar">
-		<item name="android:layout_width">75sp</item>
-        <item name="android:layout_height">75sp</item>
-    </style>
+	<style name="textview_title">
+	    <item name="android:gravity">center</item>
+	    <item name="android:background">@drawable/background_listview</item>
+	    <item name="android:textSize">20sp</item>
+	    <item name="android:typeface">sans</item>
+    	<item name="android:textStyle">bold</item>
+    	<item name="android:textColor">@color/black_blue</item>
+	</style>
+	
+	
 </resources>

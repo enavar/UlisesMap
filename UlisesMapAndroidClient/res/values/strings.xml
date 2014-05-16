@@ -3,16 +3,19 @@
 
     <string name="app_name">Ulises Map</string>
     <string name="action_settings">Settings</string>
-    <string name="check_anonymous">Anonymous</string>
-    <string name="button_enter">Enter</string>
-    <string name="button_register">Register Now</string>
     <string name="button_map">Map</string>
     <string name="button_route">Routes</string>
     <string name="button_point">Points of Interes</string>
 
     <!-- ListView -->
     <string name="ok">OK</string>
-
+	
+    <!--  LoginActivity -->
+    <string name="button_enter">Enter</string>
+    <string name="button_register">Register Now</string>
+    <string name="check_anonymous">Anonymous</string>
+    <string name="check_remember">Remember me</string>
+    
     <!-- RegisterActivity -->
     <string name="edit_login">user</string>
     <string name="edit_email">email</string>
@@ -22,6 +25,9 @@
     <string name="wrongPass">Try again</string>
     <string name="userExist">User already exist</string>
     <string name="errorSendingData">Error inserting user in database</string>
+    
+    <!--  Show Points -->
+    <string name="no_selected_point">Please select minimum two points!</string>
 
     <!-- ShowRoutes -->
     <string name="button_info_route">info</string>
@@ -36,5 +42,22 @@
     <string name="ok_comment">Your comment has been added</string>
     <string name="ok_valoration">Your valoration has been added</string>
     <string name="ok_comment_valoration">Your comment and valoration has been added</string>
+    
+    <!-- Map -->
+	<string name="prevStep">Prev</string>
+	<string name="nextStep">Next</string>
 
+    <!-- Menu -->
+    <string name="title_navigation">Navigations</string>
+    <string name="title_markers">Show markers with navigations</string>
+    <string name="title_route">Route</string>
+    <string name="title_drive_route">drive route</string>
+    <string name="title_bicycle_route">bicycle route</string>
+    <string name="title_walking_route">walking route</string>
+    <string name="title_walking_and_transport">walking and transport</string>
+    <string name="title_GPS">GPS</string>
+    <string name="title_location">Show my current location</string>
+    <string name="title_exit">Exit</string>
+    <string name="title_logo">Logo</string>
+    <string name="title_skip_logo">Skip Logo activity</string>
 </resources>
