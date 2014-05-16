@@ -8,58 +8,58 @@
 
     <item
         android:id="@+id/menu_navigations"
-        android:title="Navigations">
+        android:title="@string/title_navigation">
 		<menu>
             <group android:checkableBehavior="all" >
                 <item
                     android:id="@+id/navigations"
-                    android:title="Show markers with navigations"/>
+                    android:title="@string/title_markers"/>
             </group>
         </menu>
      </item>
     <item
         android:id="@+id/menu_route"
-        android:title="Route">
+        android:title="@string/title_route">
         <menu>
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@+id/car"
-                    android:title="drive route"/>
+                    android:title="@string/title_drive_route"/>
                 <item
                     android:id="@+id/bicycle"
-                    android:title="bicycle route"/>
+                    android:title="@string/title_bicycle_route"/>
                 <item
                     android:id="@+id/walk"
-                    android:title="walking route"/>
+                    android:title="@string/title_walking_route"/>
                 <item
                     android:id="@+id/walk_transport"
-                    android:title="walking and transport"/>
+                    android:title="@string/title_walking_and_transport"/>
             </group>
         </menu>
     </item>
     <item
         android:id="@+id/menu_gps"
-        android:title="GPS">
+        android:title="@string/title_GPS">
         <menu>
             <group android:checkableBehavior="all" >
                 <item
                     android:id="@+id/myGPS"
-                    android:title="Show my current location"/>
+                    android:title="@string/title_location"/>
             </group>
         </menu>
     </item>
     <item
         android:id="@+id/menu_exit"
-        android:title="Exit">
+        android:title="@string/title_exit">
     </item>
     <item
         android:id="@+id/menu_logo"
-        android:title="Logo">
+        android:title="@string/title_logo">
         <menu>
             <group android:checkableBehavior="all" >
                 <item
                     android:id="@+id/hideLogo"
-                    android:title="Skip Logo activity"/>
+                    android:title="@string/title_skip_logo"/>
             </group>
         </menu>
     </item>
