@@ -66,8 +66,6 @@ public class ShowRoutesAdapter extends BaseAdapter {
 		}
 		holder.name.setText(route.getName());
 		holder.valoration.setRating((float) route.getValorationAverage());
-		System.out.print(route.getValorationAverage());
-		System.out.println("ha rebut:" + holder.valoration.getNumStars());
 		holder.description.setText(route.getDescription());
 		holder.chBox.setChecked(route.isSelected());
 		return convertView;
