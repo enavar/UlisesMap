@@ -1,8 +1,12 @@
 package org.escoladeltreball.ulisesmap.adapters;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.MalformedURLException;
+
 import org.escoladeltreball.ulisesmap.R;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.res.Resources;
@@ -73,12 +77,16 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		String url = urls[0];
 		this.url = url;
 		Bitmap mIcon = null;
+		System.out.println(url);
 		try {
-			InputStream in = new java.net.URL(url).openStream();
-			mIcon = BitmapFactory.decodeStream(in);
-		} catch (Exception e) {
-			Log.e("Error", e.getMessage());
-		}		
+				InputStream in = new java.net.URL(url).openStream();
+				mIcon = BitmapFactory.decodeStream(in);	
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+				
 		return mIcon;
 	}
 
@@ -139,6 +147,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		// cancelled
 		return true;
 	}
+	// TODO Auto-generated catch block
 
 	/**
 	 * Find a asyncTask which download a given image
