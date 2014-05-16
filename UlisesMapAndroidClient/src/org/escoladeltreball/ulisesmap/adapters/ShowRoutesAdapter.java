@@ -20,7 +20,6 @@ public class ShowRoutesAdapter extends BaseAdapter {
 	
 	public static class ViewHolder {
 		protected TextView name, description;
-		protected RadioButton chBox;
 		protected RatingBar valoration;
 	}
 
@@ -55,7 +54,6 @@ public class ShowRoutesAdapter extends BaseAdapter {
 		if (convertView == null) {
 			convertView = layoutInflater.inflate(R.layout.showroutes_list_item, null);
 			holder = new ViewHolder();
-			holder.chBox = (RadioButton) convertView.findViewById(R.id.selectRoute);
 			holder.valoration = (RatingBar) convertView.findViewById(R.id.ratingValue);
 			holder.description =(TextView) convertView.findViewById(R.id.viewDescriptionRoute);
 			holder.name = (TextView) convertView.findViewById(R.id.viewNameRoute);
@@ -66,7 +64,6 @@ public class ShowRoutesAdapter extends BaseAdapter {
 		holder.name.setText(route.getName());
 		holder.valoration.setRating(route.getValorationAverage());
 		holder.description.setText(route.getDescription());
-		holder.chBox.setChecked(route.isSelected());
 		return convertView;
 	}
 
