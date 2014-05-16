@@ -27,14 +27,14 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 	private ArrayList<Point> points;
 	private ArrayList<Point> selectedPoints;
 	private Button map;
-	private String pk_city;
+	private String pkCity;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showpoints);
 		Bundle bundle = getIntent().getExtras();
-		pk_city = bundle.getString(City.FIELD_PRIMARY_KEY);
+		pkCity = bundle.getString(City.FIELD_PRIMARY_KEY);
 		String nameCity = bundle.getString(City.FIELD_NAME);
 		map = (Button) findViewById(R.id.toMap);
 		TextView title = (TextView) findViewById(R.id.Textzone);
@@ -97,7 +97,7 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 	private void getPoints() {
 		Client client = new Client(Client.SERVLET_POINT, true);
 		try {
-			String response = client.execute(pk_city).get();
+			String response = client.execute(Converter.convertSpaceToBar(pkCity)).get();
 			points = Converter.convertStringToPoints(response);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

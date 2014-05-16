@@ -16,7 +16,8 @@ import org.osmdroid.util.GeoPoint;
 
 public class Converter {
 	
-	private static final String PATH_COUNTRY = "_";
+	private static final String PATH = "_";
+	private static final String SPACE = " ";
 	
 	public static String convertUserToJSONObject(String name, String password) {
 		JSONObject jsonObjectUser = new JSONObject();
@@ -188,6 +189,7 @@ public class Converter {
 				JSONObject objCity = jSONArrayPoints.getJSONObject(i);
 				String ref = objCity.getString(City.FIELD_PRIMARY_KEY);
 				String name = objCity.getString(City.FIELD_NAME);
+				name = convertBarToSpace(name);
 				City city = new City(ref, name);
 				cities.add(city);
 			}
@@ -206,7 +208,7 @@ public class Converter {
 			for (int i = 0; i < size; i++) {
 				JSONObject objCity = jSONArrayPoints.getJSONObject(i);
 				String country = objCity.getString(City.FIELD_COUNTRY);
-				country = country.replace(PATH_COUNTRY, " ");
+				country = convertBarToSpace(country);
 				countries[i] = country;
 			}
 		} catch (JSONException e) {
@@ -235,5 +237,13 @@ public class Converter {
 			e.printStackTrace();
 		}
 		return comments;
+	}
+	
+	public static String convertSpaceToBar(String name) {
+		return name.replace(SPACE, PATH);
+	}
+	
+	public static String convertBarToSpace(String name) {
+		return name.replace(PATH, SPACE);
 	}
 }

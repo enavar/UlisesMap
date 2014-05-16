@@ -110,7 +110,8 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
 		if (parent.equals(spCountries)) {
-			getCities(countries[position]);
+			String country = Converter.convertSpaceToBar(countries[position]);
+			getCities(country);
 			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, namesCities);
 			spCities.setAdapter(adapterCities);
 			spCities.setOnItemSelectedListener(this);

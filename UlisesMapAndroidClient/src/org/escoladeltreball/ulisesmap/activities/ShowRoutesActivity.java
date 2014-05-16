@@ -78,7 +78,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 	private void getRoutes() {
 		Client client = new Client(Client.SERVLET_ROUTES, true);
 		try {
-			String arrayRoutes = client.execute(pkCity).get();
+			String arrayRoutes = client.execute(Converter.convertSpaceToBar(pkCity)).get();
 			routes = Converter.convertStringToRoutes(arrayRoutes);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
