@@ -87,7 +87,7 @@ public class Converter {
 				JSONObject objRoute = jSONArrayRoutes.getJSONObject(i);
 				String name = objRoute.getString(Route.FIELD_NAME);
 				String description = objRoute.getString(Route.FIELD_DESCRIPTION);
-				float avg = Float.valueOf(objRoute.getString(Route.FIELD_AVG));
+				double avg = objRoute.getDouble(Route.FIELD_AVG);
 				Route route = new Route(name, description, avg);
 				routes.add(route);				
 			}

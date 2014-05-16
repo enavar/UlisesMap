@@ -130,7 +130,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		try {
 			String arrayPoints = client.execute(routeName).get();
 			pointsOfRoute = Converter
-					.convertStringToPointsOfRoutes(arrayPoints);
+					.convertStringToPoints(arrayPoints);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
