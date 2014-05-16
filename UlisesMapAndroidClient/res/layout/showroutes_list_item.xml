@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.escoladeltreball.ulisesmap.model.CheckableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,15 +12,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
 
-    <TextView
+    <CheckedTextView
         android:id="@+id/viewDescriptionRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/ratingValue" />
+        android:layout_below="@+id/ratingValue"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple" />
 
-    <TextView
+    <CheckedTextView
         android:id="@+id/viewNameRoute"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/ratingValue"
         android:layout_toRightOf="@+id/selectRoute"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:gravity="center" />
 
     <RatingBar
@@ -40,4 +42,4 @@
         android:isIndicator="true"
         android:numStars="5" />
 
-</RelativeLayout>
+</org.escoladeltreball.ulisesmap.model.CheckableLayout>

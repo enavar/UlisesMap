@@ -42,6 +42,10 @@
     <string name="ok_comment">Your comment has been added</string>
     <string name="ok_valoration">Your valoration has been added</string>
     <string name="ok_comment_valoration">Your comment and valoration has been added</string>
+    
+    <!-- Map -->
+	<string name="prevStep">Prev</string>
+	<string name="nextStep">Next</string>
 
     <!-- Menu -->
     <string name="title_navigation">Navigations</string>
