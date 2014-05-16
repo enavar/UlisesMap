@@ -51,6 +51,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		getRoutes();
 		ShowRoutesAdapter adapter = new ShowRoutesAdapter(routes, layoutInflater);
 		list.setAdapter(adapter);
+		list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         list.setTextFilterEnabled(true);
 	}
 	

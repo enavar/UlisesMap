@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -64,7 +65,9 @@ public class ShowRoutesAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.name.setText(route.getName());
-		holder.valoration.setRating(route.getValorationAverage());
+		holder.valoration.setRating((float) route.getValorationAverage());
+		System.out.print(route.getValorationAverage());
+		System.out.println("ha rebut:" + holder.valoration.getNumStars());
 		holder.description.setText(route.getDescription());
 		holder.chBox.setChecked(route.isSelected());
 		return convertView;

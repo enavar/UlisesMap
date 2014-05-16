@@ -13,10 +13,10 @@ public class Route {
 	private HashSet<Point> points;
 	private HashSet<Comment> comments;
 	private HashSet<Valoration> valorations;
-	private float valorationAverage;
+	private double valorationAverage;
 	private boolean selected;
 		
-	public Route(String name, String description, float valorationAverage, HashSet<Point> points, HashSet<Comment> comments,
+	public Route(String name, String description, double valorationAverage, HashSet<Point> points, HashSet<Comment> comments,
 			HashSet<Valoration> valorations) {
 		this.name = name;
 		this.description = description;
@@ -27,7 +27,7 @@ public class Route {
 		this.selected = false;
 	}
 	
-	public Route(String name, String description, float valorationAverage) {
+	public Route(String name, String description, double valorationAverage) {
 		this.name = name;
 		this.description = description;
 		this.valorationAverage = valorationAverage;
@@ -74,7 +74,7 @@ public class Route {
 		this.description = description;
 	}
 
-	public float getValorationAverage() {
+	public double getValorationAverage() {
 		return valorationAverage;
 	}
 	
