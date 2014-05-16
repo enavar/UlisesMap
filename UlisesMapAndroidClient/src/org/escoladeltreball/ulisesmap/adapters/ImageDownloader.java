@@ -38,7 +38,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		this.bmImageReferences = new WeakReference<ImageView>(imageView);
 		mPlaceHolderBitmap = BitmapFactory.decodeResource(res,
-				R.drawable.upload);
+				R.drawable.icon);
 		placeHolder = progress;
 
 		// Get max available VM memory, exceeding this amount will throw an
@@ -185,7 +185,6 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	}
 
 	/* Static class */
-
 	static class AsyncDrawable extends BitmapDrawable {
 		private final WeakReference<ImageDownloader> taskReferences;
 

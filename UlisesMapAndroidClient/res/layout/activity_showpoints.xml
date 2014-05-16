@@ -12,12 +12,11 @@
     <TextView
         android:id="@+id/Textzone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40sp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/toMap"
-        android:background="@drawable/background_listview"
-        android:gravity="center" />
+        style="@style/textview_title" />
 
     <ListView
     	android:id="@+id/listView1"
@@ -29,10 +28,12 @@
     <Button
     	android:id="@+id/toMap"
     	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
+    	android:layout_height="40sp"
+    	android:gravity="center"
     	android:layout_alignParentRight="true"
     	android:layout_alignTop="@+id/Textzone"
-    	android:text="@string/button_map" />
+    	android:text="@string/button_map"
+    	android:background="@android:color/transparent" />
 
 </RelativeLayout>
 
