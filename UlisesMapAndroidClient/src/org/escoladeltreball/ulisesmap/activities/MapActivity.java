@@ -18,7 +18,6 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,7 +79,6 @@ public class MapActivity extends BaseActivity {
 		road = roadBuilder.getRoad();
 		// instantiate other items on the map
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
-		Log.d("all 1", "" + map.getOverlays().size());
 		initMapItems();
 		currentNavigation = mapElements;
 	}
@@ -160,6 +158,7 @@ public class MapActivity extends BaseActivity {
 		changeRouteStatus(item);
 		map.getOverlays().clear();
 		map.invalidate();
+		roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		road = roadBuilder.getRoad();
 		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
@@ -244,6 +243,7 @@ public class MapActivity extends BaseActivity {
 		ArrayList<GeoPoint> ar = new ArrayList<GeoPoint>();
 		ar.add(a);
 		ar.add(b);
+		roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		road = roadBuilder.getRoad();
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
@@ -271,19 +271,13 @@ public class MapActivity extends BaseActivity {
 				if (currentNavigation >= mapElements) {
 					currentNavigation--;
 					showMarkerInfo();
-					Log.d("map elements", "m " + mapElements);
-					Log.d("points 2", "c " + currentNavigation);
 				} else {
 					currentNavigation = mapElements;
 					showMarkerInfo();
 				}
 			} else {
-				Log.d("next", "c " + currentNavigation);
 				int maxNavigation = mapElements + navigationElements;
-				Log.d("next", "m " + navigationElements);
-				Log.d("next", "n " + currentNavigation);
 				if (currentNavigation < maxNavigation) {
-					Log.d("points", "" + currentNavigation);
 					showMarkerInfo();
 					currentNavigation++;
 				} else {
