@@ -50,7 +50,7 @@ public class BaseActivity extends Activity {
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
 		Settings.gps = prefs.getBoolean("gps", false);
 		Settings.navigations = prefs.getBoolean("navigations", false);
-		Settings.navigations = prefs.getBoolean("hideLogo", false);
+		Settings.hideLogo = prefs.getBoolean("hideLogo", false);
 		// Initiating Menu XML file (menu.xml)
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu, menu);

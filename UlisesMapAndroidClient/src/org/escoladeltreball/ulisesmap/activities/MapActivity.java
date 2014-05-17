@@ -1,13 +1,19 @@
 package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
 import org.escoladeltreball.ulisesmap.model.MarkerBuilder;
+import org.escoladeltreball.ulisesmap.model.PoiBuilder;
 import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.RoadBuilder;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.location.NominatimPOIProvider;
+import org.osmdroid.bonuspack.location.POI;
+import org.osmdroid.bonuspack.overlays.FolderOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.bonuspack.overlays.Polyline;
 import org.osmdroid.bonuspack.routing.Road;
@@ -18,11 +24,13 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
@@ -79,20 +87,24 @@ public class MapActivity extends BaseActivity {
 		road = roadBuilder.getRoad();
 		// instantiate other items on the map
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
+		Log.d("road", "" + map.getOverlays().size());
 		initMapItems();
-		currentNavigation = mapElements;
 	}
 
 	protected void initMapItems() {
 		// show Poins of interest on the map
 		makePointsMarkers(selectedPoints);
-		mapElements = map.getOverlays().size();
 		// Show user current position and draw a route to a start point
 		if (Settings.gps) {
 			initGPS();
 		}
+		Log.d("points", "" + map.getOverlays().size());
+		mapElements = map.getOverlays().size();
+		Log.d("mapele", "" + mapElements);
 		// Show instructions for each step of the road
 		if (Settings.navigations) {
+			prevStep.setVisibility(View.VISIBLE);
+			nextStep.setVisibility(View.VISIBLE);
 			currentNavigation = -1;
 			makeNavigationMarkers(road);
 			navigationElements = map.getOverlays().size() - mapElements;
@@ -100,6 +112,7 @@ public class MapActivity extends BaseActivity {
 				makeNavigationMarkers(roadGps);
 			}
 		}
+		currentNavigation = mapElements;
 	}
 
 	/**
@@ -138,10 +151,18 @@ public class MapActivity extends BaseActivity {
 			return changeRouteType(item);
 		case R.id.walk:
 			return changeRouteType(item);
+		case R.id.walk_transport:
+			return changeRouteType(item);
 		case R.id.myGPS:
 			if (item.isChecked()) {
 				item.setChecked(false);
 				Settings.gps = false;
+				map.getOverlays().clear();
+				map.invalidate();
+				roadBuilder = new RoadBuilder(geoPointsToDraw, true);
+				road = roadBuilder.getRoad();
+				initMapItems();
+				updateUIWithRoad(roadOverlay, road, Color.BLUE);
 			} else {
 				item.setChecked(true);
 				Settings.gps = true;
@@ -160,8 +181,8 @@ public class MapActivity extends BaseActivity {
 		map.invalidate();
 		roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 		road = roadBuilder.getRoad();
-		initMapItems();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
+		initMapItems();
 		return true;
 	}
 
@@ -173,9 +194,8 @@ public class MapActivity extends BaseActivity {
 	void updateUIWithRoad(Polyline polyline, Road road, int color) {
 
 		if (road.mStatus != Road.STATUS_OK)
-			Toast.makeText(
-					map.getContext(),
-					"We have a problem to get the route from your current location",
+			Toast.makeText(map.getContext(),
+					"We have a problem to get the route\n" + road.mStatus,
 					Toast.LENGTH_SHORT).show();
 		else {
 			polyline = RoadManager.buildRoadOverlay(road, map.getContext());
@@ -194,12 +214,14 @@ public class MapActivity extends BaseActivity {
 	public void makeNavigationMarkers(Road road) {
 		// set Markers
 		Drawable nodeIcon = getResources().getDrawable(R.drawable.marker_node);
+		TypedArray iconIds = getResources().obtainTypedArray(
+				R.array.navigation_icons);
 		for (int i = 0; i < road.mNodes.size(); i++) {
 			RoadNode node = road.mNodes.get(i);
 			Marker nodeMarker = new Marker(map);
 			nodeMarker.setPosition(node.mLocation);
 			nodeMarker.setIcon(nodeIcon);
-			nodeMarker.setTitle("Step " + i);
+			nodeMarker.setTitle("Step " + (i + 1));
 			map.getOverlays().add(nodeMarker);
 
 			// Set the bubble snippet with the instructions:
@@ -211,8 +233,12 @@ public class MapActivity extends BaseActivity {
 					node.mLength, node.mDuration));
 
 			// And put an icon showing the maneuver at this step:
-			Drawable icon = getResources().getDrawable(R.drawable.ic_continue);
-			nodeMarker.setImage(icon);
+			int iconId = iconIds.getResourceId(node.mManeuverType,
+					R.drawable.ic_empty);
+			if (iconId != R.drawable.ic_empty) {
+				Drawable icon = getResources().getDrawable(iconId);
+				nodeMarker.setImage(icon);
+			}
 		}
 	}
 
@@ -234,6 +260,8 @@ public class MapActivity extends BaseActivity {
 		} else {
 			myLocation = new GeoPoint(tracker.getLatitude(),
 					tracker.getLongitude());
+			Log.d("gps", myLocation.toString());
+			Log.d("start", geoPointsToDraw.get(0).toString());
 			showRoutefromMyCurrentLocation(myLocation, geoPointsToDraw.get(0));
 		}
 	}
@@ -243,8 +271,8 @@ public class MapActivity extends BaseActivity {
 		ArrayList<GeoPoint> ar = new ArrayList<GeoPoint>();
 		ar.add(a);
 		ar.add(b);
-		roadBuilder = new RoadBuilder(geoPointsToDraw, true);
-		road = roadBuilder.getRoad();
+		roadBuilder = new RoadBuilder(ar, true);
+		roadGps = roadBuilder.getRoad();
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
 	}
@@ -256,7 +284,7 @@ public class MapActivity extends BaseActivity {
 		}
 		return geoPoints;
 	}
-	
+
 	public void showMarkerInfo() {
 		Marker m = (Marker) map.getOverlays().get(currentNavigation);
 		mapController.setCenter(m.getPosition());
@@ -267,22 +295,26 @@ public class MapActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-			if ((Button) v == prevStep) {
-				if (currentNavigation >= mapElements) {
-					currentNavigation--;
-					showMarkerInfo();
+			if (road.mStatus == Road.STATUS_OK) {
+				if ((Button) v == prevStep) {
+					if (currentNavigation > mapElements) {
+						currentNavigation--;
+						showMarkerInfo();
+					} else {
+						currentNavigation = mapElements + navigationElements
+								- 1;
+						showMarkerInfo();
+					}
 				} else {
-					currentNavigation = mapElements;
-					showMarkerInfo();
-				}
-			} else {
-				int maxNavigation = mapElements + navigationElements;
-				if (currentNavigation < maxNavigation) {
-					showMarkerInfo();
-					currentNavigation++;
-				} else {
-					currentNavigation = mapElements + navigationElements -1;
-					showMarkerInfo();
+					Log.d("cur", "" + currentNavigation);
+					int maxNavigation = mapElements + navigationElements;
+					if (currentNavigation < maxNavigation) {
+						showMarkerInfo();
+						currentNavigation++;
+					} else {
+						currentNavigation = mapElements;
+						showMarkerInfo();
+					}
 				}
 			}
 		}
