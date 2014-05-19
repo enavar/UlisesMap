@@ -46,7 +46,7 @@ public class BaseActivity extends Activity {
 		
 		// for delete shared preferences, use for prevent some issue with android emulator
 		//need be commented for run in real phone
-		 prefs.edit().clear().commit();
+		// prefs.edit().clear().commit();
 		// get settings stored on device
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
 		Settings.gps = prefs.getBoolean("gps", false);
@@ -85,17 +85,13 @@ public class BaseActivity extends Activity {
 			}
 			return true;
 		case R.id.car:
-			changeRouteStatus(item);
-			return true;
+			return changeRouteStatus(item);
 		case R.id.bicycle:
-			changeRouteStatus(item);
-			return true;
+			return changeRouteStatus(item);
 		case R.id.walk:
-			changeRouteStatus(item);
-			return true;
+			return changeRouteStatus(item);
 		case R.id.walk_transport:
-			changeRouteStatus(item);
-			return true;
+			return changeRouteStatus(item);
 		case R.id.myGPS:
 			if (item.isChecked()) {
 				item.setChecked(false);
@@ -122,13 +118,14 @@ public class BaseActivity extends Activity {
 		}
 	}
 
-	public void changeRouteStatus(MenuItem item) {
+	public boolean changeRouteStatus(MenuItem item) {
 		if (item.isChecked()) {
 			item.setChecked(false);
 		} else {
 			item.setChecked(true);
 			Settings.routeType = item.getItemId();
-		}		
+		}
+		return true;
 	}
 
 	public void initMenu(Menu menu) {
@@ -138,7 +135,7 @@ public class BaseActivity extends Activity {
 		if (Settings.navigations) menu.findItem(R.id.navigations).setChecked(true);
 		else menu.findItem(R.id.navigations).setChecked(false);
 		if (Settings.hideLogo) menu.findItem(R.id.menu_logo).setChecked(true);
-		else menu.findItem(R.id.navigations).setChecked(false);
+		else menu.findItem(R.id.hideLogo).setChecked(false);
 		
 	}
 }
