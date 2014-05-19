@@ -103,6 +103,8 @@ public class ShowPointsAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
+				CheckBox cb = (CheckBox) v;
+				point.setSelected(cb.isChecked());
 				if (pointsCheck.contains(point))
 					pointsCheck.remove(point);
 				else
