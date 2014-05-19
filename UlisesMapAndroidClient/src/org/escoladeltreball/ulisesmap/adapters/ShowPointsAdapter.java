@@ -1,6 +1,7 @@
 package org.escoladeltreball.ulisesmap.adapters;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Point;
@@ -22,9 +23,10 @@ import android.widget.TextView;
 
 public class ShowPointsAdapter extends BaseAdapter {
 
-	ArrayList<Point> points;
+	private ArrayList<Point> points;
+	private HashSet<Point> pointsCheck;
 	private LayoutInflater layoutInflater;
-	Resources res;
+	private Resources res;
 
 	public static class ViewHolder {
 		protected ImageView image;
@@ -33,13 +35,12 @@ public class ShowPointsAdapter extends BaseAdapter {
 	}
 
 	public ShowPointsAdapter(Resources res, ArrayList<Point> points,
-
 	LayoutInflater layoutInflater) {
-
 		super();
 		this.res = res;
 		this.points = points;
 		this.layoutInflater = layoutInflater;
+		this.pointsCheck = new HashSet<Point>();
 	}
 
 	@Override
@@ -97,14 +98,17 @@ public class ShowPointsAdapter extends BaseAdapter {
 		return convertView;
 	}
 	
-	private void addListenerCheckBox(ViewHolder holder, Point point) {
+	private void addListenerCheckBox(ViewHolder holder, final Point point) {
 		holder.chBox.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				CheckBox cb = (CheckBox) v;
-				Point point = (Point) cb.getTag();
 				point.setSelected(cb.isChecked());
+				if (pointsCheck.contains(point))
+					pointsCheck.remove(point);
+				else
+					pointsCheck.add(point);
 			}
 		});
 		
@@ -128,8 +132,9 @@ public class ShowPointsAdapter extends BaseAdapter {
 			}
 		});
 	}
-	
-	
-	
+
+	public HashSet<Point> getPointsCheck() {
+		return pointsCheck;
+	}
 
 }
