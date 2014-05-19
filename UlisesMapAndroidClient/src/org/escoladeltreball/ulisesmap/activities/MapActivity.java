@@ -76,12 +76,13 @@ public class MapActivity extends BaseActivity {
 		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
+		Log.d("selected Pointa","" + selectedPoints.size());
 		geoPointsToDraw = getGeoPoints(selectedPoints);
+		Log.d("geoPointsToDraw","" + geoPointsToDraw.size());
 		if (activity == ACTIVITY_POINTS && geoPointsToDraw.size() > 2) {
-			roadBuilder = new RoadBuilder(geoPointsToDraw, false);
-		} else {
-			roadBuilder = new RoadBuilder(geoPointsToDraw, true);
+			geoPointsToDraw = RoadBuilder.orderGeoPoints(geoPointsToDraw);
 		}
+		RoadBuilder roadBuilder = new RoadBuilder(geoPointsToDraw);
 		road = roadBuilder.getRoad();
 		// instantiate other items on the map
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
@@ -119,11 +120,11 @@ public class MapActivity extends BaseActivity {
 	 * */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
+		Log.d("menu","" + item.getItemId());
 		switch (item.getItemId()) {
 
 		case R.id.navigations:
-
+			Log.d("menu","navigations");
 			if (item.isChecked()) {
 				item.setChecked(false);
 				Settings.navigations = false;
@@ -145,23 +146,29 @@ public class MapActivity extends BaseActivity {
 			}
 			return true;
 		case R.id.car:
-			return changeRouteType(item);
+			Log.d("menu","car");
+			changeRouteStatus(item);
+			return updateMap(item);
 		case R.id.bicycle:
-			return changeRouteType(item);
+			Log.d("menu","bicycle");
+			changeRouteStatus(item);
+			return updateMap(item);
 		case R.id.walk:
-			return changeRouteType(item);
+			Log.d("menu","walk");
+			changeRouteStatus(item);
+			return updateMap(item);
 		case R.id.walk_transport:
-			//return changeRouteType(item);
-			PoiBuilder poiBuilder = new PoiBuilder("station",
-					geoPointsToDraw.get(0));
-			return updateUIWithPoi(poiBuilder.loadPoi());
+			Log.d("menu","walk_transport");
+			changeRouteStatus(item);
+			return updateMap(item);
 		case R.id.myGPS:
+			Log.d("menu","myGPS");
 			if (item.isChecked()) {
 				item.setChecked(false);
 				Settings.gps = false;
 				map.getOverlays().clear();
 				map.invalidate();
-				roadBuilder = new RoadBuilder(geoPointsToDraw, true);
+				roadBuilder = new RoadBuilder(geoPointsToDraw);
 				road = roadBuilder.getRoad();
 				updateUIWithRoad(roadOverlay, road, Color.BLUE);
 				initMapItems();
@@ -173,38 +180,43 @@ public class MapActivity extends BaseActivity {
 			return true;
 
 		default:
+			Log.d("menu","def");
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	public boolean changeRouteType(MenuItem item) {
-		changeRouteStatus(item);
+	public boolean updateMap(MenuItem item) {		
+		Log.d("menu","change");
 		map.getOverlays().clear();
 		map.invalidate();
-		roadBuilder = new RoadBuilder(geoPointsToDraw, true);
+		roadBuilder = new RoadBuilder(geoPointsToDraw);
 		road = roadBuilder.getRoad();
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
 		initMapItems();
 		return true;
 	}
 
-	public boolean updateUIWithPoi(ArrayList<POI> pois) {
+	public FolderOverlay updateUIWithPoi(GeoPoint geoPoint, FolderOverlay poiMarkers) {
+		PoiBuilder poiBuilder = new PoiBuilder("station",
+				geoPoint);
+		ArrayList<POI> pois = poiBuilder.loadPoi();
+		Drawable PoiIcon = getResources().getDrawable(R.drawable.metro);
 		if (pois != null) {
 			Log.d("size poi", "" +pois.size());
-			FolderOverlay poiMarkers = new FolderOverlay(this);
-			map.getOverlays().add(poiMarkers);
+			//FolderOverlay poiMarkers = new FolderOverlay(this);
+			//map.getOverlays().add(poiMarkers);
 
 			for (POI poi : pois) {
 				Marker poiMarker = new Marker(map);
 				poiMarker.setTitle(poi.mType);
-				poiMarker.setSnippet(poi.mDescription);
+				poiMarker.setSnippet(poi.mDescription.split(",")[0]);
 				poiMarker.setPosition(poi.mLocation);
+				poiMarker.setIcon(PoiIcon);
 				poiMarkers.add(poiMarker);
 			}
-			map.invalidate();
-			return true;
+			return poiMarkers;
 		}
-		return false;
+		return null;
 
 	}
 
@@ -265,13 +277,19 @@ public class MapActivity extends BaseActivity {
 	}
 
 	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
-		for (int i = 0; i < selectedPoints.size(); i++) {
+		FolderOverlay poiMarkers = new FolderOverlay(this);
+		map.getOverlays().add(poiMarkers);
+		for (int i = 0; i < selectedPoints.size(); i++) {		
 			Point point = selectedPoints.get(i);
+			if (Settings.routeType == R.id.walk_transport) {
+				updateUIWithPoi(point.getGp(),poiMarkers);
+			}
 			MarkerBuilder nodeMarker = new MarkerBuilder(map, getResources(),
 					point.getGp(), point.getImage(), point.getName(),
 					point.getDescription());
 			map.getOverlays().add(nodeMarker.build());
 		}
+		map.invalidate();
 	}
 
 	public void initGPS() {
@@ -293,7 +311,7 @@ public class MapActivity extends BaseActivity {
 		ArrayList<GeoPoint> ar = new ArrayList<GeoPoint>();
 		ar.add(a);
 		ar.add(b);
-		roadBuilder = new RoadBuilder(ar, true);
+		roadBuilder = new RoadBuilder(ar);
 		roadGps = roadBuilder.getRoad();
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
 
