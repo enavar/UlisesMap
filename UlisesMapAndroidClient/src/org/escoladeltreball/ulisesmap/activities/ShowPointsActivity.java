@@ -25,7 +25,7 @@ import android.widget.Toast;
 public class ShowPointsActivity extends BaseActivity implements OnClickListener {
 
 	private ArrayList<Point> points;
-	private ArrayList<Point> selectedPoints;
+	private ShowPointsAdapter adapter;
 	private Button map;
 	private String pkCity;
 
@@ -43,7 +43,7 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		ShowPointsAdapter adapter = new ShowPointsAdapter(getResources(),points,
+		adapter = new ShowPointsAdapter(getResources(),points,
 				layoutInflater);
 		list.setAdapter(adapter);
 		list.setTextFilterEnabled(true);
@@ -56,6 +56,7 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		
 		@Override
 		protected String doInBackground(String... s) {
+			ArrayList<Point> selectedPoints = new ArrayList<Point>(adapter.getPointsCheck());
 			Intent intent = new Intent(map.getContext(), MapActivity.class);
 			intent.putExtra("selectedPoints", selectedPoints);
 			startActivity(intent);
@@ -71,27 +72,11 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 
 	@Override
 	public void onClick(View v) {
-		getSelectedPoints();
-		if (points.size() >= 2) {
+		if (adapter.getPointsCheck().size() >= 2) {
 			progress.show();
 			new IntentLauncher().execute();
 		} else
 			Toast.makeText(this, R.string.no_selected_point, Toast.LENGTH_LONG).show();
-	}
-
-	/* Methods */
-
-	/**
-	 * Create an array with selected points
-	 */
-	private void getSelectedPoints() {
-		selectedPoints = new ArrayList<Point>();
-		for (int i = 0; i < points.size(); i++) {
-			Point p = points.get(i);
-			if (p.isSelected()) {
-				selectedPoints.add(p);
-			}
-		}
 	}
 
 	private void getPoints() {
