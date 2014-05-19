@@ -36,7 +36,7 @@ public class BaseActivity extends Activity {
 		Editor editor = prefs.edit();
 		editor.putInt("routeType", Settings.routeType);
 		editor.putBoolean("gps", Settings.gps);
-		editor.putBoolean("gps", Settings.navigations);
+		editor.putBoolean("navigations", Settings.navigations);
 		editor.putBoolean("hideLogo", Settings.hideLogo);
 		editor.commit();
 	}
@@ -44,8 +44,9 @@ public class BaseActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-		// for delete shared preferences
-		// prefs.edit().clear().commit();
+		// for delete shared preferences, use for prevent some issue with android emulator
+		//need be commented for run in real phone
+		 prefs.edit().clear().commit();
 		// get settings stored on device
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
 		Settings.gps = prefs.getBoolean("gps", false);

@@ -1,7 +1,6 @@
 package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.GPSTracker;
@@ -11,7 +10,6 @@ import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.RoadBuilder;
 import org.escoladeltreball.ulisesmap.model.Settings;
 import org.osmdroid.api.IMapController;
-import org.osmdroid.bonuspack.location.NominatimPOIProvider;
 import org.osmdroid.bonuspack.location.POI;
 import org.osmdroid.bonuspack.overlays.FolderOverlay;
 import org.osmdroid.bonuspack.overlays.Marker;
@@ -103,14 +101,14 @@ public class MapActivity extends BaseActivity {
 		Log.d("mapele", "" + mapElements);
 		// Show instructions for each step of the road
 		if (Settings.navigations) {
+			if (Settings.gps) {
+				makeNavigationMarkers(roadGps);
+			}
 			prevStep.setVisibility(View.VISIBLE);
 			nextStep.setVisibility(View.VISIBLE);
 			currentNavigation = -1;
 			makeNavigationMarkers(road);
 			navigationElements = map.getOverlays().size() - mapElements;
-			if (Settings.gps) {
-				makeNavigationMarkers(roadGps);
-			}
 		}
 		currentNavigation = mapElements;
 	}
@@ -130,19 +128,20 @@ public class MapActivity extends BaseActivity {
 				item.setChecked(false);
 				Settings.navigations = false;
 				map.getOverlays().clear();
-				map.invalidate();
-				initMapItems();
+				map.invalidate();				
 				updateUIWithRoad(roadOverlay, road, Color.BLUE);
+				initMapItems();
 			} else {
 				item.setChecked(true);
 				Settings.navigations = true;
 				prevStep.setVisibility(View.VISIBLE);
 				nextStep.setVisibility(View.VISIBLE);
 				makeNavigationMarkers(road);
-				navigationElements = map.getOverlays().size() - mapElements;
 				if (Settings.gps) {
 					makeNavigationMarkers(roadGps);
 				}
+				map.invalidate();				
+				navigationElements = map.getOverlays().size() - mapElements;
 			}
 			return true;
 		case R.id.car:
@@ -152,7 +151,10 @@ public class MapActivity extends BaseActivity {
 		case R.id.walk:
 			return changeRouteType(item);
 		case R.id.walk_transport:
-			return changeRouteType(item);
+			//return changeRouteType(item);
+			PoiBuilder poiBuilder = new PoiBuilder("station",
+					geoPointsToDraw.get(0));
+			return updateUIWithPoi(poiBuilder.loadPoi());
 		case R.id.myGPS:
 			if (item.isChecked()) {
 				item.setChecked(false);
@@ -161,8 +163,8 @@ public class MapActivity extends BaseActivity {
 				map.invalidate();
 				roadBuilder = new RoadBuilder(geoPointsToDraw, true);
 				road = roadBuilder.getRoad();
-				initMapItems();
 				updateUIWithRoad(roadOverlay, road, Color.BLUE);
+				initMapItems();
 			} else {
 				item.setChecked(true);
 				Settings.gps = true;
@@ -184,6 +186,26 @@ public class MapActivity extends BaseActivity {
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
 		initMapItems();
 		return true;
+	}
+
+	public boolean updateUIWithPoi(ArrayList<POI> pois) {
+		if (pois != null) {
+			Log.d("size poi", "" +pois.size());
+			FolderOverlay poiMarkers = new FolderOverlay(this);
+			map.getOverlays().add(poiMarkers);
+
+			for (POI poi : pois) {
+				Marker poiMarker = new Marker(map);
+				poiMarker.setTitle(poi.mType);
+				poiMarker.setSnippet(poi.mDescription);
+				poiMarker.setPosition(poi.mLocation);
+				poiMarkers.add(poiMarker);
+			}
+			map.invalidate();
+			return true;
+		}
+		return false;
+
 	}
 
 	/**
