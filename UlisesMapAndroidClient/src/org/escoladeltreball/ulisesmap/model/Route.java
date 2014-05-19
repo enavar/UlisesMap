@@ -1,12 +1,15 @@
 package org.escoladeltreball.ulisesmap.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
-public class Route {
+@SuppressWarnings("serial")
+public class Route implements Serializable {
 	
 	public static final String FIELD_NAME = "name";
 	public static final String FIELD_DESCRIPTION = "description";
 	public static final String FIELD_AVG = "avg";
+	public static final String FIELD_LIST_ROUTES = "routes";
 	
 	private String name;
 	private String description;

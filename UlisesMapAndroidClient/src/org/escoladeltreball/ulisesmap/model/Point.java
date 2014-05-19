@@ -14,6 +14,7 @@ public class Point implements Serializable {
 	public static final String FIELD_DESCRIPTION = "description";
 	public static final String FIELD_IMAGE = "image";
 	public static final String FIELD_URL = "url";
+	public static final String FIELD_LIST_POINTS = "points";
 	private String name;
 	private GeoPoint gp;
 	private String street;	

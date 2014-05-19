@@ -1,12 +1,9 @@
 package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.adapters.ShowPointsAdapter;
-import org.escoladeltreball.ulisesmap.connections.Client;
-import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
 import org.escoladeltreball.ulisesmap.model.Point;
 
@@ -27,19 +24,18 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 	private ArrayList<Point> points;
 	private ShowPointsAdapter adapter;
 	private Button map;
-	private String pkCity;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showpoints);
 		Bundle bundle = getIntent().getExtras();
-		pkCity = bundle.getString(City.FIELD_PRIMARY_KEY);
+		points = (ArrayList<Point>)getIntent().getSerializableExtra(Point.FIELD_LIST_POINTS);
 		String nameCity = bundle.getString(City.FIELD_NAME);
 		map = (Button) findViewById(R.id.toMap);
 		TextView title = (TextView) findViewById(R.id.Textzone);
 		title.setText(nameCity);
-		getPoints();
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,17 +73,5 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 			new IntentLauncher().execute();
 		} else
 			Toast.makeText(this, R.string.no_selected_point, Toast.LENGTH_LONG).show();
-	}
-
-	private void getPoints() {
-		Client client = new Client(Client.SERVLET_POINT, true);
-		try {
-			String response = client.execute(Converter.convertSpaceToBar(pkCity)).get();
-			points = Converter.convertStringToPoints(response);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
 	}
 }

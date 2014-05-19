@@ -16,12 +16,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,18 +27,18 @@ import android.widget.Toast;
 public class ShowRoutesActivity extends BaseActivity implements OnClickListener {
 
 	private ArrayList<Route> routes;
-	private String pkCity;
 	private Button info;
 	private Button map;
 	ListView list;
 	private String routeName = "museum route";
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showroutes);
 		Bundle bundle = getIntent().getExtras();
-		pkCity = bundle.getString(City.FIELD_PRIMARY_KEY);
+		routes = (ArrayList<Route>)getIntent().getSerializableExtra(Route.FIELD_LIST_ROUTES);
 		String nameCity = bundle.getString(City.FIELD_NAME);
 		TextView city = (TextView) findViewById(R.id.city);
 		city.setText(nameCity);
@@ -51,7 +49,6 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		list = (ListView) findViewById(R.id.listViewRoutes);
 		LayoutInflater layoutInflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		getRoutes();
 		ShowRoutesAdapter adapter = new ShowRoutesAdapter(routes,
 				layoutInflater);
 		list.setAdapter(adapter);
@@ -71,23 +68,6 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		@Override
 		protected void onPostExecute(String result) {
 			progress.dismiss();
-		}
-	}
-
-	/* Methods */
-
-	/**
-	 * Get and display all the city routes from database
-	 */
-	private void getRoutes() {
-		Client client = new Client(Client.SERVLET_ROUTES, true);
-		try {
-			String arrayRoutes = client.execute(Converter.convertSpaceToBar(pkCity)).get();
-			routes = Converter.convertStringToRoutes(arrayRoutes);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
 		}
 	}
 
