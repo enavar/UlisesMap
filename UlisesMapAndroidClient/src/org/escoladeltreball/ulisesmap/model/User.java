@@ -8,7 +8,7 @@ import org.escoladeltreball.ulisesmap.converter.Converter;
 public class User {
 	
 	public static final String FIELD_NAME = "user";
-	public static final String FIELD_MAIL = "mail";
+	public static final String FIELD_MAIL = "email";
 	public static final String FIELD_PSW = "password";	
 	
 	private String name;
