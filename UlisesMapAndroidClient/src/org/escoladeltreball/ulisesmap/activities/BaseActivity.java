@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,12 +23,11 @@ public class BaseActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
-		//create progress dialog
+		// create progress dialog
 		progress = new ProgressDialog(this);
 		progress.setMessage("Loading data...");
-		progress.setIndeterminate(false);	
+		progress.setIndeterminate(false);
 	}
-
 
 	@Override
 	protected void onPause() {
@@ -43,9 +43,10 @@ public class BaseActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
-		// for delete shared preferences, use for prevent some issue with android emulator
-		//need be commented for run in real phone
+
+		// for delete shared preferences, use for prevent some issue with
+		// android emulator
+		// need be commented for run in real phone
 		// prefs.edit().clear().commit();
 		// get settings stored on device
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
@@ -74,15 +75,11 @@ public class BaseActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
-		
-		case R.id.menu_navigations:
-			if (item.isChecked()) {
-				item.setChecked(false);
-				Settings.navigations = false;
-			} else {
-				item.setChecked(true);
-				Settings.navigations = true;
-			}
+
+		case R.id.navigations:
+			Settings.navigations = !item.isCheckable();
+			item.setChecked(Settings.navigations);
+			Log.d("navigation", "" + Settings.navigations);
 			return true;
 		case R.id.car:
 			return changeRouteStatus(item);
@@ -93,25 +90,15 @@ public class BaseActivity extends Activity {
 		case R.id.walk_transport:
 			return changeRouteStatus(item);
 		case R.id.myGPS:
-			if (item.isChecked()) {
-				item.setChecked(false);
-				Settings.gps = false;
-			} else {
-				item.setChecked(true);
-				Settings.gps = true;
-			}
+			Settings.gps = !item.isChecked();
+			item.setChecked(Settings.gps);
 			return true;
 		case R.id.menu_exit:
 			moveTaskToBack(true);
 			return true;
 		case R.id.hideLogo:
-			if (item.isChecked()) {
-				item.setChecked(false);
-				Settings.hideLogo = false;
-			} else {
-				item.setChecked(true);
-				Settings.hideLogo = true;
-			}
+			Settings.hideLogo = !item.isChecked();
+			item.setChecked(Settings.hideLogo);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -130,12 +117,8 @@ public class BaseActivity extends Activity {
 
 	public void initMenu(Menu menu) {
 		changeRouteStatus(menu.findItem(Settings.routeType));
-		if (Settings.gps) menu.findItem(R.id.myGPS).setChecked(true);
-		else menu.findItem(R.id.myGPS).setChecked(false);
-		if (Settings.navigations) menu.findItem(R.id.navigations).setChecked(true);
-		else menu.findItem(R.id.navigations).setChecked(false);
-		if (Settings.hideLogo) menu.findItem(R.id.menu_logo).setChecked(true);
-		else menu.findItem(R.id.hideLogo).setChecked(false);
-		
+		menu.findItem(R.id.myGPS).setChecked(Settings.gps);
+		menu.findItem(R.id.navigations).setChecked(Settings.navigations);
+		menu.findItem(R.id.menu_logo).setChecked(Settings.hideLogo);
 	}
 }
