@@ -21,6 +21,9 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,9 +31,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 
 /**
  * MapActivity Show a route from points of interest
@@ -85,9 +85,10 @@ public class MapActivity extends BaseActivity {
 		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
-		Log.d("selected Pointa", "" + selectedPoints.size());
+		for (int i = 0; i < selectedPoints.size(); i++) {
+			Log.d("selected Pointa", "" + selectedPoints.size());
+		}
 		geoPointsToDraw = getGeoPoints(selectedPoints);
-		Log.d("geoPointsToDraw", "" + geoPointsToDraw.size());
 		if (activity == ACTIVITY_POINTS && geoPointsToDraw.size() > 2) {
 			geoPointsToDraw = RoadBuilder.orderGeoPoints(geoPointsToDraw);
 		}
