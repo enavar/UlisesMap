@@ -14,10 +14,9 @@
         android:textSize="32sp" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/animation"
         android:layout_width="233dp"
         android:layout_height="205dp"
-        android:layout_gravity="center"
-        android:src="@drawable/icon" />
+        android:layout_gravity="center" />
 
 </LinearLayout>

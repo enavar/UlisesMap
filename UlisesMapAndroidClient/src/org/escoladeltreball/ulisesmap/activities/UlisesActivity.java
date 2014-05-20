@@ -5,9 +5,11 @@ import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class UlisesActivity extends Activity {
@@ -44,5 +46,17 @@ public class UlisesActivity extends Activity {
 			finish();
 		}
 	};
-
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+	    super.onWindowFocusChanged(hasFocus);
+	    if (hasFocus) {
+	    	ImageView image = (ImageView) findViewById(R.id.animation);
+			image.setAdjustViewBounds(true);
+			image.setBackgroundResource(R.drawable.animation_orca);
+			final AnimationDrawable frameAnimation = (AnimationDrawable)getResources().getDrawable(R.drawable.animation_orca);
+			image.setImageDrawable(frameAnimation);
+			frameAnimation.start();
+	    }
+	}
 }
