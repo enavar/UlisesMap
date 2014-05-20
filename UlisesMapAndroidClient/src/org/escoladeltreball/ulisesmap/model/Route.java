@@ -7,9 +7,11 @@ public class Route {
 	public static final String FIELD_NAME = "name";
 	public static final String FIELD_DESCRIPTION = "description";
 	public static final String FIELD_AVG = "avg";
+	public static final String FIELD_IMAGE = "image";
 	
 	private String name;
 	private String description;
+	private String image;
 	private HashSet<Point> points;
 	private HashSet<Comment> comments;
 	private HashSet<Valoration> valorations;
@@ -27,11 +29,20 @@ public class Route {
 		this.selected = false;
 	}
 	
-	public Route(String name, String description, double valorationAverage) {
+	public Route(String name, String description, double valorationAverage, String image) {
 		this.name = name;
 		this.description = description;
 		this.valorationAverage = valorationAverage;
+		this.image = image;
 		this.selected = false;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public HashSet<Point> getPoints() {

@@ -16,12 +16,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +31,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 	private Button info;
 	private Button map;
 	ListView list;
-	private String routeName = "museum route";
+	private String routeName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		getRoutes();
 		ShowRoutesAdapter adapter = new ShowRoutesAdapter(routes,
-				layoutInflater);
+				layoutInflater, getResources());
 		list.setAdapter(adapter);
 		list.setTextFilterEnabled(true);
 	}
@@ -82,7 +80,8 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 	private void getRoutes() {
 		Client client = new Client(Client.SERVLET_ROUTES, true);
 		try {
-			String arrayRoutes = client.execute(Converter.convertSpaceToBar(pkCity)).get();
+			String arrayRoutes = client.execute(
+					Converter.convertSpaceToBar(pkCity)).get();
 			routes = Converter.convertStringToRoutes(arrayRoutes);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -94,7 +93,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 	@Override
 	public void onClick(View v) {
 		routeName = getCheckedItem();
-		if (routeName.equals("false")) {
+		if (routeName == null) {
 			Toast.makeText(this, R.string.noSelectedRoute, Toast.LENGTH_SHORT)
 					.show();
 		} else {
@@ -112,8 +111,8 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 
 	private void clickRoute(View v) {
 		if (v.equals(info)) {
-			 Settings.routeName = routeName;
-			 intentShowCommentsActivity();
+			Settings.routeName = routeName;
+			intentShowCommentsActivity();
 		} else {
 			progress.show();
 			// Starts a new activity to show gps map route
@@ -129,8 +128,7 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		ArrayList<Point> pointsOfRoute = null;
 		try {
 			String arrayPoints = client.execute(routeName).get();
-			pointsOfRoute = Converter
-					.convertStringToPoints(arrayPoints);
+			pointsOfRoute = Converter.convertStringToPoints(arrayPoints);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -141,7 +139,10 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 
 	private String getCheckedItem() {
 		int checkedId = list.getCheckedItemPosition();
-		Route route = (Route) list.getItemAtPosition(checkedId);
-		return route.getName();
+		if (checkedId != -1) {
+			Route route = (Route) list.getItemAtPosition(checkedId);
+			return route.getName();
+		}
+		return null;
 	}
 }

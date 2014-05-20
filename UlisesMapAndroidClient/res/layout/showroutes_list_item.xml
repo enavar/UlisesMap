@@ -16,6 +16,10 @@
         android:gravity="center"        
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"  />
 
+    <ProgressBar
+        android:id="@+id/placeHolderRoute"
+        style="@style/image" />
+
     <RatingBar
         android:id="@+id/ratingValue"
         style="?android:attr/ratingBarStyleSmall"
@@ -27,11 +31,10 @@
     <TextView
         android:id="@+id/viewDescriptionRoute"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imageRoute" />
+        android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@id/imageRoute"
+        android:id="@+id/imageRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
