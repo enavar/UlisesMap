@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="45sp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/toMap" />
+        android:layout_alignParentTop="true" />
 
     <ListView
         android:id="@+id/listView1"
@@ -28,9 +27,8 @@
     <Button
         android:id="@+id/toMap"
         style="@style/button_map"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/Textzone"
-        android:layout_margin="2.5sp"
-        android:layout_marginRight="20sp" />
+        android:layout_alignBaseline="@+id/Textzone"
+        android:layout_alignBottom="@+id/Textzone"
+        android:layout_alignRight="@+id/Textzone"/>
 
 </RelativeLayout>
