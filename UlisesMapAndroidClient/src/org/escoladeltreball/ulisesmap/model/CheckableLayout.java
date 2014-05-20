@@ -7,9 +7,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-public class CheckableLayout extends LinearLayout implements Checkable {
+public class CheckableLayout extends RelativeLayout implements Checkable {
 	private CheckedTextView _checkbox;
 
 	public CheckableLayout(Context context, AttributeSet attrs) {

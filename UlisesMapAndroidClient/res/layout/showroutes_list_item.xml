@@ -16,6 +16,10 @@
         android:layout_toRightOf="@+id/selectRoute"       
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"  />
 
+    <ProgressBar
+        android:id="@+id/placeHolderRoute"
+        style="@style/image" />
+
     <RatingBar
         android:id="@+id/ratingValue"
         style="?android:attr/ratingBarStyleSmall"
@@ -29,5 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/textview_street" />
+
+    <ImageView
+        android:id="@+id/imageRoute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </org.escoladeltreball.ulisesmap.model.CheckableLayout>

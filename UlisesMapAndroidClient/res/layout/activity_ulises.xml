@@ -11,14 +11,13 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:text="@string/app_name"
         android:textSize="32sp" />
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_gravity="center"
         android:layout_width="233dp"
         android:layout_height="205dp"
+        android:layout_gravity="center"
         android:src="@drawable/icon" />
 
 </LinearLayout>

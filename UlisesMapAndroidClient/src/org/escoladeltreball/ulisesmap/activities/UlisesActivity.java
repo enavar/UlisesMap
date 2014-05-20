@@ -7,6 +7,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 public class UlisesActivity extends Activity {
 
@@ -24,9 +26,12 @@ public class UlisesActivity extends Activity {
 				startActivity(new Intent(this, MenuActivity.class));
 				finish();
 			}
-		} else {
+		} else {			
 			Handler mHandler = new Handler();
-			mHandler.postDelayed(mLaunchTask, delay);
+			mHandler.postDelayed(mLaunchTask, delay);		
+			TextView app_name = (TextView) findViewById(R.id.mainTitle);
+			app_name.setText(R.string.app_name);
+			app_name.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left));
 		}
 
 	}
