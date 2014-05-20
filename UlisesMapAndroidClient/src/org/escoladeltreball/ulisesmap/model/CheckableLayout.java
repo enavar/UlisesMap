@@ -1,7 +1,8 @@
 package org.escoladeltreball.ulisesmap.model;
 
+
+
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Checkable;
@@ -36,15 +37,7 @@ public class CheckableLayout extends LinearLayout implements Checkable {
 	@Override
 	public void setChecked(boolean checked) {
 		if (_checkbox != null) {
-			if (checked) {
-				_checkbox.setChecked(checked);
-				((View) _checkbox.getParent()).setBackgroundColor(Color.CYAN);
-
-			} else {
-				_checkbox.setChecked(checked);
-				((View) _checkbox.getParent()).setBackgroundColor(Color.BLACK);
-
-			}
+			_checkbox.setChecked(checked);
 		}
 	}
 

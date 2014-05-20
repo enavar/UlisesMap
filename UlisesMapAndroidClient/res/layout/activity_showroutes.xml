@@ -18,29 +18,24 @@
 
 	<TextView
 	    android:id="@+id/city"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/toMapRoute"
-	    android:layout_alignLeft="@+id/listViewRoutes"
-	    android:layout_alignParentTop="true"
-	    android:layout_toLeftOf="@+id/button_info_route"
-	    android:gravity="center" />
-
-	<Button
-	    android:id="@+id/toMapRoute"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentTop="true"
-	    android:layout_alignRight="@+id/listViewRoutes"
-	    android:text="@string/button_map" />
+	    style="@style/textview_title"
+	    android:layout_width="match_parent"
+        android:layout_height="45sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"  />
 
 	<Button
 	    android:id="@+id/button_info_route"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBaseline="@+id/toMapRoute"
-	    android:layout_alignBottom="@+id/toMapRoute"
-	    android:layout_toLeftOf="@+id/toMapRoute"
-	    android:text="@string/button_info_route" />
+	    style="@style/button_comment"
+	    android:layout_alignBaseline="@+id/city"
+	    android:layout_alignBottom="@+id/city"
+	    android:layout_toLeftOf="@+id/toMapRoute" />
+
+	<Button
+	    android:id="@+id/toMapRoute"
+	    style="@style/button_map"
+	    android:layout_alignBaseline="@+id/city"
+	    android:layout_alignBottom="@+id/city"
+	    android:layout_alignRight="@+id/listViewRoutes" />
     
 </RelativeLayout>

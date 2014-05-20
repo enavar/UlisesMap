@@ -48,6 +48,15 @@
 	    <item name="android:layout_height">40sp</item>
     	<item name="android:gravity">center</item>
     	<item name="android:background">@drawable/backgroun_button_map</item>
+    	<item name="android:layout_marginRight">10dp</item>
+	</style>
+	
+	<style name="button_comment">
+	    <item name="android:layout_width">40sp</item>
+	    <item name="android:layout_height">40sp</item>
+    	<item name="android:gravity">center</item>
+    	<item name="android:background">@drawable/background_button_comment</item>
+    	<item name="android:layout_marginRight">10dp</item>
 	</style>
 	
 </resources>

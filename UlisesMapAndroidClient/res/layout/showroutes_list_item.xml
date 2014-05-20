@@ -7,13 +7,13 @@
 
     <CheckedTextView
         android:id="@+id/viewNameRoute"
+        style="@style/textview_name_route_point"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/selectRoute"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/ratingValue"
-        android:layout_toRightOf="@+id/selectRoute"
-        android:gravity="center"        
+        android:layout_toRightOf="@+id/selectRoute"       
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"  />
 
     <RatingBar
@@ -27,6 +27,7 @@
     <TextView
         android:id="@+id/viewDescriptionRoute"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@style/textview_street" />
 
 </org.escoladeltreball.ulisesmap.model.CheckableLayout>
