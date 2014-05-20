@@ -9,6 +9,10 @@
 
     <!-- ListView -->
     <string name="ok">OK</string>
+    
+    <!-- MenuActivity -->
+    <string name="not_points">This city not has points</string>
+    <string name="not_routes">This city not has routes</string>
 	
     <!--  LoginActivity -->
     <string name="button_enter">Enter</string>

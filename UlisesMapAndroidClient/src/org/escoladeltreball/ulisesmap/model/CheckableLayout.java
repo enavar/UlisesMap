@@ -14,6 +14,14 @@ public class CheckableLayout extends RelativeLayout implements Checkable {
 
 	public CheckableLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
+	}	
+
+	public CheckableLayout(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+	}
+	
+	public CheckableLayout(Context context) {
+		super(context);
 	}
 
 	@Override
