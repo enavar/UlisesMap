@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksander Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.converter;
 
 import java.util.ArrayList;
@@ -109,7 +125,7 @@ public class Converter {
 				String name = objPoint.getString(Point.FIELD_NAME);
 				double lat = objPoint.getDouble(Point.FIELD_LAT);
 				double lon = objPoint.getDouble(Point.FIELD_LON);
-				String street = objPoint.getString(Point.FIELD_STREET);
+				String street = (!objPoint.isNull(Point.FIELD_STREET)) ? objPoint.getString(Point.FIELD_STREET) : "";
 				String description = objPoint.getString(Point.FIELD_DESCRIPTION);
 				String url = (!objPoint.isNull(Point.FIELD_URL)) ? objPoint.getString(Point.FIELD_URL) : "";
 				String image = objPoint.getString(Point.FIELD_IMAGE);

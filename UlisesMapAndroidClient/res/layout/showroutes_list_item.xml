@@ -7,36 +7,39 @@
 
     <CheckedTextView
         android:id="@+id/viewNameRoute"
+        style="@style/textview_name_route_point"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/selectRoute"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/ratingValue"
-        android:layout_toRightOf="@+id/selectRoute"       
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"  />
+        android:gravity="center"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple" />
 
-    <ProgressBar
-        android:id="@+id/placeHolderRoute"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/viewNameRoute"
-        style="@style/image" />
+    <TextView
+        android:id="@+id/viewDescriptionRoute"
+        style="@style/textview_street"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingValue"
+        android:layout_toRightOf="@+id/imageRoute" />
 
     <ImageView
         android:id="@+id/imageRoute"
-        style="@style/image" />
+        style="@style/image"
+        android:layout_alignLeft="@+id/placeHolderRoute"
+        android:layout_below="@+id/viewNameRoute" />
+    
+    <ProgressBar
+        android:id="@+id/placeHolderRoute"
+        style="@style/image"
+        android:layout_below="@+id/viewNameRoute" />
 
     <RatingBar
         android:id="@+id/ratingValue"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:isIndicator="true"
-        android:numStars="5" />
-
-    <TextView
-        android:id="@+id/viewDescriptionRoute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/textview_street" />
+        android:layout_below="@+id/viewNameRoute"
+        android:layout_toRightOf="@+id/imageRoute" />
 
 </org.escoladeltreball.ulisesmap.model.CheckableLayout>

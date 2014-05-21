@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksander Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.activities;
 
 
@@ -80,7 +96,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 				 intent.putExtra(Point.FIELD_LIST, arrayObject);
 			} else  {
 				intent = new Intent(views[0].getContext(), ShowRoutesActivity.class);
-				intent.putExtra(Route.FIELD_LIST, arrayObject);				
+				intent.putExtra(Route.FIELD_LIST, arrayObject);
 			}
 			intent.putExtra(City.FIELD_NAME, nameCity);
 			startActivity(intent);
@@ -88,12 +104,14 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		}
 		
 		 @Override
-	        protected void onPostExecute(String result) {
+		 protected void onPostExecute(String result) {
 			 progress.dismiss();
-	        }		
+	     }
 	}
 
-	
+	/**
+	 * Get and display all countries from database
+	 */
 	private void getCountries() {
 		Client client = new Client(Client.SERVLET_COUNTRIES, false);
 		try {
@@ -106,6 +124,9 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		}		
 	}
 	
+	/**
+	 * Get and display all the countries cities from database
+	 */
 	private void getCities(String nameCountry) {
 		Client client = new Client(Client.SERVLET_CITIES, true);
 		try {
@@ -164,7 +185,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		if (parent.equals(spCountries)) {
 			String country = Converter.convertSpaceToBar(countries[position]);
 			getCities(country);
-			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, namesCities);
 			spCities.setAdapter(adapterCities);
 			spCities.setOnItemSelectedListener(this);

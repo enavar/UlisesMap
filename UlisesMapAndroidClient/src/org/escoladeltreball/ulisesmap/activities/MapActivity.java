@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksander Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.activities;
 
 import java.util.ArrayList;
@@ -33,35 +49,50 @@ import android.widget.Button;
 import android.widget.Toast;
 
 /**
- * MapActivity Show a route from points of interest
+ * MapActivity
+ * Show a route from an array of points according to choosen option in menu
  * 
- * @author: Oleksander Dovbysh Elisabet Navarro Sheila Perez
- * 
- *          This is free software, licensed under the GNU General Public License
- *          v3. See http://www.gnu.org/licenses/gpl.html for more information.
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
  */
 
 public class MapActivity extends BaseActivity {
-
-	// for MapView
-	private Road road;
-	private Road roadGps;
+	
+	/** view for show open street maps in android */
 	private MapView map;
-	private Polyline roadOverlay;
-	private Polyline roadOverlayGps;
-	private GPSTracker tracker;
-	private RoadBuilder roadBuilder;
+	/** map settings */
 	IMapController mapController;
+	/** route builded from points of interest */
+	private Road road;
+	/** routed builded from current user position and start point of the route */
+	private Road roadGps;
+	/** a line drawn from correspond route */
+	private Polyline roadOverlay;
+	/** a line drawn from correspond route */
+	private Polyline roadOverlayGps;
+	/** constantly check user current position */
+	private GPSTracker tracker;
+	/** build a road from points of interest */
+	private RoadBuilder roadBuilder;
+	
+	/** identification number of activity which started current activity */
 	private static final int ACTIVITY_POINTS = 1;
 
+	/** button for navigate throw markers */
 	private Button prevStep;
+	/** button for navigate throw markers */
 	private Button nextStep;
 
-	private ArrayList<GeoPoint> geoPointsToDraw;
+	/** points selected by user o owned from chosen route */
 	private ArrayList<Point> selectedPoints;
+	/** coordinates of points of interest */
+	private ArrayList<GeoPoint> geoPointsToDraw;
 
+	/** number of map primary elements */
 	private int mapElements;
+	/** number of map navigation elements */
 	private int navigationElements;
+	/** number of current navigation marker */
 	private int currentNavigation;
 
 	@Override
@@ -82,7 +113,7 @@ public class MapActivity extends BaseActivity {
 		map.setMultiTouchControls(true);
 
 		int activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
-		// get an array with points from ShowPointsActivity
+		// get an array with points from ShowPointsActivity		
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
 		for (int i = 0; i < selectedPoints.size(); i++) {
@@ -100,6 +131,9 @@ public class MapActivity extends BaseActivity {
 		initMapItems();
 	}
 
+	/**
+	 * Initiate a map elements
+	 */
 	protected void initMapItems() {
 		// show Poins of interest on the map
 		makePointsMarkers(selectedPoints);
@@ -121,7 +155,7 @@ public class MapActivity extends BaseActivity {
 			makeNavigationMarkers(road);
 			navigationElements = map.getOverlays().size() - mapElements;
 		}
-		currentNavigation = mapElements;
+		currentNavigation = mapElements - 1;
 	}
 
 	/**
@@ -392,9 +426,9 @@ public class MapActivity extends BaseActivity {
 		public void onClick(View v) {
 			if (road.mStatus == Road.STATUS_OK) {
 				if ((Button) v == prevStep) {
-					if (currentNavigation > mapElements) {
+					if (currentNavigation > mapElements) {	
 						currentNavigation--;
-						showMarkerInfo();
+						showMarkerInfo();						
 					} else {
 						currentNavigation = mapElements + navigationElements
 								- 1;
@@ -403,9 +437,9 @@ public class MapActivity extends BaseActivity {
 				} else {
 					Log.d("cur", "" + currentNavigation);
 					int maxNavigation = mapElements + navigationElements;
-					if (currentNavigation < maxNavigation) {
-						showMarkerInfo();
+					if (currentNavigation < maxNavigation - 1) {
 						currentNavigation++;
+						showMarkerInfo();						
 					} else {
 						currentNavigation = mapElements;
 						showMarkerInfo();
