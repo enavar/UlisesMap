@@ -32,7 +32,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 	private String [] countries;
 	private String [] namesCities;
 	private ArrayList<City> cities;
-	private ArrayList<Object> objectsShow;
+	private ArrayList<Object> arrayObject;
 	private String pkCity = null;
 	private String nameCity = null;
 
@@ -59,16 +59,14 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 	@Override
 	public void onClick(View v) {
 		if (pkCity != null) {
-			objectsShow = (ArrayList<Object>) ((v.equals(btnPoints)) ? getPoints() : getRoutes());
-			if (objectsShow != null && objectsShow.size() != 0) {
+			arrayObject = (ArrayList<Object>) ((v.equals(btnPoints)) ? getPoints() : getRoutes());
+			if (arrayObject!= null && arrayObject.size() > 0) {
 				progress.show();
 				new IntentLauncher().execute(v);
-			} else {
-				if (v.equals(btnPoints)) 
-					Toast.makeText(this, R.string.no_has_point, Toast.LENGTH_LONG).show();
-				else 
-					Toast.makeText(this, R.string.no_has_route, Toast.LENGTH_LONG).show();
-			}
+			} else if (v.equals(btnPoints))
+				Toast.makeText(this, R.string.not_points, Toast.LENGTH_LONG).show();
+			else
+				Toast.makeText(this, R.string.not_routes, Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -78,11 +76,11 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		protected String doInBackground(View... views) {
 			Intent intent;
 			if (views[0].equals(btnPoints)) {
-				intent = new Intent(views[0].getContext(), ShowPointsActivity.class);
-				intent.putExtra(Point.FIELD_LIST_POINTS, objectsShow);
-			} else {
+				 intent = new Intent(views[0].getContext(), ShowPointsActivity.class);
+				 intent.putExtra(Point.FIELD_LIST, arrayObject);
+			} else  {
 				intent = new Intent(views[0].getContext(), ShowRoutesActivity.class);
-				intent.putExtra(Route.FIELD_LIST_ROUTES, objectsShow);
+				intent.putExtra(Route.FIELD_LIST, arrayObject);
 			}
 			intent.putExtra(City.FIELD_NAME, nameCity);
 			startActivity(intent);
@@ -129,11 +127,31 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 	}
 	
 	/**
+	 * Get and display all the city routes from database
+	 * @return routes
+	 */
+	private ArrayList<Route> getRoutes() {
+		Client client = new Client(Client.SERVLET_ROUTES, true);
+		ArrayList<Route> routes = new ArrayList<Route>();
+		try {
+			String arrayRoutes = client.execute(
+					Converter.convertSpaceToBar(pkCity)).get();
+			routes = Converter.convertStringToRoutes(arrayRoutes);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		return routes;
+	}
+	
+	/**
 	 * Get and display all the city points from database
+	 * @return points
 	 */
 	private ArrayList<Point> getPoints() {
-		ArrayList<Point> points = new ArrayList<Point>();
 		Client client = new Client(Client.SERVLET_POINT, true);
+		ArrayList<Point> points = new ArrayList<Point>();
 		try {
 			String response = client.execute(Converter.convertSpaceToBar(pkCity)).get();
 			points = Converter.convertStringToPoints(response);
@@ -143,23 +161,6 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 			e.printStackTrace();
 		}
 		return points;
-	}
-	
-	/**
-	 * Get and display all the city routes from database
-	 */
-	private ArrayList<Route> getRoutes() {
-		ArrayList<Route> routes = new ArrayList<Route>();
-		Client client = new Client(Client.SERVLET_ROUTES, true);
-		try {
-			String arrayRoutes = client.execute(Converter.convertSpaceToBar(pkCity)).get();
-			routes = Converter.convertStringToRoutes(arrayRoutes);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		return routes;
 	}
 
 	@Override

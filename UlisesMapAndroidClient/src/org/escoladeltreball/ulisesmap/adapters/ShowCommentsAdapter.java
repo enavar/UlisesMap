@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.CommentValoration;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

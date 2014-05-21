@@ -31,11 +31,11 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showpoints);
 		Bundle bundle = getIntent().getExtras();
-		points = (ArrayList<Point>)getIntent().getSerializableExtra(Point.FIELD_LIST_POINTS);
-		String nameCity = bundle.getString(City.FIELD_NAME);
-		map = (Button) findViewById(R.id.toMap);
+		points = (ArrayList<Point>) getIntent().getSerializableExtra(Point.FIELD_LIST);
 		TextView title = (TextView) findViewById(R.id.Textzone);
+		String nameCity = bundle.getString(City.FIELD_NAME);
 		title.setText(nameCity);
+		map = (Button) findViewById(R.id.toMap);
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

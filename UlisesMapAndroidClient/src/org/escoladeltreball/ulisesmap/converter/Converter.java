@@ -3,10 +3,10 @@ package org.escoladeltreball.ulisesmap.converter;
 import java.util.ArrayList;
 
 import org.escoladeltreball.ulisesmap.model.City;
-import org.escoladeltreball.ulisesmap.model.CommentValoration;
-import org.escoladeltreball.ulisesmap.model.Route;
-import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.Comment;
+import org.escoladeltreball.ulisesmap.model.CommentValoration;
+import org.escoladeltreball.ulisesmap.model.Point;
+import org.escoladeltreball.ulisesmap.model.Route;
 import org.escoladeltreball.ulisesmap.model.User;
 import org.escoladeltreball.ulisesmap.model.Valoration;
 import org.json.JSONArray;
@@ -88,7 +88,9 @@ public class Converter {
 				String name = objRoute.getString(Route.FIELD_NAME);
 				String description = objRoute.getString(Route.FIELD_DESCRIPTION);
 				double avg = objRoute.getDouble(Route.FIELD_AVG);
-				Route route = new Route(name, description, avg);
+				String image = objRoute.getString(Route.FIELD_IMAGE);
+				
+				Route route = new Route(name, description, avg, image);
 				routes.add(route);				
 			}
 		} catch (JSONException e) {

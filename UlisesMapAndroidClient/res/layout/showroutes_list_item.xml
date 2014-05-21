@@ -12,9 +12,18 @@
         android:layout_alignBottom="@+id/selectRoute"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/ratingValue"
-        android:layout_toRightOf="@+id/selectRoute"
-        android:gravity="center"        
+        android:layout_toRightOf="@+id/selectRoute"       
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"  />
+
+    <ProgressBar
+        android:id="@+id/placeHolderRoute"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/viewNameRoute"
+        style="@style/image" />
+
+    <ImageView
+        android:id="@+id/imageRoute"
+        style="@style/image" />
 
     <RatingBar
         android:id="@+id/ratingValue"
@@ -27,6 +36,7 @@
     <TextView
         android:id="@+id/viewDescriptionRoute"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        style="@style/textview_street" />
 
 </org.escoladeltreball.ulisesmap.model.CheckableLayout>

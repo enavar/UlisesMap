@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot= "true" >    
+	<item android:drawable="@drawable/orca00" android:duration="70" />
+    <item android:drawable="@drawable/orca01" android:duration="70" />
+    <item android:drawable="@drawable/orca02" android:duration="70" />
+    <item android:drawable="@drawable/orca03" android:duration="70" />
+    <item android:drawable="@drawable/orca04" android:duration="70" />
+    <item android:drawable="@drawable/orca05" android:duration="70" />
+    <item android:drawable="@drawable/orca06" android:duration="70" />
+    <item android:drawable="@drawable/orca07" android:duration="70" />
+    <item android:drawable="@drawable/orca08" android:duration="70" />
+    <item android:drawable="@drawable/orca09" android:duration="70" />
+    <item android:drawable="@drawable/orca10" android:duration="70" />
+    <item android:drawable="@drawable/orca11" android:duration="70" />
+    <item android:drawable="@drawable/orca12" android:duration="70" />
+    <item android:drawable="@drawable/orca13" android:duration="70" />
+    <item android:drawable="@drawable/orca14" android:duration="70" />
+    <item android:drawable="@drawable/orca15" android:duration="70" />
+    <item android:drawable="@drawable/orca16" android:duration="70" />
+    <item android:drawable="@drawable/orca17" android:duration="70" />
+    <item android:drawable="@drawable/orca01" android:duration="70" />
+    <item android:drawable="@drawable/orca00" android:duration="70" />
+</animation-list>
