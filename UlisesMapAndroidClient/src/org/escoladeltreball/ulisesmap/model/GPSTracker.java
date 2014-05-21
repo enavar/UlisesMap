@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, Oleksandr Dovbysh & Elisabet Navarro & Sheila Perez
+ * Copyright (c) 2014, Oleksander Dovbysh & Elisabet Navarro & Sheila Perez
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,23 +130,17 @@ public class GPSTracker implements LocationListener {
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
 
 	}
-
-	/* Own methods */
 	
 	/**
 	 * Check if network and gps providers are available and if they are get a more accurate coordinates

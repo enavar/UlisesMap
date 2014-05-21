@@ -2,7 +2,7 @@
     
     <!--  ShowPoints -->
     <style name="textview_name_route_point">
-    	<item name="android:textColor">@color/red</item>
+    	<item name="android:textColor">@android:color/white</item>
     	<item name="android:typeface">sans</item>
     	<item name="android:textStyle">bold</item>
     	<item name="android:paddingLeft">5dp</item>   
@@ -44,19 +44,26 @@
 	</style>
 	
 	<style name="button_map">
-	    <item name="android:layout_width">40sp</item>
-	    <item name="android:layout_height">40sp</item>
+	    <item name="android:layout_width">30sp</item>
+	    <item name="android:layout_height">30sp</item>
     	<item name="android:gravity">center</item>
     	<item name="android:background">@drawable/backgroun_button_map</item>
     	<item name="android:layout_marginRight">10dp</item>
 	</style>
 	
 	<style name="button_comment">
-	    <item name="android:layout_width">40sp</item>
-	    <item name="android:layout_height">40sp</item>
+	    <item name="android:layout_width">30sp</item>
+	    <item name="android:layout_height">30sp</item>
     	<item name="android:gravity">center</item>
     	<item name="android:background">@drawable/background_button_comment</item>
     	<item name="android:layout_marginRight">10dp</item>
+	</style>
+	
+	<style name="star">
+	    <item name="android:isIndicator">true</item>
+	    <item name="android:numStars">5</item>
+	    <item name="android:paddingLeft">5dp</item> 
+	    <item name="android:foreground">@color/blue</item>
 	</style>
 	
 </resources>

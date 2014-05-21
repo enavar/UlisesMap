@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksander Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.connections;
 
 import java.io.BufferedReader;
@@ -11,13 +27,53 @@ import org.apache.http.client.ClientProtocolException;
 
 import android.os.AsyncTask;
 
+/**
+ * Client
+ * Class communicates with multiple servlets.
+ * 
+ * Each servlet sends and receives specific information. There are 12 servlets.
+ * Some information is sent string in JSON format depend on the servlet.
+ *
+ * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class Client extends AsyncTask<String, Integer, String> {
 	
+	/**
+	 * This servlet inserts the users database. Client sends a user in JSON
+	 * format and servlet responds if the user has inserted or not. The JSON has 
+	 * name, password and email of user.
+	 */
 	public static final String SERVLET_INSERT_USER = "ServletInsertUser";
+	/** 
+	 * This servlet check if exist a user or not. Client sends a user in JSON
+	 * format and servlet responds if the user exist or not. The JSON has name and 
+	 * password of user.
+	 */
 	public static final String SERVLET_CHECK_USER = "ServletCheckUser";
+	/**
+	 * This servlet get routes. Client send reference of route and
+	 * servlet responds string with format JSONArray. The JSONArray has
+	 * name, description, image and average of routes.
+	 */
 	public static final String SERVLET_ROUTES = "ServletRoutes";
+	/**
+	 * This servlet get points of routes. Client send name route and servlet
+	 * response string with format JSONArray. The JSONArray has name, latitude,
+	 * longitude, street, description, url and image of points.
+	 */
 	public static final String SERVLET_POINTS_OF_ROUTE = "ServletRelationRP";
+	/**
+	 * This servlet get point. Client send reference of points and
+	 * servlet responds string with format JSONArray. The JSONArray has name, latitude,
+	 * longitude, street, description, url, and image of points.
+	 */
 	public static final String SERVLET_POINT = "ServletPoints";
+	/**
+	 * This servlet get comment and valoration. Client send name of route and
+	 * servlet responds string with format JSONArray. The JSONArray has comment and 
+	 * valoration and for each comment or valoration has definition and user.
+	 */
 	public static final String SERVLET_COMMENT_AND_VALORATION = "ServletCommentValoration";
 	public static final String SERVLET_COMMENT_INSERT = "ServletInsertComment";
 	public static final String SERVLET_CHECK_COMMENT = "ServletCheckComment";
@@ -28,13 +84,23 @@ public class Client extends AsyncTask<String, Integer, String> {
 	
 	public static final String TRUE_CHECK = "true";
 	public static final String FALSE_CHECK = "false";
-	
+
 	private static final String URL = "http://ulises-ulisesmap.rhcloud.com/";
-	
+
 	private String myURL;
 	private String response;
 	private boolean sendMessage;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param nameServlet
+	 *            name of servlet. Name of servlet is default value for a
+	 *            variable published.
+	 * @param sendMessage
+	 *            true if client has to send a message or false if client hasn't
+	 *            to send message
+	 */
 	public Client(String nameServlet, boolean sendMessage) {
 		super();
 		this.myURL = URL + nameServlet;
