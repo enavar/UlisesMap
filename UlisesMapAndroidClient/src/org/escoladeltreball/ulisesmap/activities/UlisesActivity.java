@@ -32,8 +32,9 @@ import android.widget.TextView;
 public class UlisesActivity extends Activity {
 
 	private final int delay = 2000;
-	Animation textAnimation;
-	TextView app_name;
+	private Animation textAnimation;
+	private TextView app_name;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
