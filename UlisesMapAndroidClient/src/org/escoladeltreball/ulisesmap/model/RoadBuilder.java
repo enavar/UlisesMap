@@ -30,10 +30,15 @@ import android.util.Log;
 
 /**
  * Async task to get the road in a separate thread.
+ * 
+ * @author: Oleksand<r Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
  */
 public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 
+	/** road manager for getting route */
 	RoadManager roadManager;
+	/** waipoints to build a route from */
 	ArrayList<GeoPoint> waypoints;
 
 	public RoadBuilder(ArrayList<GeoPoint> waypoints) {
@@ -41,6 +46,7 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 		this.waypoints = waypoints;
 	}
 
+	@Override
 	protected Road doInBackground(Object... params) {
 		@SuppressWarnings("unchecked")
 		ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
@@ -68,15 +74,18 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 		return roadManager.getRoad(waypoints);
 	}
 	
+	/**
+	 * Execute a asynchronous task for get a road
+	 * 
+	 * @return a road builded from waypoints
+	 */
 	public Road getRoad() {
 		Road road = null;
 		try {
 			road = this.execute(waypoints).get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return road;

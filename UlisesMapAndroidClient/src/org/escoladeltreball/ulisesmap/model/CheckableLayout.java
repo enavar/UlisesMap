@@ -16,8 +16,6 @@
  */
 package org.escoladeltreball.ulisesmap.model;
 
-
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -25,6 +23,13 @@ import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.RelativeLayout;
 
+/**
+ * CheckableLayout
+ * Layout which implements checkable methods for detect click over textView
+ * 
+ * @Author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class CheckableLayout extends RelativeLayout implements Checkable {
 	private CheckedTextView _checkbox;
 
