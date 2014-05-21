@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksandr Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.adapters;
 
 import java.io.IOException;
@@ -19,27 +35,53 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+/**
+ * ImageDownloader Asynchronously download image from a url using a
+ * WeakReference to ensure that the AsyncTask does not prevent the ImageView and
+ * anything it references from being garbage collected. Use a ProgressBar to
+ * warn a user that image is downloading right now. For guarantee that ImageView
+ * is still around when the task finished reference to task itself is saved in
+ * AsyncDrawable and after checked in onPostExecute()
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
+	/** a references for prevent garbage collection of image */
 	private final WeakReference<ImageView> bmImageReferences;
+	/** an url of image to download */
 	private String url;
+	/** a placeholder for image used to find a place to put a downloading image */
 	private Bitmap mPlaceHolderBitmap;
+	/** android resources */
 	private Resources res;
+	/** animation to show while image is loading */
 	private ProgressBar placeHolder;
+	/** a cache used to temporally store downloaded images */
 	private LruCache<String, Bitmap> mMemoryCache;
-	
+
 	public ImageDownloader() {
 		mPlaceHolderBitmap = null;
 		bmImageReferences = null;
 	}
 
+	/**
+	 * Principal constructor of ImageDownloader
+	 * 
+	 * @param res
+	 *            an android resources
+	 * @param imageView
+	 *            a view on image will be shown
+	 * @param progress
+	 *            a ProgressBar to show while image is downloading
+	 */
 	public ImageDownloader(Resources res, ImageView imageView,
 			ProgressBar progress) {
 		this.res = res;
 		// Use a WeakReference to ensure the ImageView can be garbage collected
 		this.bmImageReferences = new WeakReference<ImageView>(imageView);
-		mPlaceHolderBitmap = BitmapFactory.decodeResource(res,
-				R.drawable.icon);
+		mPlaceHolderBitmap = BitmapFactory.decodeResource(res, R.drawable.icon);
 		placeHolder = progress;
 
 		// Get max available VM memory, exceeding this amount will throw an
@@ -58,9 +100,9 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 				// The cache size will be measured in kilobytes rather than
 				// number of items.
 				if (Integer.valueOf(android.os.Build.VERSION.SDK_INT) >= 12)
-		            return bitmap.getByteCount() / 1024;
-		        else
-		            return (bitmap.getRowBytes() * bitmap.getHeight()) / 1024;
+					return bitmap.getByteCount() / 1024;
+				else
+					return (bitmap.getRowBytes() * bitmap.getHeight()) / 1024;
 			}
 		};
 
@@ -76,14 +118,14 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		Bitmap mIcon = null;
 		System.out.println(url);
 		try {
-				InputStream in = new java.net.URL(url).openStream();
-				mIcon = BitmapFactory.decodeStream(in);	
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-				
+			InputStream in = new java.net.URL(url).openStream();
+			mIcon = BitmapFactory.decodeStream(in);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return mIcon;
 	}
 
@@ -107,12 +149,27 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
 	/* Class methods */
 
+	/**
+	 * Temporally save an image to a cache
+	 * 
+	 * @param key
+	 *            a url used as key to temporally store an image
+	 * @param bitmap
+	 *            a image to store
+	 */
 	public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
 		if (getBitmapFromMemCache(key) == null) {
 			mMemoryCache.put(key, bitmap);
 		}
 	}
 
+	/**
+	 * Find and return an image stored with given key if exist
+	 * 
+	 * @param key
+	 *            a key used for get an image from cache
+	 * @return an image stored in cache
+	 */
 	public Bitmap getBitmapFromMemCache(String key) {
 		return mMemoryCache.get(key);
 	}
@@ -144,6 +201,7 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		// cancelled
 		return true;
 	}
+
 	// TODO Auto-generated catch block
 
 	/**
@@ -191,7 +249,14 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 	}
 
 	/* Static class */
+
+	/**
+	 * inner class that store a week reference to a task for find a right place
+	 * to put an image when task is finished
+	 */
+
 	static class AsyncDrawable extends BitmapDrawable {
+		/** a references for prevent garbage collection of task */
 		private final WeakReference<ImageDownloader> taskReferences;
 
 		public AsyncDrawable(Resources res, Bitmap bitmap,

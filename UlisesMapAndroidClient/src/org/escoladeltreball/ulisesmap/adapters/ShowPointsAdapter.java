@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksandr Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.adapters;
 
 import java.util.ArrayList;
@@ -21,16 +37,39 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+/**
+ * ShowPointsAdapter
+ * A customized adapter for listView that show points of interest .
+ * Use an inner class for optimizes work of listView an
+ * override it each time new item should be added to listView
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class ShowPointsAdapter extends BaseAdapter {
 
+	/** a set of points to show */
 	private ArrayList<Point> points;
+	/** a set of selected points */
 	private HashSet<Point> pointsCheck;
+	/** layout to inflate */
 	private LayoutInflater layoutInflater;
+	/** android resources */
 	private Resources res;
 
+	/**
+	 * A ViewHolder object stores each of the component views inside the tag
+	 * field of the Layout, so you can immediately access them without the need
+	 * to look them up repeatedly.
+	 * 
+	 */
 	public static class ViewHolder {
+		/** a image field*/
 		protected ImageView image;
+		/** text fields */
 		protected TextView name, street, url;
+		/** checkbox field */
 		protected CheckBox chBox;
 	}
 
@@ -98,6 +137,11 @@ public class ShowPointsAdapter extends BaseAdapter {
 		return convertView;
 	}
 	
+	/**
+	 * 
+	 * @param holder 
+	 * @param point
+	 */
 	private void addListenerCheckBox(ViewHolder holder, final Point point) {
 		holder.chBox.setOnClickListener(new View.OnClickListener() {
 			
