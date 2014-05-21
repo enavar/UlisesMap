@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksandr Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.model;
 
 import org.osmdroid.api.IMapController;
@@ -16,36 +32,48 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
+/**
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class GPSTracker implements LocationListener {
 
+	/** activity context */
 	private final Context mContext;
+	/** view of map to show current user position */
 	private final MapView map;
-	Marker nodeMarker;
+	/** current user position */
+	private Marker nodeMarker;
 
-	// flag for GPS status
+	/** flag for GPS status */
 	public boolean isGPSEnabled = false;
-
-	// flag for network status
+	/** flag for network status */
 	boolean isNetworkEnabled = false;
-
-	// flag for GPS status
+	/** flag for GPS status */
 	boolean canGetLocation = false;
+	/** location */
+	Location location;
+	/** user latitude */
+	double latitude;
+	/** user longitud */
+	double longitude;
 
-	Location location; // location
-	double latitude; // latitude
-	double longitude; // longitude
-
-	// The minimum distance to change Updates in meters
-	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
-
-	// The minimum time between updates in milliseconds
-	private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
-
-	// Declaring a Location Manager
+	/** The minimum distance to change Updates in meters */
+	private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1;// 10 meters
+	/** The minimum time between updates in milliseconds */
+	private static final long MIN_TIME_BW_UPDATES = 1;// 1 minute
+	/** Declaring a Location Manager */
 	protected LocationManager locationManager;
 
 	/* Constructor */
 
+	/**
+	 * A main constructor for GPSTracker
+	 * 
+	 * @param context an activity context
+	 * @param map a View of map
+	 */
 	public GPSTracker(Context context, MapView map) {
 		this.mContext = context;
 		this.map = map;
@@ -58,8 +86,6 @@ public class GPSTracker implements LocationListener {
 	}
 
 	/* Getters and Setters */
-	
-	
 
 	public double getLatitude() {
 		return latitude;
@@ -121,7 +147,11 @@ public class GPSTracker implements LocationListener {
 	}
 
 	/* Own methods */
-
+	
+	/**
+	 * Check if network and gps providers are available and if they are get a more accurate coordinates
+	 * otherwise ask user to switch on providers for get a current location
+	 */
 	public void initGPSTracker() {
 
 		try {
@@ -186,6 +216,9 @@ public class GPSTracker implements LocationListener {
 
 	}
 
+	/**
+	 * Show a current user location on the map and centered on it
+	 */
 	public void initMarker() {
 		GeoPoint myLocation = new GeoPoint(this.latitude, this.longitude);
 		nodeMarker = new Marker(map);

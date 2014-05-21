@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksandr Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.model;
 
 import java.util.ArrayList;
@@ -14,10 +30,15 @@ import android.util.Log;
 
 /**
  * Async task to get the road in a separate thread.
+ * 
+ * @author: Oleksand<r Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
  */
 public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 
+	/** road manager for getting route */
 	RoadManager roadManager;
+	/** waipoints to build a route from */
 	ArrayList<GeoPoint> waypoints;
 
 	public RoadBuilder(ArrayList<GeoPoint> waypoints) {
@@ -25,6 +46,7 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 		this.waypoints = waypoints;
 	}
 
+	@Override
 	protected Road doInBackground(Object... params) {
 		@SuppressWarnings("unchecked")
 		ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
@@ -52,15 +74,18 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 		return roadManager.getRoad(waypoints);
 	}
 	
+	/**
+	 * Execute a asynchronous task for get a road
+	 * 
+	 * @return a road builded from waypoints
+	 */
 	public Road getRoad() {
 		Road road = null;
 		try {
 			road = this.execute(waypoints).get();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return road;
