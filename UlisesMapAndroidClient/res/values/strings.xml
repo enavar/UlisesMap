@@ -30,6 +30,10 @@
     <string name="userExist">User already exist</string>
     <string name="errorSendingData">Error inserting user in database</string>
     
+    <!-- MenuActivity -->
+    <string name="no_has_point">Not has points</string>
+    <string name="no_has_route">Not has routes</string>
+    
     <!--  Show Points -->
     <string name="no_selected_point">Please select minimum two points!</string>
 

@@ -109,7 +109,7 @@ public class Converter {
 				String name = objPoint.getString(Point.FIELD_NAME);
 				double lat = objPoint.getDouble(Point.FIELD_LAT);
 				double lon = objPoint.getDouble(Point.FIELD_LON);
-				String street = objPoint.getString(Point.FIELD_STREET);
+				String street = (!objPoint.isNull(Point.FIELD_STREET)) ? objPoint.getString(Point.FIELD_STREET) : "";
 				String description = objPoint.getString(Point.FIELD_DESCRIPTION);
 				String url = (!objPoint.isNull(Point.FIELD_URL)) ? objPoint.getString(Point.FIELD_URL) : "";
 				String image = objPoint.getString(Point.FIELD_IMAGE);

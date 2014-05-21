@@ -80,7 +80,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 				 intent.putExtra(Point.FIELD_LIST, arrayObject);
 			} else  {
 				intent = new Intent(views[0].getContext(), ShowRoutesActivity.class);
-				intent.putExtra(Route.FIELD_LIST, arrayObject);				
+				intent.putExtra(Route.FIELD_LIST, arrayObject);
 			}
 			intent.putExtra(City.FIELD_NAME, nameCity);
 			startActivity(intent);
@@ -88,12 +88,14 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		}
 		
 		 @Override
-	        protected void onPostExecute(String result) {
+		 protected void onPostExecute(String result) {
 			 progress.dismiss();
-	        }		
+	     }
 	}
 
-	
+	/**
+	 * Get and display all countries from database
+	 */
 	private void getCountries() {
 		Client client = new Client(Client.SERVLET_COUNTRIES, false);
 		try {
@@ -106,6 +108,9 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		}		
 	}
 	
+	/**
+	 * Get and display all the countries cities from database
+	 */
 	private void getCities(String nameCountry) {
 		Client client = new Client(Client.SERVLET_CITIES, true);
 		try {
@@ -164,7 +169,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		if (parent.equals(spCountries)) {
 			String country = Converter.convertSpaceToBar(countries[position]);
 			getCities(country);
-			@SuppressWarnings({ "rawtypes", "unchecked" })
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, namesCities);
 			spCities.setAdapter(adapterCities);
 			spCities.setOnItemSelectedListener(this);
