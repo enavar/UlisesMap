@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class UlisesActivity extends Activity {
 
-	private final int delay = 2000;
+	private final int delay = 5000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
