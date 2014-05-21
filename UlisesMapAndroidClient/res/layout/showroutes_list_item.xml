@@ -7,6 +7,7 @@
 
     <CheckedTextView
         android:id="@+id/viewNameRoute"
+        style="@style/textview_name_route_point"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -20,8 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ratingValue"
-        android:layout_toRightOf="@+id/imageRoute"
-        android:layout_marginBottom="40dp" />
+        android:layout_toRightOf="@+id/imageRoute" />
 
     <ImageView
         android:id="@+id/imageRoute"
@@ -40,8 +40,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewNameRoute"
-        android:layout_toRightOf="@+id/imageRoute"
-        android:isIndicator="true"
-        android:numStars="5" />
+        android:layout_toRightOf="@+id/imageRoute" />
 
 </org.escoladeltreball.ulisesmap.model.CheckableLayout>

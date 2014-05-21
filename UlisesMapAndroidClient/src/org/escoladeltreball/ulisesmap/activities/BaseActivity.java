@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2014, Oleksander Dovbysh & Elisabet Navarro & Sheila Perez
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package org.escoladeltreball.ulisesmap.activities;
 
 import org.escoladeltreball.ulisesmap.R;
@@ -47,7 +63,7 @@ public class BaseActivity extends Activity {
 		// for delete shared preferences, use for prevent some issue with
 		// android emulator
 		// need be commented for run in real phone
-		// prefs.edit().clear().commit();
+		//prefs.edit().clear().commit();
 		// get settings stored on device
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
 		Settings.gps = prefs.getBoolean("gps", false);
