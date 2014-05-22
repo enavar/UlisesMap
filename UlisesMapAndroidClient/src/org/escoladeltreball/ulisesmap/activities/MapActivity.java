@@ -50,13 +50,17 @@ import android.widget.Toast;
 
 /**
  * MapActivity
- * Show a route from an array of points according to choosen option in menu
+ * Show a route from an array of points according to chosen option
+ * in menu. Depending on activity that started this one an array of points may
+ * be ordered for improve a result route The different options handled by this
+ * activity lets to show changes on the map at run time, like route type,
+ * navigation marker o user location.
  * 
  * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
  * @version: 1.0
  */
 public class MapActivity extends BaseActivity {
-	
+
 	/** view for show open street maps in android */
 	private MapView map;
 	/** map settings */
@@ -73,7 +77,7 @@ public class MapActivity extends BaseActivity {
 	private GPSTracker tracker;
 	/** build a road from points of interest */
 	private RoadBuilder roadBuilder;
-	
+
 	/** identification number of activity which started current activity */
 	private static final int ACTIVITY_POINTS = 1;
 
@@ -95,6 +99,11 @@ public class MapActivity extends BaseActivity {
 	private int currentNavigation;
 
 	@Override
+	/**
+	 * Initiate a map and prepare  all item which may be used.
+	 * Get a set of points from a father activity and build a route.
+	 * Shown other items related to a road according to a user's options
+	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
@@ -112,7 +121,7 @@ public class MapActivity extends BaseActivity {
 		map.setMultiTouchControls(true);
 
 		int activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
-		// get an array with points from ShowPointsActivity		
+		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
 				"selectedPoints");
 		for (int i = 0; i < selectedPoints.size(); i++) {
@@ -253,11 +262,11 @@ public class MapActivity extends BaseActivity {
 	 *            coordinates of point
 	 * @param poiMarkers
 	 *            nearest object to show
-	 * @return an array with configured  nearest object
+	 * @return an array with configured nearest object
 	 */
 	public FolderOverlay makePoiMarkers(GeoPoint geoPoint,
 			FolderOverlay poiMarkers, String key) {
-		PoiBuilder poiBuilder = new PoiBuilder(key , geoPoint);
+		PoiBuilder poiBuilder = new PoiBuilder(key, geoPoint);
 		ArrayList<POI> pois = poiBuilder.loadPoi();
 		Drawable PoiIcon = getResources().getDrawable(R.drawable.metro);
 		if (pois != null) {
@@ -279,7 +288,8 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Update the map when the calculation of the road is over
 	 * 
-	 * @param road a to show at the map
+	 * @param road
+	 *            a to show at the map
 	 */
 	void updateUIWithRoad(Polyline polyline, Road road, int color) {
 
@@ -304,7 +314,8 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Add to the map navigation markers to follow a road
 	 * 
-	 * @param road a route
+	 * @param road
+	 *            a route
 	 */
 	public void makeNavigationMarkers(Road road) {
 		// set Markers
@@ -340,7 +351,8 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Show at the map selected points with his own image and description
 	 * 
-	 * @param selectedPoints an array with selected points
+	 * @param selectedPoints
+	 *            an array with selected points
 	 */
 	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
 		FolderOverlay poiMarkers = new FolderOverlay(this);
@@ -378,8 +390,10 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Show a route from current user position to route start point
 	 * 
-	 * @param a a user current position
-	 * @param b a start point of teh route
+	 * @param a
+	 *            a user current position
+	 * @param b
+	 *            a start point of teh route
 	 */
 	public void showRoutefromMyCurrentLocation(GeoPoint a, GeoPoint b) {
 		roadGps = null;
@@ -395,7 +409,8 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Extract geoPoint from given points
 	 * 
-	 * @param points a points
+	 * @param points
+	 *            a points
 	 * @return a set with geoPoints
 	 */
 	public ArrayList<GeoPoint> getGeoPoints(ArrayList<Point> points) {
@@ -425,9 +440,9 @@ public class MapActivity extends BaseActivity {
 		public void onClick(View v) {
 			if (road.mStatus == Road.STATUS_OK) {
 				if ((Button) v == prevStep) {
-					if (currentNavigation > mapElements) {	
+					if (currentNavigation > mapElements) {
 						currentNavigation--;
-						showMarkerInfo();						
+						showMarkerInfo();
 					} else {
 						currentNavigation = mapElements + navigationElements
 								- 1;
@@ -438,7 +453,7 @@ public class MapActivity extends BaseActivity {
 					int maxNavigation = mapElements + navigationElements;
 					if (currentNavigation < maxNavigation - 1) {
 						currentNavigation++;
-						showMarkerInfo();						
+						showMarkerInfo();
 					} else {
 						currentNavigation = mapElements;
 						showMarkerInfo();

@@ -26,30 +26,49 @@ import org.osmdroid.util.GeoPoint;
 import android.os.AsyncTask;
 
 /**
+ * PoiBuilder
  * Async task to get the poi in a separate thread.
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
  */
 public class PoiBuilder extends AsyncTask<Object, Void,  ArrayList<POI>> {
 	
-	String key;
-	GeoPoint start;
-	
+	/** a key word to load all object of this type */
+	private String key;
+	/** coordinates to find object near this one */
+	private GeoPoint start;
+	/** a maximum number of objects to load */
+	private final int MAX_OBJECTS = 10;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param key a key word to load all object of this type
+	 * @param start coordinates to find object near this one
+	 */
 	public PoiBuilder(String key, GeoPoint start) {
 		super();
 		this.key = key;
 		this.start = start;
 	}
 
-
-
 	@Override
+	/**
+	 * get a set of object in background task
+	 */
 	protected ArrayList<POI> doInBackground(Object... params) {
 		NominatimPOIProvider poiProvider = new NominatimPOIProvider();
 		//poiProvider.setService(NominatimPOIProvider.MAPQUEST_POI_SERVICE);
-		ArrayList<POI> pois = poiProvider.getPOICloseTo(start, key, 10, 0.01);
+		ArrayList<POI> pois = poiProvider.getPOICloseTo(start, key, MAX_OBJECTS, 0.01);
 		return pois;
 	}
 	
+	/**
+	 * Execute a background task
+	 * 
+	 * @return a set of objects
+	 */
 	public ArrayList<POI> loadPoi() {
 		ArrayList<POI> pois = null;
 		try {
