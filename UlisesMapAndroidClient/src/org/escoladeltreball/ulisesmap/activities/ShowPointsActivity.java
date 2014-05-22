@@ -72,11 +72,6 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		list.setTextFilterEnabled(true);
 		map.setOnClickListener(this);
 	}
-<<<<<<< HEAD
-=======
-
-	/* Interface method */
->>>>>>> 3ccd541d52ee9400e5a67eec42468071794dbe31
 
 	/**
 	 * Go to MapActivity. Before checks whether the user selected two points.
