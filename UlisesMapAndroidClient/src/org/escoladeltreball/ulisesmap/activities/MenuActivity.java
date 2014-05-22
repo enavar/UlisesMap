@@ -232,7 +232,17 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 		}
 		return points;
 	}
-
+	
+	/**
+	 * Method is called by the listener when the user choose country.
+	 * Change the list of cities on the country chosen. 
+	 * Connect to the database to get the list of cities.
+	 * 
+	 * @param parent
+	 * @param view
+	 * @param position
+	 * @param id
+	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
