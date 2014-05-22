@@ -73,6 +73,13 @@ public class ShowPointsAdapter extends BaseAdapter {
 		protected CheckBox chBox;
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param points a set of points
+	 * @param layoutInflater LayoutInflater to inflate rows of ListView
+	 * @param res android Resources
+	 */
 	public ShowPointsAdapter(Resources res, ArrayList<Point> points,
 	LayoutInflater layoutInflater) {
 		super();
