@@ -16,7 +16,6 @@
  */
 package org.escoladeltreball.ulisesmap.activities;
 
-
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -39,19 +38,44 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class MenuActivity extends BaseActivity implements OnClickListener, OnItemSelectedListener {
-	
+/**
+ * MenuActivity Show a menu with the different options. The activity allowed to
+ * go to the ShowRoutesActivity and ShowPointsActivity by country and city.
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
+public class MenuActivity extends BaseActivity implements OnClickListener,
+		OnItemSelectedListener {
+
+	/** Button of activity points */
 	private Button btnPoints;
+	/** Button of activity routes */
 	private Button btnRoutes;
+	/** Spinner of countries */
 	private Spinner spCountries;
+	/** Spinner of cities of country */
 	private Spinner spCities;
-	private String [] countries;
-	private String [] namesCities;
+	/** List of names countries */
+	private String[] countries;
+	/** list of names cities */
+	private String[] namesCities;
+	/** List of cities object */
 	private ArrayList<City> cities;
+	/** Lista de routes or points */
 	private ArrayList<Object> arrayObject;
+	/** Primary key of city selected */
 	private String pkCity = null;
+	/** name of city selected */
 	private String nameCity = null;
 
+	/**
+	 * Create MenuActivity
+	 * Gets the countries and cities connecting to the database.
+	 * Add listeners to buttons and list countries.
+	 * 
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,50 +87,77 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		cities = new ArrayList<City>();
 		getCountries();
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		ArrayAdapter adapterCountries = new ArrayAdapter(this, android.R.layout.simple_spinner_item, countries);
+		ArrayAdapter adapterCountries = new ArrayAdapter(this,
+				android.R.layout.simple_spinner_item, countries);
 		spCountries.setAdapter(adapterCountries);
 		spCountries.setOnItemSelectedListener(this);
 		btnPoints.setOnClickListener(this);
-		btnRoutes.setOnClickListener(this);	
+		btnRoutes.setOnClickListener(this);
 
 	}
-
+	
+	/**
+	 * Method is called by the listener when the user clicks to buttons.
+	 * If click button points, then it go to ShowPointsActivity and if click 
+	 * button routes, then it go to ShowRoutesActivity. Before launching an 
+	 * activity check if data is available. If no data displays an informational message.
+	 * 
+	 * @param v button of routes or button of points
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onClick(View v) {
 		if (pkCity != null) {
-			arrayObject = (ArrayList<Object>) ((v.equals(btnPoints)) ? getPoints() : getRoutes());
-			if (arrayObject!= null && arrayObject.size() > 0) {
+			arrayObject = (ArrayList<Object>) ((v.equals(btnPoints)) ? getPoints()
+					: getRoutes());
+			if (arrayObject != null && arrayObject.size() > 0) {
 				progress.show();
 				new IntentLauncher().execute(v);
 			} else if (v.equals(btnPoints))
-				Toast.makeText(this, R.string.not_points, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, R.string.not_points, Toast.LENGTH_LONG)
+						.show();
 			else
-				Toast.makeText(this, R.string.not_routes, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, R.string.not_routes, Toast.LENGTH_LONG)
+						.show();
 		}
 	}
 	
+	/**
+	 * IntentLaucher 
+	 * Class that launches a background activity.
+	 * 
+	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
+	 * @version: 1.0
+	 */
 	private class IntentLauncher extends AsyncTask<View, Void, String> {
 		
+		/**
+		 * Launch ShowPointsActivity or ShowRoutesActivity.
+		 * launches ShowPointsActivity or ShowRoutesActivity as a function of 
+		 * the clicked button. Send name of city and list points or routes to
+		 * next activity.
+		 */
 		@Override
 		protected String doInBackground(View... views) {
 			Intent intent;
 			if (views[0].equals(btnPoints)) {
-				 intent = new Intent(views[0].getContext(), ShowPointsActivity.class);
-				 intent.putExtra(Point.FIELD_LIST, arrayObject);
-			} else  {
-				intent = new Intent(views[0].getContext(), ShowRoutesActivity.class);
+				intent = new Intent(views[0].getContext(),
+						ShowPointsActivity.class);
+				intent.putExtra(Point.FIELD_LIST, arrayObject);
+			} else {
+				intent = new Intent(views[0].getContext(),
+						ShowRoutesActivity.class);
 				intent.putExtra(Route.FIELD_LIST, arrayObject);
 			}
 			intent.putExtra(City.FIELD_NAME, nameCity);
 			startActivity(intent);
 			return null;
 		}
-		
-		 @Override
-		 protected void onPostExecute(String result) {
-			 progress.dismiss();
-	     }
+
+		@Override
+		protected void onPostExecute(String result) {
+			progress.dismiss();
+		}
 	}
 
 	/**
@@ -121,9 +172,9 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
+
 	/**
 	 * Get and display all the countries cities from database
 	 */
@@ -132,18 +183,19 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		try {
 			String response = client.execute(nameCountry).get();
 			cities = Converter.convertStrintToCities(response);
-			namesCities = new String [cities.size()];
+			namesCities = new String[cities.size()];
 			for (int i = 0; i < cities.size(); i++)
 				namesCities[i] = cities.get(i).getName();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
-	
+
 	/**
 	 * Get and display all the city routes from database
+	 * 
 	 * @return routes
 	 */
 	private ArrayList<Route> getRoutes() {
@@ -160,16 +212,18 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 		}
 		return routes;
 	}
-	
+
 	/**
 	 * Get and display all the city points from database
+	 * 
 	 * @return points
 	 */
 	private ArrayList<Point> getPoints() {
 		Client client = new Client(Client.SERVLET_POINT, true);
 		ArrayList<Point> points = new ArrayList<Point>();
 		try {
-			String response = client.execute(Converter.convertSpaceToBar(pkCity)).get();
+			String response = client.execute(
+					Converter.convertSpaceToBar(pkCity)).get();
 			points = Converter.convertStringToPoints(response);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -186,7 +240,8 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 			String country = Converter.convertSpaceToBar(countries[position]);
 			getCities(country);
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			ArrayAdapter adapterCities = new ArrayAdapter(this, android.R.layout.simple_spinner_item, namesCities);
+			ArrayAdapter adapterCities = new ArrayAdapter(this,
+					android.R.layout.simple_spinner_item, namesCities);
 			spCities.setAdapter(adapterCities);
 			spCities.setOnItemSelectedListener(this);
 			pkCity = cities.get(0).getRef();
@@ -196,10 +251,10 @@ public class MenuActivity extends BaseActivity implements OnClickListener, OnIte
 				pkCity = cities.get(position).getRef();
 				nameCity = cities.get(position).getName();
 			}
-		}		
+		}
 	}
 
 	@Override
-	public void onNothingSelected(AdapterView<?> parent) {		
+	public void onNothingSelected(AdapterView<?> parent) {
 	}
 }
