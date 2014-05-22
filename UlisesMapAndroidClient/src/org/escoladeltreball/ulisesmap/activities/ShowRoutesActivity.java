@@ -30,7 +30,6 @@ import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,32 +84,6 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 				layoutInflater, getResources());
 		list.setAdapter(adapter);
 		list.setTextFilterEnabled(true);
-	}
-
-	/**
-	 * IntentLaucher Class that launches a background activity.
-	 * 
-	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
-	 * @version: 1.0
-	 */
-	private class IntentLauncher extends AsyncTask<Intent, Void, String> {
-		
-		/**
-		 * Launch MapActivity.
-		 */
-		@Override
-		protected String doInBackground(Intent... i) {
-			startActivity(i[0]);
-			return null;
-		}
-		
-		/**
-		 * Show progress bar
-		 */
-		@Override
-		protected void onPostExecute(String result) {
-			progress.dismiss();
-		}
 	}
 	
 	/**
