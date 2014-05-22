@@ -59,7 +59,6 @@ import android.widget.Toast;
  * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
  * @version: 1.0
  */
-
 public class MapActivity extends BaseActivity {
 
 	/** view for show open street maps in android */
