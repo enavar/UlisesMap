@@ -70,9 +70,8 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 	private String nameCity = null;
 
 	/**
-	 * Create MenuActivity
-	 * Gets the countries and cities connecting to the database.
-	 * Add listeners to buttons and list countries.
+	 * Create MenuActivity Gets the countries and cities connecting to the
+	 * database. Add listeners to buttons and list countries.
 	 * 
 	 * @param savedInstanceState
 	 */
@@ -95,14 +94,15 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 		btnRoutes.setOnClickListener(this);
 
 	}
-	
+
 	/**
-	 * Method is called by the listener when the user clicks to buttons.
-	 * If click button points, then it go to ShowPointsActivity and if click 
-	 * button routes, then it go to ShowRoutesActivity. Before launching an 
-	 * activity check if data is available. If no data displays an informational message.
+	 * Method is called by the listener when the user clicks to buttons. If
+	 * click button points, then it go to ShowPointsActivity and if click button
+	 * routes, then it go to ShowRoutesActivity. Before launching an activity
+	 * check if data is available. If no data displays an informational message.
 	 * 
-	 * @param v button of routes or button of points
+	 * @param v
+	 *            button of routes or button of points
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -121,21 +121,19 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 						.show();
 		}
 	}
-	
+
 	/**
-	 * IntentLaucher 
-	 * Class that launches a background activity.
+	 * IntentLaucher Class that launches a background activity.
 	 * 
 	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
 	 * @version: 1.0
 	 */
 	private class IntentLauncher extends AsyncTask<View, Void, String> {
-		
+
 		/**
-		 * Launch ShowPointsActivity or ShowRoutesActivity.
-		 * launches ShowPointsActivity or ShowRoutesActivity as a function of 
-		 * the clicked button. Send name of city and list points or routes to
-		 * next activity.
+		 * Launch ShowPointsActivity or ShowRoutesActivity. launches
+		 * ShowPointsActivity or ShowRoutesActivity as a function of the clicked
+		 * button. Send name of city and list points or routes to next activity.
 		 */
 		@Override
 		protected String doInBackground(View... views) {
@@ -153,7 +151,10 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 			startActivity(intent);
 			return null;
 		}
-
+		
+		/**
+		 * Show progress bar
+		 */
 		@Override
 		protected void onPostExecute(String result) {
 			progress.dismiss();
@@ -232,11 +233,11 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 		}
 		return points;
 	}
-	
+
 	/**
-	 * Method is called by the listener when the user choose country.
-	 * Change the list of cities on the country chosen. 
-	 * Connect to the database to get the list of cities.
+	 * Method is called by the listener when the user choose country. Change the
+	 * list of cities on the country chosen. Connect to the database to get the
+	 * list of cities.
 	 * 
 	 * @param parent
 	 * @param view

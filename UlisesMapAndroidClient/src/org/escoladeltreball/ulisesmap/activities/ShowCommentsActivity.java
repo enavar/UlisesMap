@@ -36,30 +36,49 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
-
+/**
+ * ShowCommentActivity
+ * Show all comments and ratings.
+ * Given the option to insert new comments and ratings.
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class ShowCommentsActivity extends BaseActivity {
 	
+	/** List of comments */
 	private ArrayList<CommentValoration> comments;
+	/** Name of user */
 	private String userName;
+	/** Name of route */
 	private String routeName; 
+	/** State option of comment */
 	private boolean disableComment = false;
+	/** State option of asses */
 	private boolean disableValoration = false;
-	private EditText et;
-	private RatingBar rb;
-	private String out;
-	private String no_insert_text = null;
-	private double no_insert_value = 0.0;
-	private boolean isAnonim = false;
+	/** Field definition of new comment */
+	private EditText editTextDefinition;
+	/** New value ranking of route */ 
+	private RatingBar rankingValue;
+	/** Default value when no comment. */
+	private static final String NO_INSERT_COMMENT = null;
+	/** Default value when no rating. */
+	private static final double NO_INSERT_VALUE = 0.0;
+	/** State option anonymous */
+	private boolean isAnonymous = false;
 	
+	/**
+	 * Create ShowCommentActivity
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showcomments);
 		userName = Settings.userName;
-		isAnonim = userName.equals(null);
+		isAnonymous = userName.equals(null);
 		routeName = Settings.routeName;
-		et = (EditText) findViewById(R.id.textView1);
-		rb = (RatingBar) findViewById(R.id.ratingBar1);
+		editTextDefinition = (EditText) findViewById(R.id.textView1);
+		rankingValue = (RatingBar) findViewById(R.id.ratingBar1);
 		checkInsert();
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -71,6 +90,7 @@ public class ShowCommentsActivity extends BaseActivity {
 	
 	/**
 	 * Add a comment, valoration to the db
+	 * 
 	 * @param view the button for press
 	 * @throws JSONException
 	 * @throws InterruptedException
@@ -78,7 +98,8 @@ public class ShowCommentsActivity extends BaseActivity {
 	 */
 	public void addCommentValoration(View view) throws JSONException, InterruptedException, ExecutionException {
 		// if user is anonim starts the register activity
-		if (isAnonim) {
+		String out = new String();
+		if (isAnonymous) {
 			Intent intent = new Intent(this, RegisterActivity.class);
 			startActivity(intent);
 		}
@@ -86,25 +107,24 @@ public class ShowCommentsActivity extends BaseActivity {
 		Client clientComment = new Client(Client.SERVLET_COMMENT_INSERT, true);
 		Client clientValoration = new Client(Client.SERVLET_VALORATION_INSERT, true);
 		String response = getString(R.string.sorry);
-		String text = et.getText().toString();
-		double value = rb.getRating();
+		String text = editTextDefinition.getText().toString();
+		double value = rankingValue.getRating();
 		// conditional posibility for insert in db
-		if (!disableComment && !disableValoration && !text.equals(no_insert_text) && value != no_insert_value) {
+		if (!disableComment && !disableValoration && !text.equals(NO_INSERT_COMMENT) && value != NO_INSERT_VALUE) {
 			out = Converter.convertCommentToJSONObject(text, userName, routeName);
 			clientComment.execute(out).get();
 			out = Converter.convertValorationToJSONObject(value, userName, routeName);
 			clientValoration.execute(out).get();
 			response = getString(R.string.ok_comment_valoration);
-		} else if (!disableComment && !text.equals(no_insert_text)) {
+		} else if (!disableComment && !text.equals(NO_INSERT_COMMENT)) {
 			out = Converter.convertCommentToJSONObject(text, userName, routeName);
 			clientComment.execute(out).get();
 			response = getString(R.string.ok_comment);
-		} else if (!disableValoration && value != no_insert_value) {
+		} else if (!disableValoration && value != NO_INSERT_VALUE) {
 			out = Converter.convertValorationToJSONObject(value, userName, routeName);
 			clientValoration.execute(out).get();
 			response = getString(R.string.ok_valoration);
 		} 
-		
 		Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
 	}
 	
@@ -124,7 +144,7 @@ public class ShowCommentsActivity extends BaseActivity {
 	}
 	
 	/**
-	 * check if local user has a route comment or valoration in database
+	 * Check if local user has a route comment or valoration in database
 	 */
 	private void checkInsert() {
 		String check = Converter.convertCheckValoratingToJSONObject(userName, routeName);
@@ -142,8 +162,6 @@ public class ShowCommentsActivity extends BaseActivity {
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		// enable or disable add comments/valorations
-		System.out.println("response " + responseValoration);
 		disableValoration = responseValoration.equals(Client.TRUE_CHECK);
 		disableComment = responseComment.equals(Client.TRUE_CHECK);
 	}
