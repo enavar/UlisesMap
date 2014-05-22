@@ -33,15 +33,34 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
-	
+/**
+ * LoginActivity Activity that enables the user to log on. Also, since this
+ * activity, the user can go RegisterActivity and go in MenuActivity as
+ * anonymous user.
+ * 
+ * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
+public class LoginActivity extends BaseActivity implements OnClickListener,
+		OnCheckedChangeListener {
+
+	/** Button of register */
 	private Button btnRegister;
+	/** Button of enter **/
 	private Button btnEnter;
+	/** CheckBox of option anonymous */
 	private CheckBox checkAnonymous;
+	/** CheckBox of option remember login */
 	private CheckBox checkRemember;
+	/** EditText of name user */
 	private EditText editUser;
-	private EditText editPwd;	
-	
+	/** EditText of password */
+	private EditText editPwd;
+
+	/**
+	 * Create LoginActivity. Add listener of buttons and checkbox and Fill the
+	 * login fields if the user has previously entered the remember option.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,61 +77,92 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 		checkAnonymous.setOnCheckedChangeListener(this);
 		checkRemember.setOnCheckedChangeListener(this);
 		if (prefs.contains("userName")) {
-	         editUser.setText(prefs.getString("userName", ""));
-	         editPwd.setText(prefs.getString("password", ""));
-	    }  
+			editUser.setText(prefs.getString("userName", ""));
+			editPwd.setText(prefs.getString("password", ""));
+		}
 	}
 
+	/**
+	 * Method is called by the listener when the user clicks. If user click in
+	 * button register, when it go to Register activity. If user click in button
+	 * enter, when it go to Menu activity. Before going to activity menu, check
+	 * the login is correct or if the anonymous user option. If there is a
+	 * problem, it displays messages to the user.
+	 */
 	@Override
 	public void onClick(View view) {
 		if (view.equals(btnRegister)) {
 			intentRegisterActivity();
-		} else if(checkAnonymous.isChecked()) {
+		} else if (checkAnonymous.isChecked()) {
 			progress.show();
-			new IntentLauncher().execute();			
+			new IntentLauncher().execute();
 		} else {
 			String user = editUser.getText().toString();
 			String pwd = editPwd.getText().toString();
 			if (User.existLogin(user, pwd)) {
-				if(checkRemember.isChecked()) {
+				if (checkRemember.isChecked()) {
 					Editor editor = prefs.edit();
 					editor.putString("userName", user);
 					editor.putString("password", pwd);
 					editor.commit();
-				} 
+				}
 				Settings.userName = user;
 				progress.show();
-				new IntentLauncher().execute();	
+				new IntentLauncher().execute();
 			} else {
-				Toast.makeText(this, R.string.error_not_checked_user, Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, R.string.error_not_checked_user,
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
-	
+
+	/**
+	 * IntentLaucher 
+	 * Class that launches a background activity.
+	 * 
+	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
+	 * @version: 1.0
+	 */
 	private class IntentLauncher extends AsyncTask<String, Void, String> {
-		
+
+		/**
+		 * Launch MenuActivity
+		 */
 		@Override
-		protected String doInBackground(String... s) {		
+		protected String doInBackground(String... s) {
 			intentMenuActivity();
 			return null;
 		}
 		
-		 @Override
-	        protected void onPostExecute(String result) {
-			 progress.dismiss();
-	        }		
+		/**
+		 * Show progress bar
+		 */
+		@Override
+		protected void onPostExecute(String result) {
+			progress.dismiss();
+		}
 	}
 	
+	/**
+	 * Launch RegisterActivity
+	 */
 	private void intentRegisterActivity() {
 		Intent intent = new Intent(this, RegisterActivity.class);
-		startActivity(intent);		
+		startActivity(intent);
 	}
 	
+	/**
+	 * Launch MenuActivity
+	 */
 	private void intentMenuActivity() {
 		Intent intent = new Intent(this, MenuActivity.class);
 		startActivity(intent);
 	}
-
+	
+	/**
+	 * Method is called by the listener when the user 
+	 * click to checkbox.
+	 */
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (buttonView.equals(checkAnonymous)) {
@@ -122,16 +172,28 @@ public class LoginActivity extends BaseActivity implements OnClickListener, OnCh
 		}
 	}
 	
+	/**
+	 * If user click option Anonymous, then checked others options.
+	 * If option anonymous is enable, then disable option remember
+	 * and editText of login.
+	 * If option anonymous is disable, then enable editText of login. 
+	 * @param isChecked state of checkbox
+	 */
 	private void checkedAnonymous(boolean isChecked) {
 		editUser.setEnabled(!isChecked);
-		editPwd.setEnabled(!isChecked);	
+		editPwd.setEnabled(!isChecked);
 		if (isChecked) {
 			checkRemember.setChecked(false);
 			editUser.setText("");
 			editPwd.setText("");
-		} 
+		}
 	}
 	
+	/**
+	 * If user click option remember, then checked others options.
+	 * If option remember is enable, then disable option anonymous. 
+	 * @param isChecked state of checkbox
+	 */
 	private void checkedRememeber(boolean isChecked) {
 		if (isChecked) {
 			checkAnonymous.setChecked(false);
