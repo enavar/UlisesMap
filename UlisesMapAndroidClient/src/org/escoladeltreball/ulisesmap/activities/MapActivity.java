@@ -64,7 +64,7 @@ public class MapActivity extends BaseActivity {
 	/** view for show open street maps in android */
 	private MapView map;
 	/** map settings */
-	IMapController mapController;
+	private IMapController mapController;
 	/** route builded from points of interest */
 	private Road road;
 	/** routed builded from current user position and start point of the route */
@@ -79,7 +79,11 @@ public class MapActivity extends BaseActivity {
 	private RoadBuilder roadBuilder;
 
 	/** identification number of activity which started current activity */
-	private static final int ACTIVITY_POINTS = 1;
+	public static final int ACTIVITY_POINTS = 1;
+	/** key of list points of before activity */
+	public static final String SELECT_POINTS= "selectedPoints";
+	/** key of identification of before activity */
+	public static final String TYPE_ACTIVITY = "activity";
 
 	/** button for navigate throw markers */
 	private Button prevStep;
@@ -120,10 +124,10 @@ public class MapActivity extends BaseActivity {
 		map.setBuiltInZoomControls(true);
 		map.setMultiTouchControls(true);
 
-		int activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
+		int activity = getIntent().getIntExtra(TYPE_ACTIVITY, ACTIVITY_POINTS);
 		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
-				"selectedPoints");
+				SELECT_POINTS);
 		for (int i = 0; i < selectedPoints.size(); i++) {
 			Log.d("selected Pointa", "" + selectedPoints.size());
 		}

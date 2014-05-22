@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
-import org.escoladeltreball.ulisesmap.activities.BaseActivity.IntentLauncher;
 import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
@@ -28,7 +27,6 @@ import org.escoladeltreball.ulisesmap.model.Point;
 import org.escoladeltreball.ulisesmap.model.Route;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,9 +69,8 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 	private String nameCity = null;
 
 	/**
-	 * Create MenuActivity
-	 * Gets the countries and cities connecting to the database.
-	 * Add listeners to buttons and list countries.
+	 * Create MenuActivity Gets the countries and cities connecting to the
+	 * database. Add listeners to buttons and list countries.
 	 * 
 	 * @param savedInstanceState
 	 */
@@ -96,14 +93,15 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 		btnRoutes.setOnClickListener(this);
 
 	}
-	
+
 	/**
-	 * Method is called by the listener when the user clicks to buttons.
-	 * If click button points, then it go to ShowPointsActivity and if click 
-	 * button routes, then it go to ShowRoutesActivity. Before launching an 
-	 * activity check if data is available. If no data displays an informational message.
+	 * Method is called by the listener when the user clicks to buttons. If
+	 * click button points, then it go to ShowPointsActivity and if click button
+	 * routes, then it go to ShowRoutesActivity. Before launching an activity
+	 * check if data is available. If no data displays an informational message.
 	 * 
-	 * @param v button of routes or button of points
+	 * @param v
+	 *            button of routes or button of points
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -216,11 +214,11 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 		}
 		return points;
 	}
-	
+
 	/**
-	 * Method is called by the listener when the user choose country.
-	 * Change the list of cities on the country chosen. 
-	 * Connect to the database to get the list of cities.
+	 * Method is called by the listener when the user choose country. Change the
+	 * list of cities on the country chosen. Connect to the database to get the
+	 * list of cities.
 	 * 
 	 * @param parent
 	 * @param view

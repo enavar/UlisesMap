@@ -45,11 +45,12 @@ public class UlisesActivity extends Activity {
 	/** application name */
 	private TextView app_name;
 
-	@Override
-	/** check if logo is skipped and if user is already has been log in earlier
-	 * otherwise initiate animation
-	 *  
+	
+	/** 
+	 * Check if logo is skipped and if user is already has been log in earlier
+	 * otherwise initiate animation 
 	 */
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ulises);
@@ -71,7 +72,7 @@ public class UlisesActivity extends Activity {
 	}
 
 	/**
-	 * will launch the activity
+	 * Will launch the activity
 	 */
 	private Runnable mLaunchTask = new Runnable() {
 		public void run() {

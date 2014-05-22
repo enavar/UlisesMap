@@ -51,8 +51,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	private EditText editRepeatPass;
 	
 	/**
-	 * Create RegisterActivity
-	 * Add listeners to button
+	 * Create RegisterActivity. Add listener of buttons and checkbox and Fill the
+	 * login fields if the user has previously entered the remember option.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

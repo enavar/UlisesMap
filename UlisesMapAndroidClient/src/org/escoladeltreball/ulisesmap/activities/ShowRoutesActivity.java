@@ -30,7 +30,6 @@ import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,22 +48,22 @@ import android.widget.Toast;
  */
 public class ShowRoutesActivity extends BaseActivity implements OnClickListener {
 
-	/** a set of routes of choosen city */
+	/** Set of routes of choosen city */
 	private ArrayList<Route> routes;
-	/** button to start a comment/valoration activity */
+	/** Button to start a comment/valoration activity */
 	private Button info;
-	/** button to show a route at the map */
+	/** Button to show a route at the map */
 	private Button map;
-	/** a list with all routes */
+	/** List with all routes */
 	ListView list;
-	/** a name route chosed by user */
+	/** Name route chosed by user */
 	private String routeName;
-
+	
+	/**
+	 * Initiate all object when the activity is started
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	/**
-	 * initiate all object when the activity is started
-	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showroutes);
@@ -86,7 +85,10 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		list.setAdapter(adapter);
 		list.setTextFilterEnabled(true);
 	}
-
+	
+	/**
+	 * Checks if the user has selected any route.
+	 */
 	@Override
 	public void onClick(View v) {
 		routeName = getCheckedItem();
@@ -120,8 +122,8 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 			progress.show();
 			// Starts a new activity to show gps map route
 			Intent intent = new Intent(v.getContext(), MapActivity.class);
-			intent.putExtra("activity", 2);
-			intent.putExtra("selectedPoints", getPointsOfRoute());
+			intent.putExtra(MapActivity.TYPE_ACTIVITY, 2);
+			intent.putExtra(MapActivity.SELECT_POINTS, getPointsOfRoute());
 			new IntentLauncher().execute(intent);
 		}
 	}

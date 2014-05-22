@@ -34,12 +34,24 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * ShowPointsActivity Show all points of city and go to MapActivity
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class ShowPointsActivity extends BaseActivity implements OnClickListener {
 
+	/** List of points */
 	private ArrayList<Point> points;
+	/** Adapter of listview points */
 	private ShowPointsAdapter adapter;
+	/** Button of map */
 	private Button map;
 
+	/**
+	 * Create ShowPointsActivity. Add listener to button.
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +73,9 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		map.setOnClickListener(this);
 	}
 
-	/* Interface method */
-
+	/**
+	 * Go to MapActivity. Before checks whether the user selected two points.
+	 */
 	@Override
 	public void onClick(View v) {
 		if (adapter.getPointsCheck().size() >= 2) {
