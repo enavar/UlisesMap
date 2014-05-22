@@ -110,8 +110,10 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
 	/* Overrided methods */
 
-	// Decode image in background.
 	@Override
+	/**
+	 * Decode image in background.
+	 */
 	protected Bitmap doInBackground(String... urls) {
 		String url = urls[0];
 		this.url = url;
@@ -129,8 +131,10 @@ public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 		return mIcon;
 	}
 
-	// Once complete, see if ImageView is still around and set bitmap.
 	@Override
+	/**
+	 * Once complete, see if ImageView is still around and set bitmap.
+	 */
 	protected void onPostExecute(Bitmap result) {
 		if (isCancelled()) {
 			result = null;

@@ -25,27 +25,32 @@ import android.widget.RelativeLayout;
 
 /**
  * CheckableLayout
- * Layout which implements checkable methods for detect click over textView
+ * Layout which override methods of android RelativeLayout for
+ * implement checkable methods used to detect click over textView
  * 
  * @Author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
  * @version: 1.0
  */
 public class CheckableLayout extends RelativeLayout implements Checkable {
+	/** CheckedTextView */
 	private CheckedTextView _checkbox;
 
 	public CheckableLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
-	}	
+	}
 
 	public CheckableLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
-	
+
 	public CheckableLayout(Context context) {
 		super(context);
 	}
 
 	@Override
+	/**
+	 * When layout is created find a field for detect future clicks
+	 */
 	protected void onFinishInflate() {
 		super.onFinishInflate();
 		// find checked text view
@@ -59,17 +64,26 @@ public class CheckableLayout extends RelativeLayout implements Checkable {
 	}
 
 	@Override
+	/**
+	 * Determine if field is checked
+	 */
 	public boolean isChecked() {
 		return _checkbox != null ? _checkbox.isChecked() : false;
 	}
 
 	@Override
+	/**
+	 * Change field status
+	 */
 	public void setChecked(boolean checked) {
 		if (_checkbox != null) {
 			_checkbox.setChecked(checked);
 		}
 	}
 
+	/**
+	 * Change field status to opposite
+	 */
 	@Override
 	public void toggle() {
 		if (_checkbox != null) {
