@@ -42,6 +42,7 @@
     <string name="noSelectedRoute">Please select a route!</string>
 
     <!-- ShowComments -->
+    <string name="not_has_comment">no comment has been added</string>
     <string name="add_comment">Add</string>
     <string name="new_comment">Add a new comment text</string>
     <string name="error_connection">Error connection</string>
