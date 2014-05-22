@@ -26,7 +26,6 @@ import org.osmdroid.bonuspack.routing.RoadManager;
 import org.osmdroid.util.GeoPoint;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 /**
  * Async task to get the road in a separate thread.
@@ -37,9 +36,10 @@ import android.util.Log;
 public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 
 	/** road manager for getting route */
-	RoadManager roadManager;
+	private RoadManager roadManager;
 	/** waipoints to build a route from */
-	ArrayList<GeoPoint> waypoints;
+	private ArrayList<GeoPoint> waypoints;
+	private static final String API_KEY = "Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w";
 
 	public RoadBuilder(ArrayList<GeoPoint> waypoints) {
 		super();
@@ -50,10 +50,8 @@ public class RoadBuilder extends AsyncTask<Object, Void, Road> {
 	protected Road doInBackground(Object... params) {
 		@SuppressWarnings("unchecked")
 		ArrayList<GeoPoint> waypoints = (ArrayList<GeoPoint>) params[0];
-		Log.d("road async", "" + waypoints.size());
 		// Sending request for get specific roadManager
-		roadManager = new MapQuestRoadManager(
-				"Fmjtd%7Cluubn96y2l%2C8n%3Do5-907a5w");
+		roadManager = new MapQuestRoadManager(API_KEY);
 
 		if (Settings.routeType == R.id.car) {
 			// for quickest drive time route.
