@@ -18,6 +18,9 @@ package org.escoladeltreball.ulisesmap.model;
 
 public class CommentValoration {
 	
+	public static final String FIELD_USER = "user";
+	public static final String FIELD_VALUE = "valoration";
+	public static final String FIELD_COMMENT= "comment";
 	private int val;
 	private String com;
 	private String user;
