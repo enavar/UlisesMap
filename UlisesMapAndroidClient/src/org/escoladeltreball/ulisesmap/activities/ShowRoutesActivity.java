@@ -40,20 +40,34 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class ShowRoutesActivity extends BaseActivity implements OnClickListener {
 
+	/** a set of routes of choosen city */
 	private ArrayList<Route> routes;
+	/** button to start a comment/valoration activity */
 	private Button info;
+	/** button to show a route at the map */
 	private Button map;
+	/** a list with all routes */
 	ListView list;
+	/** a name route chosed by user */
 	private String routeName;
 
 	@SuppressWarnings("unchecked")
 	@Override
+	/**
+	 * initiate all object when the activity is started
+	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showroutes);
-		routes = (ArrayList<Route>) getIntent().getSerializableExtra(Route.FIELD_LIST);
+		routes = (ArrayList<Route>) getIntent().getSerializableExtra(
+				Route.FIELD_LIST);
 		Bundle bundle = getIntent().getExtras();
 		String nameCity = bundle.getString(City.FIELD_NAME);
 		TextView city = (TextView) findViewById(R.id.city);
@@ -120,6 +134,11 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		}
 	}
 
+	/**
+	 * Download a set of routes from a server
+	 * 
+	 * @return a set of routes
+	 */
 	private ArrayList<Point> getPointsOfRoute() {
 		Client client = new Client(Client.SERVLET_POINTS_OF_ROUTE, true);
 		ArrayList<Point> pointsOfRoute = null;
@@ -134,6 +153,11 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		return pointsOfRoute;
 	}
 
+	/**
+	 * Determine which route is selected by user
+	 * 
+	 * @return a selected route, null otherwise
+	 */
 	private String getCheckedItem() {
 		int checkedId = list.getCheckedItemPosition();
 		if (checkedId != -1) {

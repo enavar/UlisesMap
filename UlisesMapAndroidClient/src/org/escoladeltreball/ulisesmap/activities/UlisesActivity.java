@@ -29,14 +29,27 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Main activity which show animated text with name of application and animated
+ * logo
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class UlisesActivity extends Activity {
 
+	/** delay before start another task */
 	private final int delay = 2000;
+	/** animation for application name */
 	private Animation textAnimation;
+	/** application name */
 	private TextView app_name;
 
-
 	@Override
+	/** check if logo is skipped and if user is already has been log in earlier
+	 * otherwise initiate animation
+	 *  
+	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ulises);
@@ -48,16 +61,18 @@ public class UlisesActivity extends Activity {
 				startActivity(new Intent(this, MenuActivity.class));
 				finish();
 			}
-		} else {					
-			app_name = (TextView) findViewById(R.id.mainTitle);			
-			textAnimation = AnimationUtils.loadAnimation(this, android.R.anim.slide_in_left
-					);
-			textAnimation.setDuration(2000);			
+		} else {
+			app_name = (TextView) findViewById(R.id.mainTitle);
+			textAnimation = AnimationUtils.loadAnimation(this,
+					android.R.anim.slide_in_left);
+			textAnimation.setDuration(2000);
 		}
 
 	}
 
-	// will launch the activity
+	/**
+	 * will launch the activity
+	 */
 	private Runnable mLaunchTask = new Runnable() {
 		public void run() {
 			Intent i = new Intent(getApplicationContext(), LoginActivity.class);
@@ -65,29 +80,35 @@ public class UlisesActivity extends Activity {
 			finish();
 		}
 	};
-	
-	// will launch the activity
-		private Runnable textAnimTask = new Runnable() {
-			public void run() {
-				app_name.startAnimation(textAnimation);
-				app_name.setText(R.string.app_name);
-				Handler mHandler = new Handler();
-				mHandler.postDelayed(mLaunchTask, delay);
-			}
-		};
-	
+
+	/**
+	 * will launch a text animation
+	 */
+	private Runnable textAnimTask = new Runnable() {
+		public void run() {
+			app_name.startAnimation(textAnimation);
+			app_name.setText(R.string.app_name);
+			Handler mHandler = new Handler();
+			mHandler.postDelayed(mLaunchTask, delay);
+		}
+	};
+
 	@Override
+	/**
+	 * When all object are loaded and window has focus start a logo animation
+	 */
 	public void onWindowFocusChanged(boolean hasFocus) {
-	    super.onWindowFocusChanged(hasFocus);
-	    if (hasFocus) {
-	    	ImageView image = (ImageView) findViewById(R.id.animation);
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus) {
+			ImageView image = (ImageView) findViewById(R.id.animation);
 			image.setAdjustViewBounds(true);
-			//image.setBackgroundResource(R.drawable.animation_orca);
-			final AnimationDrawable frameAnimation = (AnimationDrawable)getResources().getDrawable(R.drawable.animation_orca);
+			// image.setBackgroundResource(R.drawable.animation_orca);
+			final AnimationDrawable frameAnimation = (AnimationDrawable) getResources()
+					.getDrawable(R.drawable.animation_orca);
 			image.setImageDrawable(frameAnimation);
 			frameAnimation.start();
 			Handler textAnimHandler = new Handler();
-			textAnimHandler.postDelayed(textAnimTask, delay);				
-	    }
+			textAnimHandler.postDelayed(textAnimTask, delay);
+		}
 	}
 }
