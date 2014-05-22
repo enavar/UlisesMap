@@ -22,7 +22,6 @@ import org.escoladeltreball.ulisesmap.model.User;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -95,7 +94,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 			intentRegisterActivity();
 		} else if (checkAnonymous.isChecked()) {
 			progress.show();
-			new IntentLauncher().execute();
+			intentMenuActivity();
 		} else {
 			String user = editUser.getText().toString();
 			String pwd = editPwd.getText().toString();
@@ -108,38 +107,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 				}
 				Settings.userName = user;
 				progress.show();
-				new IntentLauncher().execute();
+				intentMenuActivity();
 			} else {
 				Toast.makeText(this, R.string.error_not_checked_user,
 						Toast.LENGTH_SHORT).show();
 			}
-		}
-	}
-
-	/**
-	 * IntentLaucher 
-	 * Class that launches a background activity.
-	 * 
-	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
-	 * @version: 1.0
-	 */
-	private class IntentLauncher extends AsyncTask<String, Void, String> {
-
-		/**
-		 * Launch MenuActivity
-		 */
-		@Override
-		protected String doInBackground(String... s) {
-			intentMenuActivity();
-			return null;
-		}
-		
-		/**
-		 * Show progress bar
-		 */
-		@Override
-		protected void onPostExecute(String result) {
-			progress.dismiss();
 		}
 	}
 	
@@ -148,7 +120,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 	 */
 	private void intentRegisterActivity() {
 		Intent intent = new Intent(this, RegisterActivity.class);
-		startActivity(intent);
+		new IntentLauncher().execute(intent);
 	}
 	
 	/**
@@ -156,7 +128,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 	 */
 	private void intentMenuActivity() {
 		Intent intent = new Intent(this, MenuActivity.class);
-		startActivity(intent);
+		new IntentLauncher().execute(intent);		
 	}
 	
 	/**

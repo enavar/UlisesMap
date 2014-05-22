@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.escoladeltreball.ulisesmap.R;
+import org.escoladeltreball.ulisesmap.activities.BaseActivity.IntentLauncher;
 import org.escoladeltreball.ulisesmap.connections.Client;
 import org.escoladeltreball.ulisesmap.converter.Converter;
 import org.escoladeltreball.ulisesmap.model.City;
@@ -112,7 +113,7 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 					: getRoutes());
 			if (arrayObject != null && arrayObject.size() > 0) {
 				progress.show();
-				new IntentLauncher().execute(v);
+				prepareIntent(v);
 			} else if (v.equals(btnPoints))
 				Toast.makeText(this, R.string.not_points, Toast.LENGTH_LONG)
 						.show();
@@ -122,42 +123,19 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 		}
 	}
 	
-	/**
-	 * IntentLaucher 
-	 * Class that launches a background activity.
-	 * 
-	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
-	 * @version: 1.0
-	 */
-	private class IntentLauncher extends AsyncTask<View, Void, String> {
-		
-		/**
-		 * Launch ShowPointsActivity or ShowRoutesActivity.
-		 * launches ShowPointsActivity or ShowRoutesActivity as a function of 
-		 * the clicked button. Send name of city and list points or routes to
-		 * next activity.
-		 */
-		@Override
-		protected String doInBackground(View... views) {
-			Intent intent;
-			if (views[0].equals(btnPoints)) {
-				intent = new Intent(views[0].getContext(),
-						ShowPointsActivity.class);
-				intent.putExtra(Point.FIELD_LIST, arrayObject);
-			} else {
-				intent = new Intent(views[0].getContext(),
-						ShowRoutesActivity.class);
-				intent.putExtra(Route.FIELD_LIST, arrayObject);
-			}
-			intent.putExtra(City.FIELD_NAME, nameCity);
-			startActivity(intent);
-			return null;
+	public void prepareIntent(View v) {
+		Intent intent;
+		if (v.equals(btnPoints)) {
+			intent = new Intent(v.getContext(),
+					ShowPointsActivity.class);
+			intent.putExtra(Point.FIELD_LIST, arrayObject);
+		} else {
+			intent = new Intent(v.getContext(),
+					ShowRoutesActivity.class);
+			intent.putExtra(Route.FIELD_LIST, arrayObject);
 		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			progress.dismiss();
-		}
+		intent.putExtra(City.FIELD_NAME, nameCity);
+		new IntentLauncher().execute(intent);
 	}
 
 	/**

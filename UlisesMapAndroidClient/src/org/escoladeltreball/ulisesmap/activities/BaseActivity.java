@@ -22,8 +22,10 @@ import org.escoladeltreball.ulisesmap.model.Settings;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -47,6 +49,33 @@ public class BaseActivity extends Activity {
 	protected SharedPreferences prefs;
 	/** references to a message and simple animation */
 	public ProgressDialog progress;
+	
+	/**
+	 * IntentLaucher 
+	 * Class that launches a background activity.
+	 * 
+	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
+	 * @version: 1.0
+	 */
+	protected class IntentLauncher extends AsyncTask<Intent, Void, String> {
+
+		/**
+		 * Launch MenuActivity
+		 */
+		@Override
+		protected String doInBackground(Intent... intent) {
+			startActivity(intent[0]);
+			return null;
+		}
+		
+		/**
+		 * Show progress bar
+		 */
+		@Override
+		protected void onPostExecute(String result) {
+			progress.dismiss();
+		}
+	}
 
 	@Override
 	/**

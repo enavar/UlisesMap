@@ -85,22 +85,6 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		list.setTextFilterEnabled(true);
 	}
 
-	/* Inner class */
-
-	private class IntentLauncher extends AsyncTask<Intent, Void, String> {
-
-		@Override
-		protected String doInBackground(Intent... i) {
-			startActivity(i[0]);
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			progress.dismiss();
-		}
-	}
-
 	@Override
 	public void onClick(View v) {
 		routeName = getCheckedItem();

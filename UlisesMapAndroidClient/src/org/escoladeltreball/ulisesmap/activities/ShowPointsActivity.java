@@ -25,7 +25,6 @@ import org.escoladeltreball.ulisesmap.model.Point;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,32 +61,21 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		map.setOnClickListener(this);
 	}
 	
-	/* Inner class */
-	
-	private class IntentLauncher extends AsyncTask<String, Void, String> {
-		
-		@Override
-		protected String doInBackground(String... s) {
-			ArrayList<Point> selectedPoints = new ArrayList<Point>(adapter.getPointsCheck());
-			Intent intent = new Intent(map.getContext(), MapActivity.class);
-			intent.putExtra("selectedPoints", selectedPoints);
-			startActivity(intent);
-			return null;
-		}
-		@Override
-	    protected void onPostExecute(String result) {
-			progress.dismiss();
-		}		
-	}
-	
 	/* Interface method */
 
 	@Override
 	public void onClick(View v) {
 		if (adapter.getPointsCheck().size() >= 2) {
 			progress.show();
-			new IntentLauncher().execute();
+			prepareIntent();
 		} else
 			Toast.makeText(this, R.string.no_selected_point, Toast.LENGTH_LONG).show();
+	}
+	
+	public void prepareIntent() {
+		ArrayList<Point> selectedPoints = new ArrayList<Point>(adapter.getPointsCheck());
+		Intent intent = new Intent(map.getContext(), MapActivity.class);
+		intent.putExtra("selectedPoints", selectedPoints);
+		new IntentLauncher().execute(intent);
 	}
 }
