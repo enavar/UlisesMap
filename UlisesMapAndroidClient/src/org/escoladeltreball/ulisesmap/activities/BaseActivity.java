@@ -49,6 +49,7 @@ public class BaseActivity extends Activity {
 	protected SharedPreferences prefs;
 	/** references to a message and simple animation */
 	public ProgressDialog progress;
+	private final static String PREF_NAME = "ulises"; 
 	
 	/**
 	 * IntentLaucher 
@@ -85,10 +86,10 @@ public class BaseActivity extends Activity {
 	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
+		prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 		// create progress dialog
 		progress = new ProgressDialog(this);
-		progress.setMessage("Loading data...");
+		progress.setMessage(getString(R.string.loadMessage));
 		progress.setIndeterminate(false);
 	}
 
@@ -150,9 +151,8 @@ public class BaseActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.navigations:
-			Settings.navigations = !item.isCheckable();
+			Settings.navigations = !item.isChecked();
 			item.setChecked(Settings.navigations);
-			Log.d("navigation", "" + Settings.navigations);
 			return true;
 		case R.id.car:
 			return changeRouteStatus(item);
@@ -205,6 +205,6 @@ public class BaseActivity extends Activity {
 		changeRouteStatus(menu.findItem(Settings.routeType));
 		menu.findItem(R.id.myGPS).setChecked(Settings.gps);
 		menu.findItem(R.id.navigations).setChecked(Settings.navigations);
-		menu.findItem(R.id.menu_logo).setChecked(Settings.hideLogo);
+		menu.findItem(R.id.hideLogo).setChecked(Settings.hideLogo);
 	}
 }

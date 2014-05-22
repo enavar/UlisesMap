@@ -23,6 +23,7 @@ import org.escoladeltreball.ulisesmap.model.User;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -93,6 +94,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 		if (view.equals(btnRegister)) {
 			intentRegisterActivity();
 		} else if (checkAnonymous.isChecked()) {
+			Editor editor = prefs.edit();
+			Settings.userName = "";
+			editor.remove("userName");
+			editor.remove("password");
+			editor.commit();
 			progress.show();
 			intentMenuActivity();
 		} else {
@@ -108,7 +114,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener,
 				Settings.userName = user;
 				progress.show();
 				intentMenuActivity();
+				Log.d("if", "if");
 			} else {
+				Log.d("else", "else");
 				Toast.makeText(this, R.string.error_not_checked_user,
 						Toast.LENGTH_SHORT).show();
 			}

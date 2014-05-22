@@ -54,7 +54,7 @@ public class UlisesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ulises);
 		if (Settings.hideLogo) {
-			if (Settings.userName.equals(null)) {
+			if (Settings.userName.equals("")) {
 				startActivity(new Intent(this, LoginActivity.class));
 				finish();
 			} else {

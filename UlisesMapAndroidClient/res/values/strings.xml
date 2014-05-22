@@ -6,6 +6,7 @@
     <string name="button_map">Map</string>
     <string name="button_route">Routes</string>
     <string name="button_point">Points of Interes</string>
+    <string name="loadMessage">Loading data...</string>
 
     <!-- ListView -->
     <string name="ok">OK</string>
