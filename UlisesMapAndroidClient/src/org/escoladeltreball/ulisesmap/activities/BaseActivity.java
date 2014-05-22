@@ -60,7 +60,7 @@ public class BaseActivity extends Activity {
 	protected class IntentLauncher extends AsyncTask<Intent, Void, String> {
 
 		/**
-		 * Launch MenuActivity
+		 * Launch Activity
 		 */
 		@Override
 		protected String doInBackground(Intent... intent) {

@@ -41,7 +41,11 @@ import android.widget.Toast;
 
 /**
  * ShowRoutesActivity
+<<<<<<< HEAD
  * Show all routes of city and go to MapActivity
+=======
+ * Show all routes available for chosen city
+>>>>>>> 3ccd541d52ee9400e5a67eec42468071794dbe31
  * 
  * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
  * @version: 1.0
@@ -107,11 +111,20 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		Intent intent = new Intent(this, ShowCommentsActivity.class);
 		new IntentLauncher().execute(intent);
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * If user click button of info, then launch ShowCommentActivity.
 	 * If user click button of map, then launch MapActivity
 	 * @param v button
+=======
+
+	/**
+	 * Determine which button is clicked and start correspond activity by creating
+	 * new Intentlauncher
+	 * 
+	 * @param v view of clicked button
+>>>>>>> 3ccd541d52ee9400e5a67eec42468071794dbe31
 	 */
 	private void clickRoute(View v) {
 		if (v.equals(info)) {

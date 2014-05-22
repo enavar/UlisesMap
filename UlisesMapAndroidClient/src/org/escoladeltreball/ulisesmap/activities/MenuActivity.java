@@ -120,7 +120,17 @@ public class MenuActivity extends BaseActivity implements OnClickListener,
 						.show();
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+	/**
+	 * Determine which button is clicked and start correspond activity. 
+	 * 
+	 * 
+	 * @param v view of clicked button
+	 */
+>>>>>>> 3ccd541d52ee9400e5a67eec42468071794dbe31
 	public void prepareIntent(View v) {
 		Intent intent;
 		if (v.equals(btnPoints)) {

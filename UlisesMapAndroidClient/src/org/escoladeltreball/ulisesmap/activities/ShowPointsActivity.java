@@ -72,6 +72,11 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		list.setTextFilterEnabled(true);
 		map.setOnClickListener(this);
 	}
+<<<<<<< HEAD
+=======
+
+	/* Interface method */
+>>>>>>> 3ccd541d52ee9400e5a67eec42468071794dbe31
 
 	/**
 	 * Go to MapActivity. Before checks whether the user selected two points.
@@ -85,9 +90,15 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 			Toast.makeText(this, R.string.no_selected_point, Toast.LENGTH_LONG)
 					.show();
 	}
-	
+
+	/**
+	 * Put a set of points to a intent and start a MapAactivity by creating new
+	 * IntentLauncher
+	 * 
+	 */
 	public void prepareIntent() {
-		ArrayList<Point> selectedPoints = new ArrayList<Point>(adapter.getPointsCheck());
+		ArrayList<Point> selectedPoints = new ArrayList<Point>(
+				adapter.getPointsCheck());
 		Intent intent = new Intent(map.getContext(), MapActivity.class);
 		intent.putExtra("selectedPoints", selectedPoints);
 		new IntentLauncher().execute(intent);
