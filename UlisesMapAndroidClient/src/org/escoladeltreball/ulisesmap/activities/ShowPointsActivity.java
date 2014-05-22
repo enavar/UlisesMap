@@ -46,7 +46,8 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showpoints);
 		Bundle bundle = getIntent().getExtras();
-		points = (ArrayList<Point>) getIntent().getSerializableExtra(Point.FIELD_LIST);
+		points = (ArrayList<Point>) getIntent().getSerializableExtra(
+				Point.FIELD_LIST);
 		TextView title = (TextView) findViewById(R.id.Textzone);
 		String nameCity = bundle.getString(City.FIELD_NAME);
 		title.setText(nameCity);
@@ -54,13 +55,12 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 		ListView list = (ListView) findViewById(R.id.listView1);
 		LayoutInflater layoutInflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		adapter = new ShowPointsAdapter(getResources(),points,
-				layoutInflater);
+		adapter = new ShowPointsAdapter(getResources(), points, layoutInflater);
 		list.setAdapter(adapter);
 		list.setTextFilterEnabled(true);
 		map.setOnClickListener(this);
 	}
-	
+
 	/* Interface method */
 
 	@Override
@@ -69,11 +69,18 @@ public class ShowPointsActivity extends BaseActivity implements OnClickListener 
 			progress.show();
 			prepareIntent();
 		} else
-			Toast.makeText(this, R.string.no_selected_point, Toast.LENGTH_LONG).show();
+			Toast.makeText(this, R.string.no_selected_point, Toast.LENGTH_LONG)
+					.show();
 	}
-	
+
+	/**
+	 * Put a set of points to a intent and start a MapAactivity by creating new
+	 * IntentLauncher
+	 * 
+	 */
 	public void prepareIntent() {
-		ArrayList<Point> selectedPoints = new ArrayList<Point>(adapter.getPointsCheck());
+		ArrayList<Point> selectedPoints = new ArrayList<Point>(
+				adapter.getPointsCheck());
 		Intent intent = new Intent(map.getContext(), MapActivity.class);
 		intent.putExtra("selectedPoints", selectedPoints);
 		new IntentLauncher().execute(intent);

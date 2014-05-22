@@ -41,6 +41,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
+ * ShowRoutesActivity
+ * Show all routes available for chosen city
  * 
  * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
  * @version: 1.0
@@ -104,6 +106,12 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		new IntentLauncher().execute(intent);
 	}
 
+	/**
+	 * Determine which button is clicked and start correspond activity by creating
+	 * new Intentlauncher
+	 * 
+	 * @param v view of clicked button
+	 */
 	private void clickRoute(View v) {
 		if (v.equals(info)) {
 			Settings.routeName = routeName;
