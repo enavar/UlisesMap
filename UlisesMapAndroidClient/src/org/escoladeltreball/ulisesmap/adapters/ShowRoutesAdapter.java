@@ -31,18 +31,38 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+/**
+ * ShowRoutesAdapter
+ * A customized adapter for listView that show routes. Use an inner
+ * class for optimizes work of listView an override it each time new item
+ * should be added to listView
+ * 
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class ShowRoutesAdapter extends BaseAdapter {
-	
+
 	private ArrayList<Route> routes;
 	private LayoutInflater layoutInflater;
 	Resources res;
-	
+
 	public static class ViewHolder {
 		protected TextView name, description;
 		protected RatingBar valoration;
 		protected ImageView image;
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param routes
+	 *            a set of routes
+	 * @param layoutInflater
+	 *            LayoutInflater to inflate rows of ListView
+	 * @param res
+	 *            android Resources
+	 */
 	public ShowRoutesAdapter(ArrayList<Route> routes,
 			LayoutInflater layoutInflater, Resources res) {
 		super();
@@ -70,20 +90,26 @@ public class ShowRoutesAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		System.out.println(position);
 		System.out.println(getItem(position).getClass());
-		Route route = (Route)getItem(position);
+		Route route = (Route) getItem(position);
 		ViewHolder holder = null;
 		if (convertView == null) {
-			convertView = layoutInflater.inflate(R.layout.showroutes_list_item, null);
+			convertView = layoutInflater.inflate(R.layout.showroutes_list_item,
+					null);
 			holder = new ViewHolder();
-			holder.valoration = (RatingBar) convertView.findViewById(R.id.ratingValue);
-			holder.description =(TextView) convertView.findViewById(R.id.viewDescriptionRoute);
-			holder.name = (TextView) convertView.findViewById(R.id.viewNameRoute);
-			holder.image = (ImageView) convertView.findViewById(R.id.imageRoute);
+			holder.valoration = (RatingBar) convertView
+					.findViewById(R.id.ratingValue);
+			holder.description = (TextView) convertView
+					.findViewById(R.id.viewDescriptionRoute);
+			holder.name = (TextView) convertView
+					.findViewById(R.id.viewNameRoute);
+			holder.image = (ImageView) convertView
+					.findViewById(R.id.imageRoute);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		ProgressBar progress = (ProgressBar) convertView.findViewById(R.id.placeHolderRoute);
+		ProgressBar progress = (ProgressBar) convertView
+				.findViewById(R.id.placeHolderRoute);
 		ImageDownloader task = new ImageDownloader(res, holder.image, progress);
 		task.loadBitmap(route.getImage(), holder.image);
 		holder.name.setText(route.getName());

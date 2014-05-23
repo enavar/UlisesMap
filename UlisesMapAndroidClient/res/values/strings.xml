@@ -6,6 +6,7 @@
     <string name="button_map">Map</string>
     <string name="button_route">Routes</string>
     <string name="button_point">Points of Interes</string>
+    <string name="loadMessage">Loading data...</string>
 
     <!-- ListView -->
     <string name="ok">OK</string>
@@ -42,6 +43,7 @@
     <string name="noSelectedRoute">Please select a route!</string>
 
     <!-- ShowComments -->
+    <string name="not_has_comment">no comment has been added</string>
     <string name="add_comment">Add</string>
     <string name="new_comment">Add a new comment text</string>
     <string name="error_connection">Error connection</string>

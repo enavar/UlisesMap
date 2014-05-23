@@ -30,11 +30,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.util.GeoPoint;
 
+/**
+ * Converter
+ * Client helper Class. Converts the information the client sends to JSON String and
+ * converts the information the servlet to object specific.
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class Converter {
 	
 	private static final String PATH = "_";
 	private static final String SPACE = " ";
 	
+	/**
+	 * Convert the information of user in JSON to String because client 
+	 * can send to servlet
+	 * 
+	 * @param name name of user
+	 * @param password password of user
+	 * @return user in format JSON to String.
+	 */
 	public static String convertUserToJSONObject(String name, String password) {
 		JSONObject jsonObjectUser = new JSONObject();
 		try {			
@@ -46,6 +62,15 @@ public class Converter {
 		return jsonObjectUser.toString();
 	}
 	
+	/**
+	 * Convert the information of user in JSON to String because client 
+	 * can send to servlet
+	 * 
+	 * @param name name of user
+	 * @param password password of user
+	 * @param email email of user
+	 * @return user in format JSON to String.
+	 */
 	public static String convertUserToJSONObject(String name, String password, String email) {
 		JSONObject jsonObjectUser = new JSONObject();
 		try {			
@@ -58,6 +83,15 @@ public class Converter {
 		return jsonObjectUser.toString();
 	}
 	
+	/**
+	 * Convert the information of comment in JSON to String because
+	 * client can send to serv(comment == null)let
+	 * 
+	 * @param definition definition of comment
+	 * @param nameUser user of comment
+	 * @param nameRoute route of comment
+	 * @return comment in format JSON to String.
+	 */
 	public static String convertCommentToJSONObject(String definition, String nameUser, String nameRoute) {
 		JSONObject jsonObjectComment = new JSONObject();
 		try {			
@@ -70,7 +104,15 @@ public class Converter {
 		return jsonObjectComment.toString();
 	}
 	
-	
+	/**
+	 * Convert the information of valoration in JSON to String because 
+	 * client can send to servlet
+	 * 
+	 * @param valoration value ranking of valoration
+	 * @param nameUser user of valoration
+	 * @param nameRoute route of valoration
+	 * @return valoration in format JSON to String.
+	 */
 	public static String convertValorationToJSONObject(double valoration, String nameUser, String nameRoute) {
 		JSONObject jsonObjectValoration = new JSONObject();
 		try {
@@ -83,6 +125,14 @@ public class Converter {
 		return jsonObjectValoration.toString();
 	}
 	
+	/**
+	 * Convert the information of valoration in JSON to String because
+	 * client can send to servlet
+	 * 
+	 * @param nameUser user of valoration
+	 * @param nameRoute route of valoration
+	 * @return valoration in format JSON to String
+	 */
 	public static String convertCheckValoratingToJSONObject(String nameUser, String nameRoute) {
 		JSONObject jsonObjectValoration = new JSONObject();
 		try {
@@ -94,6 +144,12 @@ public class Converter {
 		return jsonObjectValoration.toString();
 	}
 	
+	/**
+	 * Convert the JSONArray to String in routes
+	 * 
+	 * @param arrayRoutes JSONArray to String with information of routes
+	 * @return list of routes
+	 */
 	public static ArrayList<Route> convertStringToRoutes(String arrayRoutes) {
 		ArrayList<Route> routes = new ArrayList<Route>();
 		try {
@@ -115,6 +171,12 @@ public class Converter {
 		return routes;
 	}
 	
+	/**
+	 * Convert the JSONArray to String in points
+	 * 
+	 * @param arrayPoints JSONArray to String with information of points
+	 * @return list of points
+	 */
 	public static ArrayList<Point> convertStringToPoints(String arrayPoints) {
 		ArrayList<Point> points = new ArrayList<Point>();
 		try {
@@ -139,6 +201,12 @@ public class Converter {
 		return points;
 	}
 	
+	/**
+	 * Convert the JSONArray to String in points
+	 * 
+	 * @param arrayPoints JSONArray to String with information of points
+	 * @return list of points
+	 */
 	public static ArrayList<Point> convertStringToPointsOfRoutes(String arrayPoints) {
 		ArrayList<Point> points = new ArrayList<Point>();
 		try {
@@ -158,6 +226,12 @@ public class Converter {
 		return points;		
 	}
 	
+	/**
+	 * Convert the JSONArray to String in comments
+	 * 
+	 * @param arrayComments JSONArray to String witvalorationh information of comments
+	 * @return list of comments
+	 */
 	public static ArrayList<Comment> convertStringToComments(String arrayComments) {
 		ArrayList<Comment> comments = new ArrayList<Comment>();
 		try {
@@ -178,6 +252,12 @@ public class Converter {
 		return comments;
 	}
 	
+	/**
+	 * Convert the JSONArray to String in valorations
+	 * 
+	 * @param arrayValorations JSONArray to String with information of valorations
+	 * @return list of valorations
+	 */
 	public static ArrayList<Valoration> convertStringToValorations(String arrayValorations) {
 		ArrayList<Valoration> valorations = new ArrayList<Valoration>();
 		try {
@@ -198,6 +278,12 @@ public class Converter {
 		return valorations;
 	}
 	
+	/**
+	 * Convert the JSONArray to String in cities
+	 * 
+	 * @param arrayCities JSONArray to String with information of cities
+	 * @return list of cities.
+	 */
 	public static ArrayList<City> convertStrintToCities(String arrayCities) {
 		ArrayList<City> cities = new ArrayList<City>();
 		try {
@@ -217,6 +303,12 @@ public class Converter {
 		return cities;
 	}
 	
+	/**
+	 * Convert the JSONArray to String in countries
+	 * 
+	 * @param arrayCountry JSONArray to String with information of countries
+	 * @return list of countries
+	 */
 	public static String[] convertStringToCountry(String arrayCountry) {
 		String [] countries = null;		
 		try {
@@ -235,6 +327,12 @@ public class Converter {
 		return countries;
 	}
 	
+	/**
+	 * Convert the JSONArray to String in Comments and valorations
+	 * 
+	 * @param arrayComments JSONArray to String with information of comments and valorations
+	 * @return list of comment and valorations
+	 */
 	public static ArrayList<CommentValoration> convertStringToCommentsValorations(String arrayComments) {
 		ArrayList<CommentValoration> comments = new ArrayList<CommentValoration>();
 		try {
@@ -242,12 +340,12 @@ public class Converter {
 			int size = jSONArrayPoints.length();
 			for (int i = 0; i < size; i++) {
 				JSONObject objComment = jSONArrayPoints.getJSONObject(i);
-				String user = objComment.getString("user");
-				String comment = objComment.getString("comment");
+				String user = objComment.getString(CommentValoration.FIELD_USER);
+				String comment = objComment.getString(CommentValoration.FIELD_COMMENT);
 				if (comment == null) {
-					comment = "no comment has been added";
+					comment = " ";
 				}
-				int valoration = objComment.getInt("valoration");
+				int valoration = objComment.getInt(CommentValoration.FIELD_VALUE);
 				CommentValoration commentvaloration = new CommentValoration(valoration,comment,user);
 				comments.add(commentvaloration);
 			}
@@ -257,10 +355,22 @@ public class Converter {
 		return comments;
 	}
 	
+	/**
+	 * Replace space of path
+	 * 
+	 * @param name name of city or country
+	 * @return name of city or country with path
+	 */
 	public static String convertSpaceToBar(String name) {
 		return name.replace(SPACE, PATH);
 	}
 	
+	/**
+	 * Replace path of space
+	 * 
+	 * @param name name of city or country
+	 * @return name of city or country with space
+	 */
 	public static String convertBarToSpace(String name) {
 		return name.replace(PATH, SPACE);
 	}

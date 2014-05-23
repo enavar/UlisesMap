@@ -50,18 +50,21 @@ import android.widget.Toast;
 
 /**
  * MapActivity
- * Show a route from an array of points according to choosen option in menu
+ * Show a route from an array of points according to chosen option
+ * in menu. Depending on activity that started this one an array of points may
+ * be ordered for improve a result route The different options handled by this
+ * activity lets to show changes on the map at run time, like route type,
+ * navigation marker o user location.
  * 
  * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
  * @version: 1.0
  */
-
 public class MapActivity extends BaseActivity {
-	
+
 	/** view for show open street maps in android */
 	private MapView map;
 	/** map settings */
-	IMapController mapController;
+	private IMapController mapController;
 	/** route builded from points of interest */
 	private Road road;
 	/** routed builded from current user position and start point of the route */
@@ -74,9 +77,13 @@ public class MapActivity extends BaseActivity {
 	private GPSTracker tracker;
 	/** build a road from points of interest */
 	private RoadBuilder roadBuilder;
-	
+
 	/** identification number of activity which started current activity */
-	private static final int ACTIVITY_POINTS = 1;
+	public static final int ACTIVITY_POINTS = 1;
+	/** key of list points of before activity */
+	public static final String SELECT_POINTS= "selectedPoints";
+	/** key of identification of before activity */
+	public static final String TYPE_ACTIVITY = "activity";
 
 	/** button for navigate throw markers */
 	private Button prevStep;
@@ -96,6 +103,11 @@ public class MapActivity extends BaseActivity {
 	private int currentNavigation;
 
 	@Override
+	/**
+	 * Initiate a map and prepare  all item which may be used.
+	 * Get a set of points from a father activity and build a route.
+	 * Shown other items related to a road according to a user's options
+	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
@@ -112,13 +124,10 @@ public class MapActivity extends BaseActivity {
 		map.setBuiltInZoomControls(true);
 		map.setMultiTouchControls(true);
 
-		int activity = getIntent().getIntExtra("activity", ACTIVITY_POINTS);
-		// get an array with points from ShowPointsActivity		
+		int activity = getIntent().getIntExtra(TYPE_ACTIVITY, ACTIVITY_POINTS);
+		// get an array with points from ShowPointsActivity
 		selectedPoints = (ArrayList<Point>) getIntent().getSerializableExtra(
-				"selectedPoints");
-		for (int i = 0; i < selectedPoints.size(); i++) {
-			Log.d("selected Pointa", "" + selectedPoints.size());
-		}
+				SELECT_POINTS);
 		geoPointsToDraw = getGeoPoints(selectedPoints);
 		if (activity == ACTIVITY_POINTS && geoPointsToDraw.size() > 2) {
 			geoPointsToDraw = RoadBuilder.orderGeoPoints(geoPointsToDraw);
@@ -127,12 +136,11 @@ public class MapActivity extends BaseActivity {
 		road = roadBuilder.getRoad();
 		// instantiate other items on the map
 		updateUIWithRoad(roadOverlay, road, Color.BLUE);
-		Log.d("road", "" + map.getOverlays().size());
 		initMapItems();
 	}
 
 	/**
-	 * Initiate a map elements
+	 * Initiate a map elements	
 	 */
 	protected void initMapItems() {
 		// show Poins of interest on the map
@@ -141,9 +149,7 @@ public class MapActivity extends BaseActivity {
 		if (Settings.gps) {
 			initGPS();
 		}
-		Log.d("points", "" + map.getOverlays().size());
 		mapElements = map.getOverlays().size();
-		Log.d("mapele", "" + mapElements);
 		// Show instructions for each step of the road
 		if (Settings.navigations) {
 			if (Settings.gps) {
@@ -164,11 +170,9 @@ public class MapActivity extends BaseActivity {
 	 * */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		Log.d("menu", "" + item.getItemId());
 		switch (item.getItemId()) {
 
 		case R.id.navigations:
-			Log.d("menu", "navigations");
 			if (item.isChecked()) {
 				item.setChecked(false);
 				Settings.navigations = false;
@@ -190,23 +194,18 @@ public class MapActivity extends BaseActivity {
 			}
 			return true;
 		case R.id.car:
-			Log.d("menu", "car");
 			changeRouteStatus(item);
 			return updateMap(item);
 		case R.id.bicycle:
-			Log.d("menu", "bicycle");
 			changeRouteStatus(item);
 			return updateMap(item);
 		case R.id.walk:
-			Log.d("menu", "walk");
 			changeRouteStatus(item);
 			return updateMap(item);
 		case R.id.walk_transport:
-			Log.d("menu", "walk_transport");
 			changeRouteStatus(item);
 			return updateMap(item);
 		case R.id.myGPS:
-			Log.d("menu", "myGPS");
 			if (item.isChecked()) {
 				item.setChecked(false);
 				Settings.gps = false;
@@ -223,14 +222,13 @@ public class MapActivity extends BaseActivity {
 			}
 			return true;
 
-		default:
-			Log.d("menu", "def");
+		default:				
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
 	/**
-	 * Recalculate a road and all related item when diferent route type is
+	 * Recalculate a road and all related item when different route type is
 	 * selected
 	 * 
 	 * @param item
@@ -254,21 +252,19 @@ public class MapActivity extends BaseActivity {
 	 *            coordinates of point
 	 * @param poiMarkers
 	 *            nearest object to show
-	 * @return an array with configured  nearest object
+	 * @return an array with configured nearest object
 	 */
 	public FolderOverlay makePoiMarkers(GeoPoint geoPoint,
 			FolderOverlay poiMarkers, String key) {
-		PoiBuilder poiBuilder = new PoiBuilder(key , geoPoint);
+		PoiBuilder poiBuilder = new PoiBuilder(key, geoPoint);
 		ArrayList<POI> pois = poiBuilder.loadPoi();
 		Drawable PoiIcon = getResources().getDrawable(R.drawable.metro);
 		if (pois != null) {
-			Log.d("size poi", "" + pois.size());
-
 			for (POI poi : pois) {
 				Marker poiMarker = new Marker(map);
 				poiMarker.setTitle(poi.mType);
 				poiMarker.setSnippet(poi.mDescription.split(",")[0]);
-				poiMarker.setPosition(poi.mLocation);
+				poiMarker.setPosition(poi.mLocation);					
 				poiMarker.setIcon(PoiIcon);
 				poiMarkers.add(poiMarker);
 			}
@@ -280,16 +276,17 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Update the map when the calculation of the road is over
 	 * 
-	 * @param road a to show at the map
+	 * @param road
+	 *            a to show at the map
 	 */
-	void updateUIWithRoad(Polyline polyline, Road road, int color) {
+	public void updateUIWithRoad(Polyline polyline, Road road, int color) {
 
 		if (road.mStatus != Road.STATUS_OK)
-			Toast.makeText(map.getContext(),
+			Toast.makeText(this,
 					"We have a problem to get the route\n" + road.mStatus,
 					Toast.LENGTH_SHORT).show();
 		else {
-			polyline = RoadManager.buildRoadOverlay(road, map.getContext());
+			polyline = RoadManager.buildRoadOverlay(road, this);
 			polyline.setColor(color);
 			map.getOverlays().add(polyline);
 
@@ -305,7 +302,8 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Add to the map navigation markers to follow a road
 	 * 
-	 * @param road a route
+	 * @param road
+	 *            a route
 	 */
 	public void makeNavigationMarkers(Road road) {
 		// set Markers
@@ -341,7 +339,8 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Show at the map selected points with his own image and description
 	 * 
-	 * @param selectedPoints an array with selected points
+	 * @param selectedPoints
+	 *            an array with selected points
 	 */
 	public void makePointsMarkers(ArrayList<Point> selectedPoints) {
 		FolderOverlay poiMarkers = new FolderOverlay(this);
@@ -365,13 +364,11 @@ public class MapActivity extends BaseActivity {
 	public void initGPS() {
 		tracker = new GPSTracker(this, map);
 		GeoPoint myLocation = null;
-		if (tracker.isNetworkEnabled() == false) {
+		if (!tracker.isNetworkEnabled()) {
 			tracker.showSettingsAlert();
 		} else {
 			myLocation = new GeoPoint(tracker.getLatitude(),
 					tracker.getLongitude());
-			Log.d("gps", myLocation.toString());
-			Log.d("start", geoPointsToDraw.get(0).toString());
 			showRoutefromMyCurrentLocation(myLocation, geoPointsToDraw.get(0));
 		}
 	}
@@ -379,8 +376,10 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Show a route from current user position to route start point
 	 * 
-	 * @param a a user current position
-	 * @param b a start point of teh route
+	 * @param a
+	 *            a user current position
+	 * @param b
+	 *            a start point of teh route
 	 */
 	public void showRoutefromMyCurrentLocation(GeoPoint a, GeoPoint b) {
 		roadGps = null;
@@ -390,13 +389,13 @@ public class MapActivity extends BaseActivity {
 		roadBuilder = new RoadBuilder(ar);
 		roadGps = roadBuilder.getRoad();
 		updateUIWithRoad(roadOverlayGps, roadGps, Color.GREEN);
-
 	}
 
 	/**
 	 * Extract geoPoint from given points
 	 * 
-	 * @param points a points
+	 * @param points
+	 *            a points
 	 * @return a set with geoPoints
 	 */
 	public ArrayList<GeoPoint> getGeoPoints(ArrayList<Point> points) {
@@ -420,32 +419,20 @@ public class MapActivity extends BaseActivity {
 	/**
 	 * Listener to navigate throw navigation markers
 	 */
-	OnClickListener Navigationlistener = new OnClickListener() {
+	private OnClickListener Navigationlistener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 			if (road.mStatus == Road.STATUS_OK) {
-				if ((Button) v == prevStep) {
-					if (currentNavigation > mapElements) {	
-						currentNavigation--;
-						showMarkerInfo();						
-					} else {
-						currentNavigation = mapElements + navigationElements
-								- 1;
-						showMarkerInfo();
-					}
-				} else {
-					Log.d("cur", "" + currentNavigation);
-					int maxNavigation = mapElements + navigationElements;
-					if (currentNavigation < maxNavigation - 1) {
-						currentNavigation++;
-						showMarkerInfo();						
-					} else {
-						currentNavigation = mapElements;
-						showMarkerInfo();
-					}
-				}
+				return;
 			}
+			if (((Button) v).equals(prevStep)) {
+				currentNavigation = (currentNavigation > mapElements) ? currentNavigation - 1 : mapElements + navigationElements - 1;
+			} else {
+				int maxNavigation = mapElements + navigationElements;
+				currentNavigation = (currentNavigation < maxNavigation - 1) ? currentNavigation + 1 : mapElements;
+			}
+			showMarkerInfo();
 		}
 	};
 }

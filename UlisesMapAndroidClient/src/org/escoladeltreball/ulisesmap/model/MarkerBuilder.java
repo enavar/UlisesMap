@@ -34,17 +34,49 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+/**
+ * MarkerBuilder
+ * Prepare a marker to be shown at the map. Download and set all
+ * it properties.
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class MarkerBuilder extends Marker {
 
+	/** coordinates of marker */
 	GeoPoint point;
+	/** url to load a marker image */
 	String imgUrl;
+	/** description of marker */
 	String desc;
+	/** marker name */
 	String name;
+	/** android resources for create a bitmap */
 	Resources res;
+	/** asynchronous task for load image */
 	ImageDownloader downloader;
+	/** final image size */
 	private final int IMAGE_SIZE = 50;
 
-	public MarkerBuilder(MapView mapView, Resources res, GeoPoint point, String imgUrl, String desc, String name) {
+	/**
+	 * Constructor
+	 * 
+	 * @param mapView
+	 *            a map to show a marker
+	 * @param res
+	 *            an android resources
+	 * @param point
+	 *            coordinates of marker
+	 * @param imgUrl
+	 *            url to load a marker image
+	 * @param desc
+	 *            description of marker
+	 * @param name
+	 *            android resources for create a bitma
+	 */
+	public MarkerBuilder(MapView mapView, Resources res, GeoPoint point,
+			String imgUrl, String desc, String name) {
 		super(mapView);
 		this.res = res;
 		this.point = point;
@@ -52,16 +84,22 @@ public class MarkerBuilder extends Marker {
 		this.name = name;
 		this.desc = desc;
 		this.downloader = new ImageDownloader();
-	}	
-	
+	}
+
+	/**
+	 * Set all properties of a marker like name, image, description. Download
+	 * and prepare image to assign to a marker
+	 * 
+	 * @return a marker ready to be shown at map
+	 */
 	public Marker build() {
 		this.setPosition(point);
 		try {
 			Bitmap bitmap = downloader.execute(imgUrl).get();
 			Bitmap cutted = cutImage(bitmap);
 			Drawable smallImg = new BitmapDrawable(res,
-					Bitmap.createScaledBitmap(cutted, IMAGE_SIZE,
-							IMAGE_SIZE, false));
+					Bitmap.createScaledBitmap(cutted, IMAGE_SIZE, IMAGE_SIZE,
+							false));
 			Drawable image = new BitmapDrawable(res, bitmap);
 			this.setIcon(smallImg);
 			this.setImage(image);
@@ -75,7 +113,14 @@ public class MarkerBuilder extends Marker {
 		this.setTitle(name);
 		return this;
 	}
-	
+
+	/**
+	 * Make a circular image from rectangular one
+	 * 
+	 * @param input
+	 *            a bitmap to be processed
+	 * @return a cut image
+	 */
 	public Bitmap cutImage(Bitmap input) {
 		Bitmap output = Bitmap.createBitmap(input.getWidth(),
 				input.getHeight(), Config.ARGB_8888);

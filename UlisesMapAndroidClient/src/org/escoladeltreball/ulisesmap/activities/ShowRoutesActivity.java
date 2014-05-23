@@ -30,7 +30,6 @@ import org.escoladeltreball.ulisesmap.model.Settings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,20 +39,36 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * ShowRoutesActivity
+ * Show all routes available for chosen city
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class ShowRoutesActivity extends BaseActivity implements OnClickListener {
 
+	/** Set of routes of choosen city */
 	private ArrayList<Route> routes;
+	/** Button to start a comment/valoration activity */
 	private Button info;
+	/** Button to show a route at the map */
 	private Button map;
+	/** List with all routes */
 	ListView list;
+	/** Name route chosed by user */
 	private String routeName;
-
+	
+	/**
+	 * Initiate all object when the activity is started
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showroutes);
-		routes = (ArrayList<Route>) getIntent().getSerializableExtra(Route.FIELD_LIST);
+		routes = (ArrayList<Route>) getIntent().getSerializableExtra(
+				Route.FIELD_LIST);
 		Bundle bundle = getIntent().getExtras();
 		String nameCity = bundle.getString(City.FIELD_NAME);
 		TextView city = (TextView) findViewById(R.id.city);
@@ -70,23 +85,10 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		list.setAdapter(adapter);
 		list.setTextFilterEnabled(true);
 	}
-
-	/* Inner class */
-
-	private class IntentLauncher extends AsyncTask<Intent, Void, String> {
-
-		@Override
-		protected String doInBackground(Intent... i) {
-			startActivity(i[0]);
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			progress.dismiss();
-		}
-	}
-
+	
+	/**
+	 * Checks if the user has selected any route.
+	 */
 	@Override
 	public void onClick(View v) {
 		routeName = getCheckedItem();
@@ -106,6 +108,12 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		new IntentLauncher().execute(intent);
 	}
 
+	/**
+	 * Determine which button is clicked and start correspond activity by creating
+	 * new Intentlauncher
+	 * 
+	 * @param v view of clicked button
+	 */
 	private void clickRoute(View v) {
 		if (v.equals(info)) {
 			Settings.routeName = routeName;
@@ -114,12 +122,17 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 			progress.show();
 			// Starts a new activity to show gps map route
 			Intent intent = new Intent(v.getContext(), MapActivity.class);
-			intent.putExtra("activity", 2);
-			intent.putExtra("selectedPoints", getPointsOfRoute());
+			intent.putExtra(MapActivity.TYPE_ACTIVITY, 2);
+			intent.putExtra(MapActivity.SELECT_POINTS, getPointsOfRoute());
 			new IntentLauncher().execute(intent);
 		}
 	}
 
+	/**
+	 * Download a set of routes from a server
+	 * 
+	 * @return a set of routes
+	 */
 	private ArrayList<Point> getPointsOfRoute() {
 		Client client = new Client(Client.SERVLET_POINTS_OF_ROUTE, true);
 		ArrayList<Point> pointsOfRoute = null;
@@ -134,6 +147,11 @@ public class ShowRoutesActivity extends BaseActivity implements OnClickListener 
 		return pointsOfRoute;
 	}
 
+	/**
+	 * Determine which route is selected by user
+	 * 
+	 * @return a selected route, null otherwise
+	 */
 	private String getCheckedItem() {
 		int checkedId = list.getCheckedItemPosition();
 		if (checkedId != -1) {

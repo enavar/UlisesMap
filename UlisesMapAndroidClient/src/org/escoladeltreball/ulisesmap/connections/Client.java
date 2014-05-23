@@ -75,20 +75,60 @@ public class Client extends AsyncTask<String, Integer, String> {
 	 * valoration and for each comment or valoration has definition and user.
 	 */
 	public static final String SERVLET_COMMENT_AND_VALORATION = "ServletCommentValoration";
+	/** 
+	 * This servlet insert the comment database. Client send a comment in JSON format and servlet 
+	 * responds if the comment has inserted or not. The JSON has definition, user and route. 
+	 */
 	public static final String SERVLET_COMMENT_INSERT = "ServletInsertComment";
+	/**
+	 * This servlet check if exist a comment of user or not. Client send in JSON format and servlet
+	 * responds if the comment of user exist or not. The JSON has name of route and name of user.
+	 */
 	public static final String SERVLET_CHECK_COMMENT = "ServletCheckComment";
+	/**
+	 * This servlet insert the valoration database. Client send a comment in JSON format and servlet 
+	 * responds if the valoration has inserted or not. The JSON has value ranking, user and route. 
+	 */
 	public static final String SERVLET_VALORATION_INSERT = "ServletInsertValoration";
+	/**
+	 * This servlet check if exist a valoration of user or not. Client send in JSON format and servlet
+	 * responds if the valoration of user exist or not. The JSON has name of route and name of user.
+	 */
 	public static final String SERVLET_CHECK_VALORATION = "ServletCheckValoration";
+	/**
+	 * This servlet get all countries database. Client not send nothing and servlet responds string 
+	 * with format JSONArray. The JSONArray has name of country.
+	 */
 	public static final String SERVLET_COUNTRIES = "ServletCities";
+	/**
+	 * This servlet get all cities of countries database. Client send name of country and servlet responds 
+	 * string with format JSONArray. The JSONArray has name of city.
+	 */
 	public static final String SERVLET_CITIES = "ServletCities";
 	
+	/**
+	 * Answer when the request of servlet has gone well.
+	 */
 	public static final String TRUE_CHECK = "true";
+	/**
+	 * Answer when the request of servlet hasn't gone well.
+	 */
 	public static final String FALSE_CHECK = "false";
-
+	/**
+	 * Path of server
+	 */
 	private static final String URL = "http://ulises-ulisesmap.rhcloud.com/";
-
+	/**
+	 * Path of servlet
+	 */
 	private String myURL;
+	/**
+	 * Response of servlet
+	 */
 	private String response;
+	/**
+	 * Determines whether or not the client sends information
+	 */
 	private boolean sendMessage;
 	
 	/**
@@ -107,6 +147,9 @@ public class Client extends AsyncTask<String, Integer, String> {
 		this.sendMessage = sendMessage;
 	}
 	
+	/**
+	 * Connect with servlet, send information and receiver response.
+	 */
 	protected String doInBackground(String... String) {
 		try {
 			URL url = new URL(myURL);

@@ -22,30 +22,81 @@ import org.escoladeltreball.ulisesmap.model.Settings;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+/**
+ * BaseActivity Handle a option menu used in almost all activities which allow
+ * to a user personalize a view of route on the map. Load a user preferences
+ * from an android SharedPreferences when an activity is created and store it in
+ * Setting class which is used while user stay in this activity and store them
+ * back when user start a new one. Also keep a references to a ProgressBar shown
+ * while a new activity is loading.
+ * 
+ * @author: Oleksandr Dovbysh, Elisabet Navarro, Sheila Perez
+ * @version: 1.0
+ */
 public class BaseActivity extends Activity {
 
+	/** for store user preferences */
 	protected SharedPreferences prefs;
+	/** references to a message and simple animation */
 	public ProgressDialog progress;
+	private final static String PREF_NAME = "ulises"; 
+	
+	/**
+	 * IntentLaucher 
+	 * Class that launches a background activity.
+	 * 
+	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
+	 * @version: 1.0
+	 */
+	protected class IntentLauncher extends AsyncTask<Intent, Void, String> {
+
+		/**
+		 * Launch Activity
+		 */
+		@Override
+		protected String doInBackground(Intent... intent) {
+			startActivity(intent[0]);
+			return null;
+		}
+		
+		/**
+		 * Show progress bar
+		 */
+		@Override
+		protected void onPostExecute(String result) {
+			progress.dismiss();
+		}
+	}
 
 	@Override
+	/**
+	 * Load an application preferences from android database and
+	 * create a simple animation for show while doing some background task
+	 * 
+	 */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		prefs = getSharedPreferences("ulises", Context.MODE_PRIVATE);
+		prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 		// create progress dialog
 		progress = new ProgressDialog(this);
-		progress.setMessage("Loading data...");
+		progress.setMessage(getString(R.string.loadMessage));
 		progress.setIndeterminate(false);
 	}
 
 	@Override
+	/**
+	 * While an activity is no longer at foreground store a user preferences to android database
+	 */
 	protected void onPause() {
 		super.onPause();
 		// store setting on device
@@ -58,12 +109,16 @@ public class BaseActivity extends Activity {
 	}
 
 	@Override
+	/**
+	 * Load an application options from android database to specific class which handle
+	 * its while staying in activity
+	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// for delete shared preferences, use for prevent some issue with
 		// android emulator
 		// need be commented for run in real phone
-		//prefs.edit().clear().commit();
+		// prefs.edit().clear().commit();
 		// get settings stored on device
 		Settings.routeType = prefs.getInt("routeType", R.id.walk);
 		Settings.gps = prefs.getBoolean("gps", false);
@@ -77,6 +132,9 @@ public class BaseActivity extends Activity {
 	}
 
 	@Override
+	/**
+	 * Initiate menu each time user open it
+	 */
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		initMenu(menu);
@@ -93,9 +151,8 @@ public class BaseActivity extends Activity {
 		switch (item.getItemId()) {
 
 		case R.id.navigations:
-			Settings.navigations = !item.isCheckable();
+			Settings.navigations = !item.isChecked();
 			item.setChecked(Settings.navigations);
-			Log.d("navigation", "" + Settings.navigations);
 			return true;
 		case R.id.car:
 			return changeRouteStatus(item);
@@ -121,6 +178,13 @@ public class BaseActivity extends Activity {
 		}
 	}
 
+	/**
+	 * Change a route status to a new one
+	 * 
+	 * @param item
+	 *            a chosen menu item
+	 * @return a true after change item status
+	 */
 	public boolean changeRouteStatus(MenuItem item) {
 		if (item.isChecked()) {
 			item.setChecked(false);
@@ -131,10 +195,16 @@ public class BaseActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Load to a menu all values
+	 * 
+	 * @param menu
+	 *            a menu to be shown
+	 */
 	public void initMenu(Menu menu) {
 		changeRouteStatus(menu.findItem(Settings.routeType));
 		menu.findItem(R.id.myGPS).setChecked(Settings.gps);
 		menu.findItem(R.id.navigations).setChecked(Settings.navigations);
-		menu.findItem(R.id.menu_logo).setChecked(Settings.hideLogo);
+		menu.findItem(R.id.hideLogo).setChecked(Settings.hideLogo);
 	}
 }
