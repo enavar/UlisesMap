@@ -1,1 +1,6 @@
+org.escoladeltreball.ulisesmap
 org.escoladeltreball.ulisesmap.activities
+org.escoladeltreball.ulisesmap.adapters
+org.escoladeltreball.ulisesmap.connections
+org.escoladeltreball.ulisesmap.converter
+org.escoladeltreball.ulisesmap.model
