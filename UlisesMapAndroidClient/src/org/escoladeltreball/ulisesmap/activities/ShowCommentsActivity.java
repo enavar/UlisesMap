@@ -125,6 +125,9 @@ public class ShowCommentsActivity extends BaseActivity {
 			clientValoration.execute(out).get();
 			response = getString(R.string.ok_valoration);
 		} 
+		if (isAnonymous) {
+			response = getString(R.string.anonymous_users_false);
+		}
 		Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
 	}
 	
