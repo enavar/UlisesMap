@@ -63,6 +63,9 @@ public class BaseActivity extends Activity {
 	protected class IntentLauncher extends AsyncTask<Intent, Void, String> {
 
 		@Override
+		/**
+		 * Check for internet connection before start  new activity
+		 */
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (!isNetworkConnected()) {
@@ -221,10 +224,18 @@ public class BaseActivity extends Activity {
 		menu.findItem(R.id.hideLogo).setChecked(Settings.hideLogo);
 	}
 	
+	/**
+	 * Show message if there are no internet connection 
+	 */
 	private void showToast() {
 		Toast.makeText(this, getString(R.string.check_internet_conn), Toast.LENGTH_LONG).show();
 	}
 
+	/**
+	 * Check if there are internet connection
+	 * 
+	 * @return true if there are internet connection
+	 */
 	private boolean isNetworkConnected() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		return (cm.getActiveNetworkInfo() != null);
