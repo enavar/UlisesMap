@@ -25,12 +25,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /**
  * BaseActivity Handle a option menu used in almost all activities which allow
@@ -49,16 +52,28 @@ public class BaseActivity extends Activity {
 	protected SharedPreferences prefs;
 	/** references to a message and simple animation */
 	public ProgressDialog progress;
-	private final static String PREF_NAME = "ulises"; 
-	
+	private final static String PREF_NAME = "ulises";
+
 	/**
-	 * IntentLaucher 
-	 * Class that launches a background activity.
+	 * IntentLaucher Class that launches a background activity.
 	 * 
 	 * @Author: Oleksander Dovbysh, Elisabet Navarro, Sheila Perez
 	 * @version: 1.0
 	 */
 	protected class IntentLauncher extends AsyncTask<Intent, Void, String> {
+
+		@Override
+		/**
+		 * Check for internet connection before start  new activity
+		 */
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (!isNetworkConnected()) {
+				showToast();
+				progress.dismiss();
+				this.cancel(true);
+			}
+		}
 
 		/**
 		 * Launch Activity
@@ -68,7 +83,7 @@ public class BaseActivity extends Activity {
 			startActivity(intent[0]);
 			return null;
 		}
-		
+
 		/**
 		 * Show progress bar
 		 */
@@ -91,6 +106,7 @@ public class BaseActivity extends Activity {
 		progress = new ProgressDialog(this);
 		progress.setMessage(getString(R.string.loadMessage));
 		progress.setIndeterminate(false);
+		progress.setCancelable(true);
 	}
 
 	@Override
@@ -206,5 +222,22 @@ public class BaseActivity extends Activity {
 		menu.findItem(R.id.myGPS).setChecked(Settings.gps);
 		menu.findItem(R.id.navigations).setChecked(Settings.navigations);
 		menu.findItem(R.id.hideLogo).setChecked(Settings.hideLogo);
+	}
+	
+	/**
+	 * Show message if there are no internet connection 
+	 */
+	private void showToast() {
+		Toast.makeText(this, getString(R.string.check_internet_conn), Toast.LENGTH_LONG).show();
+	}
+
+	/**
+	 * Check if there are internet connection
+	 * 
+	 * @return true if there are internet connection
+	 */
+	private boolean isNetworkConnected() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		return (cm.getActiveNetworkInfo() != null);
 	}
 }
