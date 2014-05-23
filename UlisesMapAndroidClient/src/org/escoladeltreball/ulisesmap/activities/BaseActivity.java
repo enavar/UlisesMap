@@ -26,10 +26,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -223,12 +221,13 @@ public class BaseActivity extends Activity {
 		menu.findItem(R.id.navigations).setChecked(Settings.navigations);
 		menu.findItem(R.id.hideLogo).setChecked(Settings.hideLogo);
 	}
-	
+
 	/**
-	 * Show message if there are no internet connection 
+	 * Show message if there are no internet connection
 	 */
 	private void showToast() {
-		Toast.makeText(this, getString(R.string.check_internet_conn), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, getString(R.string.check_internet_conn),
+				Toast.LENGTH_LONG).show();
 	}
 
 	/**
