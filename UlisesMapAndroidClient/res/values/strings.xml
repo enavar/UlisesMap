@@ -7,6 +7,7 @@
     <string name="button_route">Routes</string>
     <string name="button_point">Points of Interes</string>
     <string name="loadMessage">Loading data...</string>
+    <string name="check_internet_conn">No internet connection detected. Switch on internet and try again</string>
 
     <!-- ListView -->
     <string name="ok">OK</string>
