@@ -56,7 +56,7 @@ public class ShowCommentsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showcomments);
 		userName = Settings.userName;
-		isAnonim = userName.equals(null);
+		isAnonim = userName.equals("");
 		routeName = Settings.routeName;
 		et = (EditText) findViewById(R.id.textView1);
 		rb = (RatingBar) findViewById(R.id.ratingBar1);
