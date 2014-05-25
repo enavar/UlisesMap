@@ -9,30 +9,38 @@
 
     <RatingBar
         android:id="@+id/ratingBar1"
+        style="?android:attr/ratingBarStyleIndicator"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignParentTop="true"
+        android:numStars="5"
+        android:layout_margin="5dp"
+        android:layout_toLeftOf="@+id/addComment" />
 
     <EditText
         android:id="@+id/textView1"
-        android:layout_width="232dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ratingBar1"
-        android:layout_alignRight="@+id/addComment"
         android:layout_below="@+id/ratingBar1"
-        android:layout_weight="0.12"
+        android:layout_margin="5dp"
+        android:layout_toLeftOf="@+id/addComment"
         android:hint="@string/new_comment" />
 
     <Button
         android:id="@+id/addComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
         android:layout_alignParentRight="true"
-        android:text="@string/add_comment"
-        android:onClick="addCommentValoration" />
+        android:layout_alignParentTop="true"
+        android:background="@drawable/state_button_standar"
+        android:onClick="addCommentValoration"
+        android:text="@string/add_comment" />
 
     <ListView
         android:id="@+id/listView1"
+        android:layout_marginTop="14dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
