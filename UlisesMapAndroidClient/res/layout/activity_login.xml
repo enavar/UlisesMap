@@ -8,52 +8,42 @@
 	android:paddingRight="@dimen/activity_horizontal_margin"
 	android:paddingTop="@dimen/activity_vertical_margin"
 	tools:context=".LoginActivity">
-
-	<EditText
-		android:id="@+id/edit_login"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:inputType="text"
-		android:hint="@string/edit_login"
-		/>
-	<Button
-	    android:id="@+id/buttonRegister"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/editPsw"
-	    android:layout_below="@+id/editPsw"
-	    android:layout_marginTop="116dp"
-	    android:text="@string/button_register" />
-
-	<Button
-	    android:id="@+id/buttonEnter"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignBottom="@+id/buttonRegister"
-	    android:layout_alignLeft="@+id/buttonRegister"
-	    android:layout_marginBottom="44dp"
-	    android:text="@string/button_enter" />
-
-	<EditText
-	    android:id="@+id/editPsw"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/edit_login"
-	    android:layout_below="@+id/edit_login"
-	    android:ems="10"
-	    android:hint="@string/edit_password"
-	    android:inputType="textPassword" >
-	    <requestFocus />
-	</EditText>
-
-	<CheckBox
+	
+    <ImageView
+	    android:id="@+id/iconUser"
+	    style="@style/icon_menu"
+	    android:layout_alignParentLeft="true"	    
+	    android:src="@drawable/icon_user" />
+    
+    <EditText
+        android:id="@+id/edit_login"
+        style="@style/edit_text"
+        android:layout_toRightOf="@+id/iconUser"
+        android:hint="@string/edit_login"
+        android:inputType="text"/>
+    
+    <ImageView
+	    android:id="@+id/iconPdw"
+	    style="@style/icon_menu"
+	    android:layout_below="@+id/iconUser"
+	    android:src="@drawable/icon_pdw" />
+    
+    <EditText
+        android:id="@+id/editPsw"
+        style="@style/edit_text"
+       	android:layout_toRightOf="@+id/iconPdw"
+        android:layout_below="@+id/edit_login"
+        android:hint="@string/edit_password"
+        android:inputType="textPassword" />
+    
+    <CheckBox
 	    android:id="@+id/checkAnonymous"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/editPsw"
-	    android:layout_below="@+id/editPsw"
+	    android:layout_alignLeft="@+id/iconPdw"
+	    android:layout_below="@+id/iconPdw"
 	    android:text="@string/check_anonymous" />
-
+    
 	<CheckBox
 	    android:id="@+id/checkRemember"
 	    android:layout_width="wrap_content"
@@ -63,5 +53,24 @@
 	    android:layout_alignRight="@+id/checkAnonymous"
 	    android:layout_marginRight="20dp"
 	    android:text="@string/check_remember" />
+
+	<Button
+	    android:id="@+id/buttonEnter"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/checkAnonymous"
+	    android:layout_below="@+id/checkRemember"
+	    android:layout_marginTop="25dp"
+	    android:background="@drawable/state_button_standar"
+	    android:text="@string/button_enter" />
+
+	<Button
+	    android:id="@+id/buttonRegister"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"	    
+	    android:layout_alignLeft="@+id/buttonEnter"
+	    android:layout_below="@+id/buttonEnter"
+	    android:background="@drawable/state_button_standar"
+	    android:text="@string/button_register" />
  
 </RelativeLayout>

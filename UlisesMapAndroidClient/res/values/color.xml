@@ -1,6 +1,7 @@
 <resources>
-    <color name="blue">#72B095</color>
-    <color name="dark_blue">#1F7872</color>
+    <color name="blue">#ACD1E9</color>
+    <color name="dark_blue">#3771c8ff</color>
     <color name="yellow">#DEDBA7</color>
     <color name="black_blue">#1A202C</color>
+    <color name="red">#D13F31</color>
 </resources>

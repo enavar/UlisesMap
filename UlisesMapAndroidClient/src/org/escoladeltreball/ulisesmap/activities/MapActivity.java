@@ -282,7 +282,7 @@ public class MapActivity extends BaseActivity {
 
 		if (road.mStatus != Road.STATUS_OK)
 			Toast.makeText(this,
-					"We have a problem to get the route\n" + road.mStatus,
+					R.string.error_map + "\n" + road.mStatus,
 					Toast.LENGTH_SHORT).show();
 		else {
 			polyline = RoadManager.buildRoadOverlay(road, this);

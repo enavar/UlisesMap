@@ -58,6 +58,7 @@
     <!-- Map -->
 	<string name="prevStep">Prev</string>
 	<string name="nextStep">Next</string>
+	<string name="error_map">We have a problem to get the route</string>
 
     <!-- Menu -->
     <string name="title_navigation">Navigations</string>
