@@ -26,13 +26,15 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:text="@string/button_route"
+		android:background="@drawable/state_button_standar"
 		/>
-	
+
 	<Button
-		android:id="@+id/buttonPoint"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/button_point"
-		/>
+	    android:id="@+id/buttonPoint"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="10dp"
+	    android:background="@drawable/state_button_standar"
+	    android:text="@string/button_point" />
 	
 </LinearLayout>

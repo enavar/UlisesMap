@@ -67,9 +67,10 @@
 	<Button
 	    android:id="@+id/buttonRegister"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"	    
+	    android:layout_height="wrap_content"
 	    android:layout_alignLeft="@+id/buttonEnter"
 	    android:layout_below="@+id/buttonEnter"
+	    android:layout_marginTop="10dp"
 	    android:background="@drawable/state_button_standar"
 	    android:text="@string/button_register" />
  
