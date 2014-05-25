@@ -18,11 +18,11 @@ package org.escoladeltreball.ulisesmap.adapters;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Point;
-
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.text.Html;
@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -165,20 +166,24 @@ public class ShowPointsAdapter extends BaseAdapter {
 		
 	}
 
+	@SuppressLint("DefaultLocale")
 	private void addDialog(View view, final Point point) {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-				builder.setTitle(point.getName());
-				builder.setMessage(point.getDescription());
-				builder.setCancelable(true);
-				builder.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-	                   public void onClick(DialogInterface dialog, int id) {
-	                       dialog.cancel();
-	                   }
-	               });
-				AlertDialog dialog = builder.create();
+				final Dialog dialog = new Dialog(view.getContext());
+				dialog.setContentView(R.layout.dialog);
+				dialog.setTitle(point.getName().toUpperCase());
+				TextView txtDescription = (TextView) dialog.findViewById(R.id.description_dialog);
+				txtDescription.setText(point.getDescription());
+				Button btnDialog = (Button) dialog.findViewById(R.id.button_dialog);
+				btnDialog.setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+						
+					}
+				});
 				dialog.show();
 			}
 		});
