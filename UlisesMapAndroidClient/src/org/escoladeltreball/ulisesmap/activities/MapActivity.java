@@ -422,7 +422,7 @@ public class MapActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-			if (road.mStatus == Road.STATUS_OK) {
+			if (road.mStatus != Road.STATUS_OK) {
 				return;
 			}
 			if (((Button) v).equals(prevStep)) {
