@@ -18,8 +18,10 @@ package org.escoladeltreball.ulisesmap.adapters;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+
 import org.escoladeltreball.ulisesmap.R;
 import org.escoladeltreball.ulisesmap.model.Point;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -31,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -172,8 +175,10 @@ public class ShowPointsAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View view) {
 				final Dialog dialog = new Dialog(view.getContext());
+				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 				dialog.setContentView(R.layout.dialog);
-				dialog.setTitle(point.getName().toUpperCase());
+				TextView txtTitle = (TextView) dialog.findViewById(R.id.title_dialog);
+				txtTitle.setText(point.getName().toUpperCase());
 				TextView txtDescription = (TextView) dialog.findViewById(R.id.description_dialog);
 				txtDescription.setText(point.getDescription());
 				Button btnDialog = (Button) dialog.findViewById(R.id.button_dialog);
